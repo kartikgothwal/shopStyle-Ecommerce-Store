@@ -6,7 +6,7 @@ import { ProductPageShimmer } from "../CardShimmerEffect";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductCard from "../Products/ProductCard";
 const Main = () => {
-  const testArr = new Array(10).fill(undefined)
+  const testArr = new Array(10).fill(undefined);
   const [product, SetProduct] = useState([]);
   const [toogleAccordian, SetToogleAccordian] = useState({
     Availability: false,
@@ -20,7 +20,12 @@ const Main = () => {
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
   useEffect(() => {
-    SetProduct(ProductData.filter((items) => items.category == category));
+    console.log(category);
+    SetProduct(
+      ProductData.filter((items) =>
+        items.subCategory.find((vals) => vals == category)
+      )
+    );
   }, [ProductData]);
   return (
     <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -141,7 +146,10 @@ const Main = () => {
                       toogleAccordian.Availability ? " h-[3rem]" : null
                     } transition-all duration-300 flex justify-center gap-3`}
                   >
-                    <label class="h-[1.2rem] w-[4rem] relative block aspect-[2/0.75] cursor-pointer rounded-full  bg-gradient-to-r from-gray-200 to-gray-100 bg-[length:100%_100%] shadow-2xl shadow-purple-300 transition-all duration-500 [&amp;:has(input:checked)]:rotate-180  hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-blue-600" style={{background:"blue"}}>
+                    <label
+                      class="h-[1.2rem] w-[4rem] relative block aspect-[2/0.75] cursor-pointer rounded-full  bg-gradient-to-r from-gray-200 to-gray-100 bg-[length:100%_100%] shadow-2xl shadow-purple-300 transition-all duration-500 [&amp;:has(input:checked)]:rotate-180  hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-blue-600"
+                      style={{ background: "blue" }}
+                    >
                       <input type="checkbox" class="peer/input hidden" />
                       <div class="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
                     </label>{" "}
@@ -294,7 +302,7 @@ const Main = () => {
                 ? product.map((items) => {
                     return <ProductCard key={items.id} items={items} />;
                   })
-                : testArr.map((items)=><ProductPageShimmer />)}
+                : testArr.map((items) => <ProductPageShimmer />)}
               <ProductCard />
             </div>
           </div>
