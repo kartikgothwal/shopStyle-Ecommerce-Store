@@ -15,7 +15,7 @@ export default function ProductCard({ items }) {
         <h5 className="mb-2 block font-sans   max-sm:text-[16px] font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
           {items.title}
         </h5>
-        <p className="block font-sans text-base max-sm:text-[13px] font-light leading-relaxed text-inherit antialiased">
+        <p className="block font-sans   lowercase text-base max-sm:text-[13px] font-light leading-relaxed text-inherit antialiased">
           {items.description}
         </p>
       </div>
