@@ -1,4 +1,6 @@
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+
+ 
 export default function ProductCard({ items }) {
   if (items == undefined) return null;
   console.log(items);
@@ -8,7 +10,7 @@ export default function ProductCard({ items }) {
         <img
           src={items.thumbnail}
           alt={items.title}
-          className="object-contain bg-white h-full w-full"
+          className="object-cover bg-white h-full w-full"
         />
       </div>
       <div className="px-6">

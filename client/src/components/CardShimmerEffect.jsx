@@ -19,5 +19,13 @@ export const BigCardShimmerEffect = () => {
     </>
   );
 };
-
+export const ProductPageShimmer = () => {
+  return (
+    <>
+      <div className="h-full w-full mx-auto bg-white shadow-lg p-1 animate__animated animate__fadeIn">
+        <div className="shimmer rounded cursor-pointer z-2 h-[25rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px]    min-w-[100%] p-1 flex flex-col"></div>
+      </div>
+    </>
+  );
+};
 export default CardShimmerEffect;

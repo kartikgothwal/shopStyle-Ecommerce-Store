@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../HOC";
+import { ProductPageShimmer } from "../CardShimmerEffect";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductCard from "../Products/ProductCard";
 const Main = () => {
+  const testArr = new Array(10).fill(undefined)
   const [product, SetProduct] = useState([]);
   const [toogleAccordian, SetToogleAccordian] = useState({
     Availability: false,
@@ -18,7 +20,6 @@ const Main = () => {
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
   useEffect(() => {
-    
     SetProduct(ProductData.filter((items) => items.category == category));
   }, [ProductData]);
   return (
@@ -293,7 +294,7 @@ const Main = () => {
                 ? product.map((items) => {
                     return <ProductCard key={items.id} items={items} />;
                   })
-                : null}
+                : testArr.map((items)=><ProductPageShimmer />)}
               <ProductCard />
             </div>
           </div>
