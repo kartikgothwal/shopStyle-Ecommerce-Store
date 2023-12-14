@@ -11,7 +11,7 @@ const ShopByGender = () => {
     <>
       <section className="flex h-full w-full flex-col gap-12 justify-between items-center">
         <h1 className={`${styles.subHeading} text-[#545252]`}>
-          Shop for Family{" "}
+          Shop By Size{" "}
         </h1>
         <div className="  w-full h-full flex  flex-col  lg:flex-row gap-6 justify-center">
           <div className="h-[25rem] w-full  ">
@@ -52,7 +52,7 @@ const ShopByGender = () => {
         </div>
         <button
           className="relative bg-black  px-8 py-3 rounded-md isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 "
-          onClick={() => navigate("/product/")}
+          onClick={() => navigate("/product/clothes")}
         >
           View All Products <ArrowOutwardIcon />
         </button>

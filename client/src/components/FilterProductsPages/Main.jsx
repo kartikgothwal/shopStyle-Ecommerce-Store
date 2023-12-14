@@ -18,6 +18,7 @@ const Main = () => {
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
   useEffect(() => {
+    
     SetProduct(ProductData.filter((items) => items.category == category));
   }, [ProductData]);
   return (
