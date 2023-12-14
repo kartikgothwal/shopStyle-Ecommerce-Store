@@ -41,7 +41,17 @@ const Main = () => {
                 className="border-1 transition-colors duration-300 relative opacity-70 h-16 font-normal text-gray-500 bg-gray-300 text-[12px] right-0 flex justify-center items-center hover:text-gray-900 hover:opacity-80 w-full"
                 onClick={() => SetSortToggle(!sortToggle)}
               >
-                Sort By <KeyboardArrowDownIcon />
+                Sort By{" "}
+                <KeyboardArrowDownIcon
+                  className={`${
+                    sortToggle ? "rotate-180" : null
+                  } transition-all duration-300`}
+                  style={{
+                    transition: "transform",
+                    transitionDuration: "200ms",
+                    transitionTimingFunction: "ease-in",
+                  }}
+                />
               </button>
               {sortToggle && (
                 <div className="border border-gray-500 overflow-y-scroll h-[15rem] absolute w-[100%] bg-white py-6 px-6 z-40">
