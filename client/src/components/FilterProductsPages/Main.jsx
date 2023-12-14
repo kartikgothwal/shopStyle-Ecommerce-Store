@@ -35,8 +35,8 @@ const Main = () => {
           </p>
         </div>
         <div className=" grid max-md:grid-rows-[70px,1fr]  gap-x-12  md:grid-cols-[minmax(200px,300px)_minmax(334px,1fr)]">
-          <div className=" h-full w-full grid md:grid-cols-1 grid-cols-2 gap-8 border">
-            <div className="h-full w-full relative">
+          <div className=" h-[36rem] w-full grid md:grid-cols-1 grid-cols-2 gap-8 border">
+            <div className="h-[4rem] w-full relative">
               <button
                 className="border-1 transition-colors duration-300 relative opacity-70 h-16 font-normal text-gray-500 bg-gray-300 text-[12px] right-0 flex justify-center items-center hover:text-gray-900 hover:opacity-80 w-full"
                 onClick={() => SetSortToggle(!sortToggle)}
