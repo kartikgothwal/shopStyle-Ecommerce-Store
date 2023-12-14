@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../HOC";
-import { Button } from "@material-tailwind/react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductCard from "../Products/ProductCard";
 const Main = () => {
@@ -23,7 +22,7 @@ const Main = () => {
   }, [ProductData]);
   return (
     <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
-      <div className=" min-h-screen w-full mt-3 flex flex-col gap-8 border border-black">
+      <div className=" min-h-screen w-full mt-3 flex flex-col gap-8  ">
         <div className="py-2 px-8 grid grid-rows-2 lg:gap-y-8">
           <h1 className="text-center text-2xl font-normal text-[#545252]">
             Buy Statement Readymade Blouses Online
@@ -274,8 +273,8 @@ const Main = () => {
               </div>
             </div>
           </div>
-          <div className=" h-full w-full">
-            <div className="border border-black h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] justify-center items-center ">
+          <div className="my-4 mb-[5rem] h-full w-full">
+            <div className=" h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] max-md:grid-cols-[repeat(auto-fit,minmax(150px,280px))] justify-center items-center ">
               {product.length
                 ? product.map((items) => {
                     return <ProductCard key={items.id} items={items} />;

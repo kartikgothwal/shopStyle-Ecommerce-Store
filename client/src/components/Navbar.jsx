@@ -63,7 +63,7 @@ const Navbar = () => {
               />
             </NavLink>
 
-            <div className="hidden border-2 shadow-[0_0_3px_hsl(240deg,7%,62%)] border-black absolute sm:flex left-8 mx-4 h-[2rem] w-[15rem] rounded-md px-3 md:relative md:left-0 md:flex justify-center items-center max-w-md max">
+            <div className="hidden border-2 shadow-[0_0_3px_hsl(240deg,7%,62%)] border-black absolute sm:flex left-8 mx-4 h-[2rem] w-[15rem] rounded-md px-3 md:relative md:left-0 md:flex justify-center items-center max-md:w-[14rem] ">
               <SearchIcon />
               <input
                 type="text"
