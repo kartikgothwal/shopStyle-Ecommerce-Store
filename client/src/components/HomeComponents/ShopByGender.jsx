@@ -26,7 +26,10 @@ const ShopByGender = () => {
               Mens{" "}
             </h1>
           </div>
-          <div className="h-[25rem] w-full">
+          <div
+            className="h-[25rem] w-full"
+            onClick={() => navigate("/product/Womens Dresses")}
+          >
             {" "}
             <div
               className="hover:opacity-80 cursor-pointer  bg-cover  h-[90%]"
@@ -38,7 +41,7 @@ const ShopByGender = () => {
               Womens{" "}
             </h1>{" "}
           </div>
-          <div className="h-[25rem] w-full ">
+          <div className="h-[25rem] w-full " onClick={() => navigate("/product/Kids Clothes")}>
             {" "}
             <div
               className="hover:opacity-80 cursor-pointer  bg-cover mt-2   h-[90%]"
@@ -58,6 +61,10 @@ const ShopByGender = () => {
           View All Products <ArrowOutwardIcon />
         </button>
       </section>
+      
+
+
+      
     </>
   );
 };

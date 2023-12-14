@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ComponentLoaderAnimation from "./components/ComponentLoaderAnimation";
 import CardShimmerEffect from "./components/CardShimmerEffect";
+import PageNotFound from "./components/PageNotFound";
 const Home = lazy(() => import("./components/HomeComponents/Home"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
@@ -65,6 +66,7 @@ const App = () => {
             }
           />
           <Route path="/random" element={<CardShimmerEffect />} />
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </>
