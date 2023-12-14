@@ -3,12 +3,12 @@ export default function ProductCard({ items }) {
   if (items == undefined) return null;
   console.log(items);
   return (
-    <div className="h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto" >
-      <div className="relative mx-4 -mt-6 h-full overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600 shadow-2xl">
+    <div className="cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">
+      <div className="relative mx-4 -mt-6 h-[10rem] lg:h-[15rem] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-blue-gray-500/40 bg-gradient-to-r  bg-transparent shadow-2xl">
         <img
           src={items.thumbnail}
           alt={items.title}
-          className="object-cover h-full w-full"
+          className="object-contain bg-white h-full w-full"
         />
       </div>
       <div className="px-6">
@@ -23,7 +23,7 @@ export default function ProductCard({ items }) {
         <h5 className="mb-2 block font-sans  font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
           ${items.price}.00
         </h5>
-        <p className="block font-sans text-base  max-sm:text-[13px]font-light leading-relaxed text-inherit antialiased">
+        <p className="block font-sans text-base  max-sm:text-[13px] font-light leading-relaxed text-inherit antialiased">
           {" "}
           <button className="overflow-hidden relative w-32 p-2 h-12 bg-black text-white border-none rounded-md text-[16px] font-normal cursor-pointer flex items-center justify-center  z-10 group max-mobileSize:w-[6rem] max-mobileSize:h-[2.5rem]">
             Add to cart
