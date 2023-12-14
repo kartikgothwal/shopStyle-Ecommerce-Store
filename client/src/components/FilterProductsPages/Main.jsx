@@ -273,7 +273,7 @@ const Main = () => {
               </div>
             </div>
           </div>
-          <div className="my-4 mb-[5rem] h-full w-full">
+          <div className="my-4 mb-[5rem]  w-full">
             <div className=" h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] max-md:grid-cols-[repeat(auto-fit,minmax(150px,280px))] justify-center items-center ">
               {product.length
                 ? product.map((items) => {
