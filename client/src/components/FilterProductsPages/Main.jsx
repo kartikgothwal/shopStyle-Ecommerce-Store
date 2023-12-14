@@ -275,7 +275,7 @@ const Main = () => {
             </div>
           </div>
           <div className=" h-full w-full">
-            <div className="border border-black h-full w-full grid gap-6 grid-cols-[repeat(auto-fit,minmax(150px,500px))] justify-center items-center ">
+            <div className="border border-black h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] justify-center items-center ">
               {product.length
                 ? product.map((items) => {
                     return <ProductCard key={items.id} items={items} />;
