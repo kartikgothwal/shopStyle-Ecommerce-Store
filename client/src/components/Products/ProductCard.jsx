@@ -1,56 +1,45 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
-
 export default function ProductCard({ items }) {
-  if(items ==undefined) return null
+  if (items == undefined) return null;
   return (
-    <Card className="max-sm:w-[18rem] sm:w-[22rem] justify-items-center justify-center h-[30rem] max-h-screen-sm:[27rem] cursor-pointer mx-auto">
-      <CardHeader shadow={false} floated={false} className="h-96">
-        <img
-          //   src={items.thumbnail}
-          src={items ? items.thumbnail : null}
-          className="h-full w-full object-contain"
-        />
-      </CardHeader>
-      <CardBody>
-        <div className="mb-2 flex items-center justify-between">
-          <Typography color="blue-gray" className="font-medium">
-            {items ? items.title : null}
-          </Typography>
-          <Typography color="blue-gray" className="font-medium">
-            $ {items ? `${items.price}.00` : 0.0}
-          </Typography>
+    <section className="shadow-sm bg-gray-900 bg-opacity-25 rounded-lg " style={{ backgroundColor: "#eee" }}>
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <div class="card text-black">
+              <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp"
+                class="card-img-top"
+                alt="Apple Computer"
+              />
+              <div class="card-body">
+                <div class="text-center">
+                  <h5 class="card-title">Believing is seeing</h5>
+                  <p class="text-muted mb-4">Apple pro display XDR</p>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between">
+                    <span>Pro Display XDR</span>
+                    <span>$5,999</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span>Pro stand</span>
+                    <span>$999</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <span>Vesa Mount Adapter</span>
+                    <span>$199</span>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                  <span>Total</span>
+                  <span>$7,197.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-normal opacity-75"
-        >
-          {items ? items.description : null}
-        </Typography>
-      </CardBody>
-      <CardFooter className="pt-0 flex gap-3">
-        <Button
-          ripple={false}
-          fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-        >
-          Buy Now
-        </Button>
-        <Button
-          ripple={false}
-          fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-        >
-          Add to Cart
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </section>
   );
 }
