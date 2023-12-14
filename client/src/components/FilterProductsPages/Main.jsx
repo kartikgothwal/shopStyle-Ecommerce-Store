@@ -35,7 +35,7 @@ const Main = () => {
           </p>
         </div>
         <div className=" grid max-md:grid-rows-[70px,1fr]  gap-x-12  md:grid-cols-[minmax(200px,300px)_minmax(334px,1fr)]">
-          <div className=" h-[36rem] w-full grid md:grid-cols-1 grid-cols-2 gap-8 border">
+          <div className=" min-h-[36rem] max-h-[100vh] w-full grid md:grid-cols-1 grid-cols-2   ">
             <div className="h-[4rem] w-full relative">
               <button
                 className="border-1 transition-colors duration-300 relative opacity-70 h-16 font-normal text-gray-500 bg-gray-300 text-[12px] right-0 flex justify-center items-center hover:text-gray-900 hover:opacity-80 w-full"
@@ -86,7 +86,7 @@ const Main = () => {
                 </div>
               )}
             </div>
-            <div className="  text-[#545252] w-full h-full  flex gap-7 flex-col justify-center items-center">
+            <div className="sticky top-2 border text-[#545252] w-full h-full flex gap-7 flex-col justify-center items-center">
               <div className="flex flex-col gap-4">
                 <p className="text-center ">
                   {product ? (
@@ -98,7 +98,7 @@ const Main = () => {
                 </p>
                 <h1 className="text-center text-sm">Filter by</h1>
               </div>
-              <div className="w-full h-full flex flex-col px-4 py-2 gap-5">
+              <div className="sticky w-full h-full flex flex-col px-4 py-2 gap-5">
                 <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
                   <div
                     className="flex justify-between item-center"
@@ -273,7 +273,7 @@ const Main = () => {
               </div>
             </div>
           </div>
-          <div className="my-4 mb-[5rem]  w-full">
+          <div className="my-4 max-sm:my-[3rem] sm:my-[3rem] mb-[5rem]  w-full md:my-0">
             <div className=" h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] max-md:grid-cols-[repeat(auto-fit,minmax(150px,280px))] justify-center items-center ">
               {product.length
                 ? product.map((items) => {
