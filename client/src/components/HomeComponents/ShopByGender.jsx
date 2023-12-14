@@ -2,8 +2,11 @@ import React from "react";
 import { PaddingGiverHoc } from "../HOC";
 import { styles } from "../../utils/Style";
 import { mens, women, kids } from "../../assets";
+
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import { useNavigate } from "react-router-dom";
 const ShopByGender = () => {
+  const navigate = useNavigate();
   return (
     <>
       <section className="flex h-full w-full flex-col gap-12 justify-between items-center">
@@ -47,7 +50,10 @@ const ShopByGender = () => {
             </h1>
           </div>
         </div>
-        <button className="relative bg-black  px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 ">
+        <button
+          className="relative bg-black  px-8 py-3 rounded-md isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 "
+          onClick={() => navigate("/product/")}
+        >
           View All Products <ArrowOutwardIcon />
         </button>
       </section>
