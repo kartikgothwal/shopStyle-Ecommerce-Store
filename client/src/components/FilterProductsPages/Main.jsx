@@ -47,7 +47,7 @@ const Main = () => {
       });
     }
     window.scrollTo(0, 0);
-  }, [ProductData, CurrentPage]);
+  }, [ProductData, CurrentPage, category]);
 
   const handleCurrentPage = (pageVal) => {
     SetCurrentPage(pageVal);
@@ -336,7 +336,6 @@ const Main = () => {
         </div>
 
         <Pagination
-          
           {...TotalDetails}
           CurrentPage={CurrentPage}
           handleCurrentPage={handleCurrentPage}

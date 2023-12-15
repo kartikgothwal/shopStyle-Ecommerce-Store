@@ -167,15 +167,16 @@ const Navbar = () => {
                   return (
                     <li
                       key={index}
-                      className="transition origin-left hover:border-b hover:border-black pb-4 "
+                      className="transition cursor-pointer origin-left hover:border-b hover:border-black pb-4 "
+                      onClick={() => navigate(`/product/${nav.link}`)}
                     >
-                      <NavLink
+                      <span
                         to={`/product/${nav.link}`}
                         className="whitespace-nowrap"
                       >
                         {" "}
                         {nav.title}
-                      </NavLink>
+                      </span>
                     </li>
                   );
                 })}
