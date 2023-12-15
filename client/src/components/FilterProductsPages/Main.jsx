@@ -11,9 +11,13 @@ import Pagination from "./Pagination";
 import axios from "axios";
 const Main = () => {
   const [CurrentPage, SetCurrentPage] = useState(1);
-  const [totalPages, SetTotalPages] = useState(0);
+  const [TotalDetails, SetTotalDetails] = useState({
+    totalPages: 0,
+    totalDocument: 0,
+  });
   const testArr = new Array(10).fill(undefined);
   const [product, SetProduct] = useState(null);
+  let totalDocument = 0;
   const [toogleAccordian, SetToogleAccordian] = useState({
     Availability: false,
     Price: false,
@@ -37,7 +41,10 @@ const Main = () => {
       );
       console.log(data);
       SetProduct(data.PaginationProducts);
-      SetTotalPages(data.TotalPages);
+      SetTotalDetails({
+        totalPages: data.TotalPages,
+        totalDocument: data.TotalDocument,
+      });
     }
     window.scrollTo(0, 0);
   }, [ProductData, CurrentPage]);
@@ -312,7 +319,13 @@ const Main = () => {
               <div className=" h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] max-md:grid-cols-[repeat(auto-fit,minmax(150px,280px))] justify-center items-center ">
                 {product && product.length
                   ? product.map((items) => {
-                      return <ProductCard key={items.id} items={items} />;
+                      return (
+                        <ProductCard
+                          key={items.id}
+                          items={items}
+                          totalDocument={totalDocument}
+                        />
+                      );
                     })
                   : testArr.map((items, index) => (
                       <ProductPageShimmer key={index} />
@@ -323,7 +336,8 @@ const Main = () => {
         </div>
 
         <Pagination
-          totalPages={totalPages}
+          
+          {...TotalDetails}
           CurrentPage={CurrentPage}
           handleCurrentPage={handleCurrentPage}
         />

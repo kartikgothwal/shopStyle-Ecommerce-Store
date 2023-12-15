@@ -1,6 +1,7 @@
 import React from "react";
-
-const Pagination = ({ totalPages, CurrentPage, handleCurrentPage }) => {
+import { LIMIT_PER_PAGE } from "../../contants";
+const Pagination = ({ totalPages, totalDocument,CurrentPage, handleCurrentPage }) => {
+  console.log(totalDocument)
   return (
     <>
       <div className="my-12 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
@@ -19,14 +20,18 @@ const Pagination = ({ totalPages, CurrentPage, handleCurrentPage }) => {
           </a>
         </div>
         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm text-gray-700">
+          <div className="">
+            <p className="text-sm text-gray-700 flex gap-[3px]">
               Showing
-              <span className="font-medium">1</span>
+              <span className="font-medium">
+                {CurrentPage * LIMIT_PER_PAGE - LIMIT_PER_PAGE + 1}
+              </span>
               to
-              <span className="font-medium">10</span>
+              <span className="font-medium">
+                {CurrentPage * LIMIT_PER_PAGE}
+              </span>
               of
-              <span className="font-medium">97</span>
+              <span className="font-medium">{totalDocument}</span>
               results
             </p>
           </div>
@@ -69,7 +74,7 @@ const Pagination = ({ totalPages, CurrentPage, handleCurrentPage }) => {
                       ? "bg-indigo-600 text-white "
                       : "text-indigo-600 bg-white "
                   }px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-                  onClick={() => handleCurrentPage(CurrentPage + 1)}
+                  onClick={() => handleCurrentPage(index + 1)}
                 >
                   {index + 1}
                 </a>
