@@ -9,6 +9,8 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { useSelector } from "react-redux";
 import { BigCardShimmerEffect } from "../CardShimmerEffect";
+import { useNavigate } from "react-router-dom";
+
 const ProductCategoryCard = ({ items }) => {
   return (
     <div className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col">
@@ -38,6 +40,7 @@ const ProductCategoryCard = ({ items }) => {
   );
 };
 const JustLaunched = () => {
+  const navigate = useNavigate();
   const testArr = new Array(10).fill(undefined);
   const [product, setProduct] = useState([]);
   const ProductData = useSelector((state) => state.product.productdata);
@@ -115,9 +118,9 @@ const JustLaunched = () => {
                 })}
           </div>
         </div>
-        <button className="relative bg-black  px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 mx-auto">
+        {/* <button className="relative bg-black  px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 mx-auto">
           View All Products <ArrowOutwardIcon />
-        </button>
+        </button> */}
       </section>
       <section className="mt-28 h-full w-full flex  flex-col gap-12 justify-between items-center">
         <h1 className={`${styles.subHeading} text-[#545252]`}>Electronics </h1>
@@ -132,7 +135,10 @@ const JustLaunched = () => {
                 Up to 30% off
               </h1>
               <p>Selected Smartphone Brands</p>
-              <button className="border transition-color duration-300 hover:bg-transparent hover:border-white hover:text-white  px-10 py-1 my-4 rounded-[22px] bg-white text-black">
+              <button
+                className="border transition-color duration-300 hover:bg-transparent hover:border-white hover:text-white  px-10 py-1 my-4 rounded-[22px] bg-white text-black"
+                onClick={() => navigate("/product/Smartphone")}
+              >
                 Shop
               </button>
             </div>
@@ -144,16 +150,22 @@ const JustLaunched = () => {
             <div className="text-white absolute top-20 left-20 max-md:left-12">
               <p>Holiday Deals</p>
               <h1 className="max-md:text-[1rem] text-[2rem] font-bold">
-                Up to 30% off
+                Up to 20% off
               </h1>
-              <p>Selected Smartphone Brands</p>
-              <button className="border transition-color duration-300 hover:bg-transparent hover:border-white hover:text-white px-10 py-1 my-4 rounded-[22px] bg-white text-black">
+              <p>Selected Headphones Brands</p>
+              <button
+                className="border transition-color duration-300 hover:bg-transparent hover:border-white hover:text-white px-10 py-1 my-4 rounded-[22px] bg-white text-black"
+                onClick={() => navigate("/product/Headphone")}
+              >
                 Shop
               </button>
             </div>
           </div>
         </div>
-        <button className="relative bg-black  px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4">
+        <button
+          className="relative bg-black  px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4"
+          onClick={() => navigate("/product/Electronic")}
+        >
           View All Products
           <ArrowOutwardIcon className="font-bold" />
         </button>

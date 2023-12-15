@@ -29,11 +29,14 @@ const Pagination = ({
             <p className="text-sm text-gray-700 flex gap-[3px]">
               Showing
               <span className="font-medium">
-                {CurrentPage * LIMIT_PER_PAGE - LIMIT_PER_PAGE + 1}
+                {Math.min(
+                  CurrentPage * LIMIT_PER_PAGE - LIMIT_PER_PAGE + 1,
+                  totalDocument
+                )}
               </span>
               to
               <span className="font-medium">
-                {CurrentPage * LIMIT_PER_PAGE}  
+                {Math.min(CurrentPage * LIMIT_PER_PAGE, totalDocument)}
               </span>
               of
               <span className="font-medium">{totalDocument}</span>

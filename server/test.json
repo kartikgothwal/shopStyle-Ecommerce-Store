@@ -1,50 +1,41 @@
 [
   {
-    "id": 39,
-    "title": "Women winter jacket",
-    "description": "2021 Custom Winter Fall Zebra Knit Crop Top Women Sweaters Wool Mohair Cos Customize Crew Neck Women' S Crop Top Sweater",
-    "price": 600,
+    "id": 43,
+    "title": "frock gold printed Lehenga Choli",
+    "description": "GSelf Design Semi Stitched Lehenga Choli  (Dark Green, Beige)",
+    "price": 1200,
     "availability": true,
-    "discountPercentage": 17.2,
-    "stock": 55,
-    "brand": "Top Sweater",
-    "subCategory": ["Tops", "Jacket", "Clothes", "T Shirts", "Winters"],
-    "category": "T Shirts",
-    "sizes": ["S", "M", "XL"],
-    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/o/t/n/m-no-slc-women-winter-jackets-slc-original-imags224hqgh7frh.jpeg?q=70",
+    "discountPercentage": 10.55,
+    "stock": 150,
+    "brand": "PURVAJA",
+    "subCategory": ["Womens Dresses", "Clothes", "wedding"],
+    "category": "Lehenga",
+    "sizes": ["L", "XL"],
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/r/g/y/free-sleeveless-gulabo-purvaja-original-imagqarntykdgjyz.jpeg?q=70",
     "images": [
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/o/t/n/m-no-slc-women-winter-jackets-slc-original-imags224hqgh7frh.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/c/j/4/-original-imags8vvsssfxegb.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/8/h/y/-original-imags8vvhmx58fpy.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/b/w/x/-original-imags8vvbx522k8p.jpeg?q=70"
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/r/g/y/free-sleeveless-gulabo-purvaja-original-imagqarntykdgjyz.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/i/n/n/free-sleeveless-gulabo-purvaja-original-imagqarnxafetyne.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/o/v/r/free-sleeveless-gulabo-purvaja-original-imagqarnwkfunmsk.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/u/i/d/free-sleeveless-gulabo-purvaja-original-imagqarnw4qezfwd.jpeg?q=70"
     ]
   },
   {
-    "id": 39,
-    "title": "Men Solid Bomber Jacket",
-    "description": "2021 Custom Winter Fall Zebra Men Solid Bomber Jacket",
-    "price": 500,
+    "id": 43,
+    "title": "Sherwani For MEN",
+    "description": "SG LEMAN Sherwani For Men",
+    "price": 1500,
     "availability": true,
-    "discountPercentage": 14.2,
-    "stock": 55,
-    "brand": "Top Sweater",
-    "subCategory": [
-      "Tops",
-      "Mens",
-      "Mens Jacket",
-      "Clothes",
-      "T Shirts",
-      "Winters"
-    ],
-    "category": "Jacket",
-    "sizes": ["S", "M", "XL"],
-    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/n/5/s/l-no-bmwj011000-14-dollar-original-imagtg5eyd7hajtf.jpeg?q=70",
+    "discountPercentage": 11.55,
+    "stock": 150,
+    "brand": "PURVAJA",
+    "subCategory": ["Mens Dresses", "Clothes", "wedding"],
+    "category": "Kurta Pajama Sherwani ",
+    "sizes": ["M", "L", "XL"],
+    "thumbnail": "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61YVGPeiJYL._SX679_.jpg",
     "images": [
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/n/5/s/l-no-bmwj011000-14-dollar-original-imagtg5eyd7hajtf.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/w/i/g/l-no-bmwj011000-14-dollar-original-imagtg5euzc28fgt.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/l/j/p/l-no-bmwj011000-14-dollar-original-imagtg5en8ahxqyt.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/f/t/g/l-no-bmwj011000-14-dollar-original-imagtg5ezxfwbvhq.jpeg?q=70",
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/p/n/v/l-no-bmwj011000-14-dollar-original-imagtg5egkpgegkf.jpeg?q=70"
+      "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Y6iM12+YL._SX679_.jpg",
+      "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Ng58iEe7L._SX679_.jpg",
+      "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71G5yJV3woL._SX679_.jpg"
     ]
   }
 ]

@@ -1939,5 +1939,266 @@
       "https://i.dummyjson.com/data/products/100/3.jpg",
       "https://i.dummyjson.com/data/products/100/thumbnail.jpg"
     ]
+  },
+  {
+    "title": "Women winter jacket",
+    "brand": "Top Sweater",
+    "description": "2021 Custom Winter Fall Zebra Knit Crop Top Women Sweaters Wool Mohair…",
+    "price": 600,
+    "discountPercentage": 17.2,
+    "availability": true,
+    "stock": 55,
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/o/t/n/m-no-slc-women-winter-jackets-slc-original-imags224hqgh7frh.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/o/t/n/m-no-slc-women-winter-jackets-slc-original-imags224hqgh7frh.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/c/j/4/-original-imags8vvsssfxegb.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/8/h/y/-original-imags8vvhmx58fpy.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/b/w/x/-original-imags8vvbx522k8p.jpeg?q=70"
+    ],
+    "category": "T Shirts",
+    "subCategory": ["Tops", "Jacket", "Clothes", "T Shirts", "Winters"],
+    "sizes": ["S", "M", "XL"]
+  },
+  {
+    "title": "Men Solid Bomber Jacket",
+    "brand": "Top Sweater",
+    "description": "2021 Custom Winter Fall Zebra Men Solid Bomber Jacket",
+    "price": 500,
+    "discountPercentage": 14.2,
+    "availability": true,
+    "stock": 55,
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/n/5/s/l-no-bmwj011000-14-dollar-original-imagtg5eyd7hajtf.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/n/5/s/l-no-bmwj011000-14-dollar-original-imagtg5eyd7hajtf.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/w/i/g/l-no-bmwj011000-14-dollar-original-imagtg5euzc28fgt.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/l/j/p/l-no-bmwj011000-14-dollar-original-imagtg5en8ahxqyt.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/f/t/g/l-no-bmwj011000-14-dollar-original-imagtg5ezxfwbvhq.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/p/n/v/l-no-bmwj011000-14-dollar-original-imagtg5egkpgegkf.jpeg?q=70"
+    ],
+
+    "category": "Jacket",
+    "subCategory": [
+      "Tops",
+      "Mens",
+      "Mens Jacket",
+      "Clothes",
+      "T Shirts",
+      "Winters"
+    ],
+    "sizes": ["S", "M", "XL"]
+  },
+  {
+    "title": "Women Self Design Casual Jacket",
+    "brand": "Breil By Fort Collins",
+    "description": "2021 Custom Winter Fall Zebra",
+    "price": 600,
+    "discountPercentage": 17.2,
+    "availability": true,
+    "stock": 55,
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/u/z/m/m-1-no-90170y-breil-by-fort-collins-original-imagvbzaxd63vt78.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/e/0/y/m-1-no-90170y-breil-by-fort-collins-original-imagvbzat3mdmguf.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/e/0/y/m-1-no-90170y-breil-by-fort-collins-original-imagvbzat3mdmguf.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/jacket/h/h/6/m-1-no-90170y-breil-by-fort-collins-original-imagvbza9zmzpuwd.jpeg?q=70"
+    ],
+    "rating": [],
+    "category": "T Shirts",
+    "subCategory": ["Tops", "Jacket", "Clothes", "T Shirts", "Winters"],
+    "sizes": ["S", "M", "XL"],
+    "faq": []
+  },
+  {
+    "title": "Men Striped Padded Jacket",
+    "description": "2021 Custom Winter Fall Zebra Men Solid Bomber Jacket",
+    "price": 500,
+    "availability": true,
+    "discountPercentage": 14.2,
+    "stock": 55,
+    "brand": "Roadster ",
+    "subCategory": [
+      "Tops",
+      "Mens",
+      "Mens Jacket",
+      "Clothes",
+      "T Shirts",
+      "Winters"
+    ],
+    "category": "Jacket",
+    "sizes": ["S", "M", "XL"],
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/kj8wccw0-0/jacket/t/f/p/m-11969476-roadster-original-imafyurzyz4pknwg.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/kj8wccw0-0/jacket/3/p/j/m-11969476-roadster-original-imafyurzrp9dugvd.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/kj8wccw0-0/jacket/w/h/l/m-11969476-roadster-original-imafyurzanhgqnfg.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/kj8wccw0-0/jacket/3/z/z/m-11969476-roadster-original-imafyurzujwzg3gt.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Protective Gloves",
+    "description": "Solid Protective Men & Women Gloves",
+    "price": 100,
+    "availability": true,
+    "discountPercentage": 17.2,
+    "stock": 55,
+    "brand": "TC Reusable",
+    "subCategory": ["Automotive", "Hardware", "gloves"],
+    "category": "Automotive",
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/glove/b/h/s/free-1-1-ins-traders-original-imagvr66qdk9gpgs.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/km82d8w0/gardening-shoulder-glove/o/m/p/gardening-and-planting-gloves-for-men-and-women-with-breathable-original-imagf626cqa3uxq2.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/glove/z/z/r/free-1-1-ins-traders-original-imagvr66n6fr4nky.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/glove/b/h/s/free-1-1-ins-traders-original-imagvr66qdk9gpgs.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Protective Gloves",
+    "description": "Solid Protective Men & Women Gloves",
+    "price": 100,
+    "availability": true,
+    "discountPercentage": 17.2,
+    "stock": 55,
+    "brand": "TC Reusable",
+    "subCategory": ["Automotive", "Hardware", "gloves"],
+    "category": "Automotive",
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/glove/q/6/p/free-thick-black-woolen-gloves-sastasales-original-imagu9urgkgyjzeb.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/glove/v/8/z/free-thick-black-woolen-gloves-sastasales-original-imaghwqkqhv6z4cs.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/shopsy-glove/s/y/a/free-thick-driving-winter-glove-and-knitted-woolen-glove-combo-original-imagkh8tdxxnjkzb.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/glove/0/0/9/free-thick-black-woolen-gloves-sastasales-original-imaghgntyh4qv4tv.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "boAt Airdopes Alpha",
+    "description": "boAt Airdopes Alpha with 35 HRS Playback, 13mm Drivers, Dual Mics ENx & Beast Mode Bluetooth Headset  (Jet Black, In the Ear)",
+    "price": 120,
+    "availability": true,
+    "discountPercentage": 10.96,
+    "stock": 44,
+    "brand": "boAt",
+    "subCategory": ["Headphone", "Electronic"],
+    "category": "Headphone",
+    "thumbnail": "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/t/j/u/-original-imagqre8hcncxaxk.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/t/j/u/-original-imagqre8hcncxaxk.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/u/l/z/-original-imagr5j7tfsrgx5q.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/z/q/z/-original-imagr5j7qnzgggeb.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/c/c/v/-original-imagr5j7hauyvyjh.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/i/a/x/-original-imagqre89m84dgkm.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Worricow Headphone",
+    "description": "Worricow Over the head Wirless Active Noise cancellation ,HD sound Bluetooth Headset  (Black, In the Ear)",
+    "price": 200,
+    "availability": true,
+    "discountPercentage": 5.96,
+    "stock": 47,
+    "brand": "Worricow ",
+    "subCategory": ["Headphone", "Electronic"],
+    "category": "Headphone",
+    "thumbnail": "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/e/s/h/p47-wireless-headphone-black-janrock-original-imaggugwdh8a2kpa.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/a/d/i/47-wireless-portable-gaming-headphone-microphone-stereo-card-original-imafz89ckaudhjwb.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/r/d/7/p47-wireless-active-noise-cancellation-thumping-bass-headphone-original-imagqhnggg47g4fj.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/e/s/h/p47-wireless-headphone-black-janrock-original-imaggugwdh8a2kpa.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Boult Headphone",
+    "description": "Boult Audio Z40 with Zen ENC Mic, 60H Battery Life, Low Latency Gaming, Made In India, 5.3 Bluetooth Headset  (Blue, In the Ear)",
+    "price": 150,
+    "availability": true,
+    "discountPercentage": 11.96,
+    "stock": 10,
+    "brand": "Boult",
+    "subCategory": ["Headphone", "Electronic"],
+    "category": "Headphone",
+    "thumbnail": "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/z/v/y/-original-imagmuggusa94g3u.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/3/z/x/-original-imagtvpyrzszyd8y.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/l/3/g/-original-imagtvqtfcetd3fs.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/c/j/b/-original-imagtvpy9kyext2s.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "sublimation plain kids tank",
+    "description": "Baby Boys Casual T-shirt Pyjama  (Beige)",
+    "price": 482,
+    "availability": true,
+    "discountPercentage": 11.12,
+    "stock": 20,
+    "brand": "Soft Cotton",
+    "subCategory": ["Kids Clothes", "Clothes", "T Shirts"],
+    "category": "T Shirts",
+    "sizes": ["S", "M", "L", "XL"],
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/s/z/6/18-24-months-2122-babygo-original-imaghaygvtctmswp.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/e/y/l/18-24-months-2122-babygo-original-imaghaygyjab9jzx.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/s/z/6/18-24-months-2122-babygo-original-imaghaygvtctmswp.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/s/z/6/18-24-months-2122-babygo-original-imaghaygvtctmswp.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Girls Casual",
+    "description": "Girls Casual Sweatshirt Sweatpant  (Pink)",
+    "price": 482,
+    "availability": true,
+    "discountPercentage": 11.12,
+    "stock": 20,
+    "brand": "NautiNati",
+    "subCategory": ["Kids Clothes", "Clothes", "T Shirts"],
+    "category": "T Shirts",
+    "sizes": ["S", "M", "L", "XL"],
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/e/5/4/7-8-years-nn314-165-nautinati-original-imaguhubzcjghyg8.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/g/w/v/7-8-years-nn314-165-nautinati-original-imaguhubz4zh9ncj.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/c/d/u/7-8-years-nn314-165-nautinati-original-imaguhubqzx5j75f.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/kids-apparel-combo/7/j/e/7-8-years-nn314-165-nautinati-original-imaguhubfeaqjvuk.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "frock gold printed Lehenga Choli",
+    "description": "GSelf Design Semi Stitched Lehenga Choli  (Dark Green, Beige)",
+    "price": 1200,
+    "availability": true,
+    "discountPercentage": 10.55,
+    "stock": 150,
+    "brand": "PURVAJA",
+    "subCategory": ["Womens Dresses", "Clothes", "wedding"],
+    "category": "Lehenga",
+    "sizes": ["L", "XL"],
+    "thumbnail": "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/r/g/y/free-sleeveless-gulabo-purvaja-original-imagqarntykdgjyz.jpeg?q=70",
+    "images": [
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/r/g/y/free-sleeveless-gulabo-purvaja-original-imagqarntykdgjyz.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/i/n/n/free-sleeveless-gulabo-purvaja-original-imagqarnxafetyne.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/o/v/r/free-sleeveless-gulabo-purvaja-original-imagqarnwkfunmsk.jpeg?q=70",
+      "https://rukminim2.flixcart.com/image/832/832/xif0q/lehenga-choli/u/i/d/free-sleeveless-gulabo-purvaja-original-imagqarnw4qezfwd.jpeg?q=70"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "Sherwani For MEN",
+    "description": "SG LEMAN Sherwani For Men",
+    "price": 1500,
+    "availability": true,
+    "discountPercentage": 11.55,
+    "stock": 150,
+    "brand": "PURVAJA",
+    "subCategory": ["Mens Dresses", "Clothes", "wedding"],
+    "category": "Kurta Pajama Sherwani ",
+    "sizes": ["M", "L", "XL"],
+    "thumbnail": "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61YVGPeiJYL._SX679_.jpg",
+    "images": [
+      "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Y6iM12+YL._SX679_.jpg",
+      "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/51Ng58iEe7L._SX679_.jpg",
+      "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71G5yJV3woL._SX679_.jpg"
+    ]
   }
 ]

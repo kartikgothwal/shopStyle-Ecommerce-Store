@@ -9,7 +9,7 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { useSelector } from "react-redux";
 import { BigCardShimmerEffect } from "../CardShimmerEffect";
-
+import { useNavigate } from "react-router-dom";
 const ProductCategoryCard = ({ items }) => {
   return (
     <div className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col">
@@ -53,6 +53,7 @@ const ProductCategoryCard = ({ items }) => {
   );
 };
 const ForWardrobe = () => {
+  const navigate = useNavigate();
   const testArr = new Array(10).fill(undefined);
   const [product, setProduct] = useState([]);
   const ProductData = useSelector((state) => state.product.productdata);
@@ -133,7 +134,10 @@ const ForWardrobe = () => {
               : testArr.map((items) => <BigCardShimmerEffect />)}
           </div>
         </div>
-        <button className="relative bg-black px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 mx-auto">
+        <button
+          className="relative bg-black px-8 py-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 mx-auto"
+          onClick={() => navigate("/product/Clothes")}
+        >
           View All Products <ArrowOutwardIcon />
         </button>
       </section>
