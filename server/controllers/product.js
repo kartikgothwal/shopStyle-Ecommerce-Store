@@ -12,7 +12,7 @@ exports.getProducts = async (req, res) => {
       const PaginationProducts = await ProductModel.find({
         subCategory: { $regex: new RegExp(category, "i") },
       })
-        .skip(page - 1)
+        .skip((page - 1) * LIMIT_PER_PAGE)
         .limit(LIMIT_PER_PAGE);
       const TotalDocument = await ProductModel.find({
         subCategory: { $regex: new RegExp(category, "i") },
