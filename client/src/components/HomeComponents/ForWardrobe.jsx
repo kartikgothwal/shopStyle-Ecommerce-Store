@@ -80,7 +80,7 @@ const ForWardrobe = () => {
     }
   };
   useEffect(() => {
-    if (ProductData.length) {
+    if (ProductData?.length) {
       setProduct(
         ProductData.filter((items) => {
           return (
@@ -92,7 +92,6 @@ const ForWardrobe = () => {
       );
     }
   }, [ProductData]);
-
   return (
     <>
       <section className=" text-[#545252] h-[100%]  md:mt-12 mt-0 ">
@@ -127,7 +126,7 @@ const ForWardrobe = () => {
               ? product.map((items, index) => {
                   return (
                     <>
-                      <ProductCategoryCard key={index} items={items} />
+                      <ProductCategoryCard key={items.id} items={items} />
                     </>
                   );
                 })

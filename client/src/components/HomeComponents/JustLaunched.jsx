@@ -65,14 +65,13 @@ const JustLaunched = () => {
     }
   };
   useEffect(() => {
-    if (ProductData.length) {
+    if (ProductData && ProductData.length) {
       setProduct(
         ProductData.slice(ProductData.length - 10),
         ProductData.length
       );
     }
   }, [ProductData]);
-
   return (
     <>
       <section className=" text-[#545252] h-[100%]  md:mt-12 mt-0 ">

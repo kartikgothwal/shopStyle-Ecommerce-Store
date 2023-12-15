@@ -9,9 +9,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const ProductCategoryCard = ({ items }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <div className="cursor-pointer z-2 max-sm:h-[11rem] h-[13rem] max-w-[200px] min-w-[220px] max-sm:min-w-[180px] rounded-xl p-1 border-2 border-[#54525273] " onClick={()=>navigate(`/product/${items.category}`)}>
+    <div
+      className="cursor-pointer z-2 max-sm:h-[11rem] h-[13rem] max-w-[200px] min-w-[220px] max-sm:min-w-[180px] rounded-xl p-1 border-2 border-[#54525273] "
+      onClick={() => navigate(`/product/${items.category}`)}
+    >
       <aside className="border h-full rounded-xl w-full overflow-hidden">
         <img
           src={items.image}
@@ -57,7 +60,8 @@ const ProductsCategory = () => {
 
   useEffect(() => {
     let val = [];
-    ProductData.map((items) => {
+    // Use nullish coalescing operator to ensure ProductData is an array
+    ProductData?.map((items) => {
       return { category: items.category, image: items.thumbnail };
     }).filter((items) => {
       if (!val.length) {

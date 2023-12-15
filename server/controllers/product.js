@@ -2,7 +2,22 @@ const Products = require("../model/product");
 const ProductModel = Products.ProductModel;
 exports.getProducts = async (req, res) => {
   try {
+    if (req.query.page) {
+      console.log("on it")
+      // console.log(req.query)
+      const { page, LIMIT_PER_PAGE, category } = req.query;
+      const PaginationProducts = await ProductModel.find({
+        subCategory: { $elemMatch: { $eq: category } },
+      })
+        .skip(page - 1)
+        .limit(LIMIT_PER_PAGE);
+        console.log(PaginationProducts)
+      return res
+        .status(200)
+        .json({ message: "pagination Products fetched successfully", PaginationProducts });
+    }
     const AllProducts = await ProductModel.find();
+   
     return res
       .status(200)
       .json({ message: "Products fetched successfully", AllProducts });

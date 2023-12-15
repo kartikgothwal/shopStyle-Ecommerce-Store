@@ -3,13 +3,16 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../HOC";
 import Footer from "../Footer";
+import { LIMIT_PER_PAGE } from "../../contants";
 import { ProductPageShimmer } from "../CardShimmerEffect";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductCard from "../Products/ProductCard";
 import Pagination from "./Pagination";
+import axios from "axios";
 const Main = () => {
+  const [page, SetPage] = useState(1);
   const testArr = new Array(10).fill(undefined);
-  const [product, SetProduct] = useState([]);
+  const [product, SetProduct] = useState(null);
   const [toogleAccordian, SetToogleAccordian] = useState({
     Availability: false,
     Price: false,
@@ -21,14 +24,23 @@ const Main = () => {
   const [sortToggle, SetSortToggle] = useState(false);
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
-
+  const handlePageClick = () => {};
   useEffect(() => {
+    // PaginationCall();
     console.log(category);
     SetProduct(
       ProductData.filter((items) => items.subCategory.includes(category))
     );
+    // async function PaginationCall() {
+    //   const { data } = await axios.get(
+    //     `${process.env.REACT_APP_BACKEND_URL}/product?page=${page}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`
+    //   );
+    //   console.log(data)
+    // SetProduct(data.PaginationProducts);
+    // }
     window.scrollTo(0, 0);
-  }, [ProductData]);
+  }, []);
+  console.log(product);
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -150,11 +162,11 @@ const Main = () => {
                       } transition-all duration-300 flex justify-center gap-3`}
                     >
                       <label
-                        class="h-[1.2rem] w-[4rem] relative block aspect-[2/0.75] cursor-pointer rounded-full  bg-gradient-to-r from-gray-200 to-gray-100 bg-[length:100%_100%] shadow-2xl shadow-purple-300 transition-all duration-500 [&amp;:has(input:checked)]:rotate-180  hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-blue-600"
+                        className="h-[1.2rem] w-[4rem] relative block aspect-[2/0.75] cursor-pointer rounded-full  bg-gradient-to-r from-gray-200 to-gray-100 bg-[length:100%_100%] shadow-2xl shadow-purple-300 transition-all duration-500 [&amp;:has(input:checked)]:rotate-180  hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-blue-600"
                         style={{ background: "blue" }}
                       >
-                        <input type="checkbox" class="peer/input hidden" />
-                        <div class="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
+                        <input type="checkbox" className="peer/input hidden" />
+                        <div className="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
                       </label>{" "}
                       In stock only
                     </div>
@@ -302,12 +314,13 @@ const Main = () => {
 
             <div className="my-4 max-sm:my-[3rem] sm:my-[3rem] mb-[5rem]  w-full md:my-0">
               <div className=" h-full w-full grid gap-12 grid-cols-[repeat(auto-fit,minmax(150px,400px))] max-md:grid-cols-[repeat(auto-fit,minmax(150px,280px))] justify-center items-center ">
-                {product.length
+                {product && product.length
                   ? product.map((items) => {
                       return <ProductCard key={items.id} items={items} />;
                     })
-                  : testArr.map((items) => <ProductPageShimmer />)}
-                <ProductCard />
+                  : testArr.map((items, index) => (
+                      <ProductPageShimmer key={index} />
+                    ))}
               </div>
             </div>
           </div>

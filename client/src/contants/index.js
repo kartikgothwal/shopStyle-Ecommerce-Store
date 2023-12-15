@@ -1,5 +1,5 @@
 import { Adidas, Calvin, Puma, chanel, gucci, nike } from "../assets";
-
+export const LIMIT_PER_PAGE=5
 export const navLinks = [
   {
     id: "Shirts",
