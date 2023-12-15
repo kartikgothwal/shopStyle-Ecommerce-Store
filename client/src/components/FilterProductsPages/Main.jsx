@@ -10,7 +10,8 @@ import ProductCard from "../Products/ProductCard";
 import Pagination from "./Pagination";
 import axios from "axios";
 const Main = () => {
-  const [page, SetPage] = useState(1);
+  const [CurrentPage, SetCurrentPage] = useState(1);
+  const [totalPages, SetTotalPages] = useState(0);
   const testArr = new Array(10).fill(undefined);
   const [product, SetProduct] = useState(null);
   const [toogleAccordian, SetToogleAccordian] = useState({
@@ -26,21 +27,24 @@ const Main = () => {
   const { category } = useParams();
   const handlePageClick = () => {};
   useEffect(() => {
-    // PaginationCall();
-    console.log(category);
+    PaginationCall();
     SetProduct(
       ProductData.filter((items) => items.subCategory.includes(category))
     );
-    // async function PaginationCall() {
-    //   const { data } = await axios.get(
-    //     `${process.env.REACT_APP_BACKEND_URL}/product?page=${page}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`
-    //   );
-    //   console.log(data)
-    // SetProduct(data.PaginationProducts);
-    // }
+    async function PaginationCall() {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/product?page=${CurrentPage}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`
+      );
+      console.log(data);
+      SetProduct(data.PaginationProducts);
+      SetTotalPages(data.TotalPages);
+    }
     window.scrollTo(0, 0);
-  }, []);
-  console.log(product);
+  }, [ProductData, CurrentPage]);
+
+  const handleCurrentPage = (pageVal) => {
+    SetCurrentPage(pageVal);
+  };
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -120,15 +124,7 @@ const Main = () => {
               </div>
               <div className="sticky top-2 border text-[#545252] w-full h-full flex gap-7 flex-col justify-center items-center">
                 <div className="flex flex-col gap-4">
-                  <p className="text-center ">
-                    {product ? (
-                      <span className="font-bold">{product.length} </span>
-                    ) : (
-                      "_"
-                    )}
-                    products
-                  </p>
-                  <h1 className="text-center text-sm">Filter by</h1>
+                  <h1 className="text-center text-sm ny-4">Filter by</h1>
                 </div>
                 <div className="sticky w-full h-full flex flex-col px-4 py-2 gap-5">
                   <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
@@ -326,7 +322,11 @@ const Main = () => {
           </div>
         </div>
 
-        <Pagination />
+        <Pagination
+          totalPages={totalPages}
+          CurrentPage={CurrentPage}
+          handleCurrentPage={handleCurrentPage}
+        />
         <Footer />
       </section>
     </>
