@@ -3,16 +3,22 @@ const ProductModel = Products.ProductModel;
 exports.getProducts = async (req, res) => {
   try {
     if (req.query.page) {
+      console.log(req.query);
       console.log("on it");
       // console.log(req.query)
       const { page, LIMIT_PER_PAGE, category } = req.query;
+      // const PaginationProducts = await ProductModel.find({
+      //   subCategory: { $elemMatch: { $eq: category } },
+      // })
+      //   .skip(page - 1)
+      //   .limit(LIMIT_PER_PAGE);
       const PaginationProducts = await ProductModel.find({
-        subCategory: { $elemMatch: { $eq: category } },
+        subCategory: { $regex: new RegExp(category, "i") },
       })
         .skip(page - 1)
         .limit(LIMIT_PER_PAGE);
       const TotalDocument = await ProductModel.find({
-        subCategory: { $elemMatch: { $eq: category } },
+        subCategory: { $regex: new RegExp(category, "i") },
       }).countDocuments();
       const TotalPages = Math.ceil(TotalDocument / LIMIT_PER_PAGE);
       return res.status(200).json({

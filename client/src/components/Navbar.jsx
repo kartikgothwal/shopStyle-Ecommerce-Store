@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { navLinks } from "../contants";
+import { LIMIT_PER_PAGE, navLinks } from "../contants";
 import { NavLink } from "react-router-dom";
 import { Logo } from "../assets";
 import PersonIcon from "@mui/icons-material/Person";
@@ -13,6 +13,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+
 const Navbar = () => {
   const userData = useSelector((state) => state.user.userData);
   // const [cookieRemoved, setCookieRemoved] = useState(false);
@@ -168,7 +169,10 @@ const Navbar = () => {
                       key={index}
                       className="transition origin-left hover:border-b hover:border-black pb-4 "
                     >
-                      <NavLink to={`/product/${nav.title}`} className="  whitespace-nowrap">
+                      <NavLink
+                        to={`/product/${nav.link}`}
+                        className="whitespace-nowrap"
+                      >
                         {" "}
                         {nav.title}
                       </NavLink>

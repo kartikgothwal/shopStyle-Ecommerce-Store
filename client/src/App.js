@@ -66,6 +66,7 @@ const App = () => {
             }
           />
           <Route path="/random" element={<CardShimmerEffect />} />
+          
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </Router>
