@@ -2,20 +2,17 @@ import { Adidas, Calvin, Puma, chanel, gucci, nike } from "../assets";
 export const LIMIT_PER_PAGE=5
 export const navLinks = [
   {
-    id: "Shirts",
-    title: "Shirts",
+    id: "T Shirts",
+    title: "T Shirts",
+  },
+  
+  {
+    id: "Women ",
+    title: "Womens  ",
   },
   {
-    id: "Jeans",
-    title: "Skills",
-  },
-  {
-    id: "Women's  ",
-    title: "Women's  ",
-  },
-  {
-    id: "Men's  ",
-    title: "Men's  ",
+    id: "Men  ",
+    title: "Mens  ",
   },
   {
     id: "Home & Living",

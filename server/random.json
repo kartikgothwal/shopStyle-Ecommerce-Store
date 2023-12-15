@@ -955,7 +955,7 @@
     "discountPercentage": 2.62,
     "stock": 107,
     "brand": "Maasai Sandals",
-    "subCategory": ["Womens-Shoes", "Shoes"],
+    "subCategory": ["Womens Shoes", "Shoes"],
     "sizes": ["6", "7", "8", "9", "10"],
     "category": "Sandals",
     "thumbnail": "https://i.dummyjson.com/data/products/49/thumbnail.jpg",

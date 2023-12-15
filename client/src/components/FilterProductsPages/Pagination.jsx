@@ -1,7 +1,12 @@
 import React from "react";
 import { LIMIT_PER_PAGE } from "../../contants";
-const Pagination = ({ totalPages, totalDocument,CurrentPage, handleCurrentPage }) => {
-  console.log(totalDocument)
+const Pagination = ({
+  totalPages,
+  totalDocument,
+  CurrentPage,
+  handleCurrentPage,
+}) => {
+  console.log(totalDocument);
   return (
     <>
       <div className="my-12 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
@@ -28,7 +33,7 @@ const Pagination = ({ totalPages, totalDocument,CurrentPage, handleCurrentPage }
               </span>
               to
               <span className="font-medium">
-                {CurrentPage * LIMIT_PER_PAGE}
+                {CurrentPage * LIMIT_PER_PAGE}  
               </span>
               of
               <span className="font-medium">{totalDocument}</span>

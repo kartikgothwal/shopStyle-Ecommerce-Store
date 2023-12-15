@@ -168,7 +168,7 @@ const Navbar = () => {
                       key={index}
                       className="transition origin-left hover:border-b hover:border-black pb-4 "
                     >
-                      <NavLink to={""} className="  whitespace-nowrap">
+                      <NavLink to={`/product/${nav.title}`} className="  whitespace-nowrap">
                         {" "}
                         {nav.title}
                       </NavLink>
