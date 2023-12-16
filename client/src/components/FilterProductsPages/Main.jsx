@@ -449,7 +449,7 @@ const Main = () => {
                                       modifyData.filter.brand.length
                                     ) {
                                       let shorter = modifyData.filter.brand;
-                                      if (shorter.indexOf(brand) != -1) {
+                                      if (shorter.indexOf(brand) == -1) {
                                         SetModifyData((prevData) => {
                                           return {
                                             ...prevData,
@@ -460,17 +460,16 @@ const Main = () => {
                                           };
                                         });
                                       } else {
-                                        shorter =
-                                          modifyData.filter.brand.splice(
-                                            shorter.indexOf(brand),
-                                            1
-                                          );
+                                        shorter.splice(
+                                          shorter.indexOf(brand),
+                                          1
+                                        );
                                         SetModifyData((prevData) => {
                                           return {
                                             ...prevData,
                                             filter: {
                                               ...modifyData.filter,
-                                              brand: [...shorter],
+                                              brand: shorter,
                                             },
                                           };
                                         });
@@ -531,19 +530,75 @@ const Main = () => {
                         } transition-all duration-300`}
                       >
                         <p className="  flex justify-start items-center gap-2">
-                          <input type="radio" name="rating" />{" "}
+                          <input
+                            type="radio"
+                            name="rating"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    price: { $lt: 100 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span>Under $100</span>
                         </p>
                         <p className="flex justify-start items-center gap-2">
-                          <input type="radio" name="rating" />{" "}
+                          <input
+                            type="radio"
+                            name="rating"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    price: { $lt: 200 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span>Under $200</span>
                         </p>
                         <p className="flex justify-start items-center gap-2">
-                          <input type="radio" name="rating" />{" "}
+                          <input
+                            type="radio"
+                            name="rating"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    price: { $lt: 300 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span>Under $300</span>
                         </p>
                         <p className="flex justify-start items-center gap-2">
-                          <input type="radio" name="rating" />{" "}
+                          <input
+                            type="radio"
+                            name="rating"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    price: { $lt: 100 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span>Under $400</span>
                         </p>
                         <div className="flex gap-4 mt-4 flex-col sm:flex-row">
@@ -553,6 +608,7 @@ const Main = () => {
                             min={0}
                             max={1000}
                             placeholder="$min"
+                            
                           />
                           <input
                             type="number"
