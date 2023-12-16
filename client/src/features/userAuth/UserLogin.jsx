@@ -96,7 +96,7 @@ const UserLogin = () => {
               type="submit"
               className="max-md:w-[100%]  h-10 hover:border   transition-color duration-300 hover:bg-transparent px-10 py-[-2] my-4 rounded  bg-black hover:text-black hover:border-black z-20 text-white md:ml[-20px] w-full"
             >
-              Subscribe
+              Sign In
             </button>
           </form>
         </div>

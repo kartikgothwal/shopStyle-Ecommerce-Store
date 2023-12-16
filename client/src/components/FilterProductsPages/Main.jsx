@@ -26,7 +26,10 @@ const Main = () => {
     Price: false,
     Rating: false,
   });
-  const [sortToggle, SetSortToggle] = useState(false);
+  const [Toogle, SetToggle] = useState({
+    sort: false,
+    filter: false,
+  });
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
   const handlePageClick = () => {};
@@ -52,6 +55,17 @@ const Main = () => {
   const handleCurrentPage = (pageVal) => {
     SetCurrentPage(pageVal);
   };
+  const handleToogle = (val) => {
+    if (val == "sort") {
+      SetToggle((prevData) => {
+        return { ...prevData, sort: !Toogle.sort };
+      });
+    } else if (val == "filter") {
+      SetToggle((prevData) => {
+        return { ...prevData, filter: !Toogle.filter };
+      });
+    } else return null;
+  };
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -68,16 +82,17 @@ const Main = () => {
             </p>
           </div>
           <div className=" grid max-md:grid-rows-[70px,1fr]  gap-x-12  md:grid-cols-[minmax(200px,300px)_minmax(334px,1fr)]">
-            <div className=" min-h-[36rem] max-h-[100vh] w-full grid md:grid-cols-1 grid-cols-2   ">
+            {/* <div className=" min-h-[36rem] max-h-[100vh] w-full grid md:grid-cols-1 grid-cols-2   "> */}
+            <div className=" md:gap-4 h-[4rem] w-full flex flex-row md:flex-col gap-4  ">
               <div className="h-[4rem] w-full relative">
                 <button
                   className="border-1 transition-colors duration-300 relative opacity-70 h-16 font-normal text-gray-500 bg-gray-300 text-[12px] right-0 flex justify-center items-center hover:text-gray-900 hover:opacity-80 w-full"
-                  onClick={() => SetSortToggle(!sortToggle)}
+                  onClick={() => handleToogle("sort")}
                 >
                   Sort By{" "}
                   <KeyboardArrowDownIcon
                     className={`${
-                      sortToggle ? "rotate-180" : null
+                      Toogle.sort ? "rotate-180" : null
                     } transition-all duration-300`}
                     style={{
                       transition: "transform",
@@ -86,42 +101,33 @@ const Main = () => {
                     }}
                   />
                 </button>
-                {sortToggle && (
-                  <div className="border border-gray-500 overflow-y-scroll h-[15rem] absolute w-[100%] bg-white py-6 px-6 z-40">
+                {Toogle.sort && (
+                  <div
+                    className="border-2  overflow-y-scroll h-[10rem] absolute w-[100%] bg-white py-6 px-6 z-[41] rounded-xl overflow-hidden"
+                    style={{ overflow: "hidden" }}
+                  >
                     <ul className=" flex flex-col text-[#545252] gap-4">
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => SetSortToggle(!sortToggle)}
-                      >
-                        Featured
-                      </button>
-                      <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => SetSortToggle(!sortToggle)}
-                      >
-                        Best Selling
-                      </button>
-                      <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => SetSortToggle(!sortToggle)}
+                        onClick={() => handleToogle("sort")}
                       >
                         Alphabetically, A-Z
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => SetSortToggle(!sortToggle)}
+                        onClick={() => handleToogle("sort")}
                       >
                         Alphabetically, Z-A
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => SetSortToggle(!sortToggle)}
+                        onClick={() => handleToogle("sort")}
                       >
                         Price, low to high
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => SetSortToggle(!sortToggle)}
+                        onClick={() => handleToogle("sort")}
                       >
                         Price, low to high
                       </button>
@@ -129,189 +135,209 @@ const Main = () => {
                   </div>
                 )}
               </div>
-              <div className="sticky top-2 border text-[#545252] w-full h-full flex gap-7 flex-col justify-center items-center">
-                <div className="flex flex-col gap-4">
-                  <h1 className="text-center text-sm ny-4">Filter by</h1>
+              <div className="  border text-[#545252] w-full h-full flex flex-col justify-center items-center relative">
+                <div
+                  className="  flex-col gap-4 h-[76px] w-full flex justify-center items-center text-gray-500 bg-gray-300 text-[12px]  hover:text-gray-900 hover:opacity-80  opacity-70 cursor-pointer"
+                  onClick={() => handleToogle("filter")}
+                >
+                  <h1 className="text-center ny-4 ">
+                    Filter by{" "}
+                    <KeyboardArrowDownIcon
+                      className={`${
+                        Toogle.filter ? "rotate-180" : null
+                      } transition-all duration-300`}
+                      style={{
+                        transition: "transform",
+                        transitionDuration: "200ms",
+                        transitionTimingFunction: "ease-in",
+                      }}
+                    />
+                  </h1>
                 </div>
-                <div className="sticky w-full h-full flex flex-col px-4 py-2 gap-5">
-                  <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
-                    <div
-                      className="flex justify-between item-center"
-                      onClick={() =>
-                        SetToogleAccordian((prevData) => {
-                          return {
-                            ...prevData,
-                            Availability: !toogleAccordian.Availability,
-                          };
-                        })
-                      }
-                    >
-                      <span>Availability </span>
-                      <KeyboardArrowDownIcon
-                        className={`${
-                          toogleAccordian.Availability ? "rotate-180" : null
-                        } transition-all duration-300`}
-                        style={{
-                          transition: "transform",
-                          transitionDuration: "300ms",
-                          transitionTimingFunction: "ease-in",
-                        }}
-                      />
-                    </div>
 
-                    <div
-                      className={`my-3 h-[0px] overflow-hidden ${
-                        toogleAccordian.Availability ? " h-[3rem]" : null
-                      } transition-all duration-300 flex justify-center gap-3`}
-                    >
-                      <label
-                        className="h-[1.2rem] w-[4rem] relative block aspect-[2/0.75] cursor-pointer rounded-full  bg-gradient-to-r from-gray-200 to-gray-100 bg-[length:100%_100%] shadow-2xl shadow-purple-300 transition-all duration-500 [&amp;:has(input:checked)]:rotate-180  hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-blue-600"
-                        style={{ background: "blue" }}
+                {Toogle.filter ? (
+                  <div className="  w-full   flex flex-col px-4 py-4 gap-5 border-2  bg-white z-40 absolute top-16 rounded-xl overflow-hidden">
+                    <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
+                      <div
+                        className="flex justify-between item-center"
+                        onClick={() =>
+                          SetToogleAccordian((prevData) => {
+                            return {
+                              ...prevData,
+                              Availability: !toogleAccordian.Availability,
+                            };
+                          })
+                        }
                       >
-                        <input type="checkbox" className="peer/input hidden" />
-                        <div className="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
-                      </label>{" "}
-                      In stock only
-                    </div>
-                  </div>
+                        <span>Availability </span>
+                        <KeyboardArrowDownIcon
+                          className={`${
+                            toogleAccordian.Availability ? "rotate-180" : null
+                          } transition-all duration-300`}
+                          style={{
+                            transition: "transform",
+                            transitionDuration: "300ms",
+                            transitionTimingFunction: "ease-in",
+                          }}
+                        />
+                      </div>
 
-                  <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
-                    <div
-                      className="flex justify-between item-center"
-                      onClick={() =>
-                        SetToogleAccordian((prevData) => {
-                          return {
-                            ...prevData,
-                            Discount: !toogleAccordian.Discount,
-                          };
-                        })
-                      }
-                    >
-                      <span>Discount </span>
-                      <KeyboardArrowDownIcon
-                        className={`${
-                          toogleAccordian.Discount ? "rotate-180" : null
+                      <div
+                        className={`my-3 h-[0px] overflow-hidden ${
+                          toogleAccordian.Availability ? " h-[3rem]" : null
+                        } transition-all duration-300 flex justify-center gap-3`}
+                      >
+                        <label
+                          className="h-[1.2rem] w-[4rem] relative block aspect-[2/0.75] cursor-pointer rounded-full  bg-gradient-to-r from-gray-200 to-gray-100 bg-[length:100%_100%] shadow-2xl shadow-purple-300 transition-all duration-500 [&amp;:has(input:checked)]:rotate-180  hover:bg-[length:100%_500%] focus:bg-[length:100%_500%] bg-blue-600"
+                          style={{ background: "blue" }}
+                        >
+                          <input
+                            type="checkbox"
+                            className="peer/input hidden"
+                          />
+                          <div className="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
+                        </label>{" "}
+                        In stock only
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
+                      <div
+                        className="flex justify-between item-center"
+                        onClick={() =>
+                          SetToogleAccordian((prevData) => {
+                            return {
+                              ...prevData,
+                              Discount: !toogleAccordian.Discount,
+                            };
+                          })
+                        }
+                      >
+                        <span>Discount </span>
+                        <KeyboardArrowDownIcon
+                          className={`${
+                            toogleAccordian.Discount ? "rotate-180" : null
+                          } transition-all duration-300`}
+                          style={{
+                            transition: "transform",
+                            transitionDuration: "300ms",
+                            transitionTimingFunction: "ease-in",
+                          }}
+                        />
+                      </div>
+
+                      <div
+                        className={`my-3 h-[0px] overflow-hidden ${
+                          toogleAccordian.Discount ? " h-[100%]" : null
                         } transition-all duration-300`}
-                        style={{
-                          transition: "transform",
-                          transitionDuration: "300ms",
-                          transitionTimingFunction: "ease-in",
-                        }}
-                      />
+                      >
+                        hhekl
+                      </div>
                     </div>
+                    <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
+                      <div
+                        className="flex justify-between item-center"
+                        onClick={() =>
+                          SetToogleAccordian((prevData) => {
+                            return {
+                              ...prevData,
+                              Price: !toogleAccordian.Price,
+                            };
+                          })
+                        }
+                      >
+                        <span>Price </span>
+                        <KeyboardArrowDownIcon
+                          className={`${
+                            toogleAccordian.Price ? "rotate-180" : null
+                          } transition-all duration-300`}
+                          style={{
+                            transition: "transform",
+                            transitionDuration: "300ms",
+                            transitionTimingFunction: "ease-in",
+                          }}
+                        />
+                      </div>
 
-                    <div
-                      className={`my-3 h-[0px] overflow-hidden ${
-                        toogleAccordian.Discount ? " h-[3rem]" : null
-                      } transition-all duration-300`}
-                    >
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Provident veritatis minus libero officiis et?
-                    </div>
-                  </div>
-                  <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
-                    <div
-                      className="flex justify-between item-center"
-                      onClick={() =>
-                        SetToogleAccordian((prevData) => {
-                          return {
-                            ...prevData,
-                            Price: !toogleAccordian.Price,
-                          };
-                        })
-                      }
-                    >
-                      <span>Price </span>
-                      <KeyboardArrowDownIcon
-                        className={`${
-                          toogleAccordian.Price ? "rotate-180" : null
+                      <div
+                        className={`my-3 h-[0px] overflow-hidden ${
+                          toogleAccordian.Price ? " h-[3rem]" : null
                         } transition-all duration-300`}
-                        style={{
-                          transition: "transform",
-                          transitionDuration: "300ms",
-                          transitionTimingFunction: "ease-in",
+                      >
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Provident veritatis minus libero officiis et?
+                      </div>
+                    </div>
+                    <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
+                      <div
+                        className="flex justify-between item-center"
+                        onClick={() => {
+                          SetToogleAccordian((prevData) => {
+                            return {
+                              ...prevData,
+                              Size: !toogleAccordian.Size,
+                            };
+                          });
                         }}
-                      />
-                    </div>
+                      >
+                        <span>Size </span>
+                        <KeyboardArrowDownIcon
+                          className={`${
+                            toogleAccordian.Size ? "rotate-180" : null
+                          } transition-all duration-300`}
+                          style={{
+                            transition: "transform",
+                            transitionDuration: "300ms",
+                            transitionTimingFunction: "ease-in",
+                          }}
+                        />
+                      </div>
 
-                    <div
-                      className={`my-3 h-[0px] overflow-hidden ${
-                        toogleAccordian.Price ? " h-[3rem]" : null
-                      } transition-all duration-300`}
-                    >
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Provident veritatis minus libero officiis et?
-                    </div>
-                  </div>
-                  <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
-                    <div
-                      className="flex justify-between item-center"
-                      onClick={() => {
-                        SetToogleAccordian((prevData) => {
-                          return {
-                            ...prevData,
-                            Size: !toogleAccordian.Size,
-                          };
-                        });
-                      }}
-                    >
-                      <span>Size </span>
-                      <KeyboardArrowDownIcon
-                        className={`${
-                          toogleAccordian.Size ? "rotate-180" : null
+                      <div
+                        className={`my-3 h-[0px] overflow-hidden ${
+                          toogleAccordian.Size ? " h-[3rem]" : null
                         } transition-all duration-300`}
-                        style={{
-                          transition: "transform",
-                          transitionDuration: "300ms",
-                          transitionTimingFunction: "ease-in",
+                      >
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Provident veritatis minus libero officiis et?
+                      </div>
+                    </div>
+                    <div className="flex flex-col text-[12px]   item-center   w-full cursor-pointer font-normal">
+                      <div
+                        className="flex justify-between item-center"
+                        onClick={() => {
+                          SetToogleAccordian((prevData) => {
+                            return {
+                              ...prevData,
+                              Rating: !toogleAccordian.Rating,
+                            };
+                          });
                         }}
-                      />
-                    </div>
+                      >
+                        <span>Rating </span>
+                        <KeyboardArrowDownIcon
+                          className={`${
+                            toogleAccordian.Rating ? "rotate-180" : null
+                          } transition-all duration-300`}
+                          style={{
+                            transition: "transform",
+                            transitionDuration: "300ms",
+                            transitionTimingFunction: "ease-in",
+                          }}
+                        />
+                      </div>
 
-                    <div
-                      className={`my-3 h-[0px] overflow-hidden ${
-                        toogleAccordian.Size ? " h-[3rem]" : null
-                      } transition-all duration-300`}
-                    >
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Provident veritatis minus libero officiis et?
-                    </div>
-                  </div>
-                  <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
-                    <div
-                      className="flex justify-between item-center"
-                      onClick={() => {
-                        SetToogleAccordian((prevData) => {
-                          return {
-                            ...prevData,
-                            Rating: !toogleAccordian.Rating,
-                          };
-                        });
-                      }}
-                    >
-                      <span>Rating </span>
-                      <KeyboardArrowDownIcon
-                        className={`${
-                          toogleAccordian.Rating ? "rotate-180" : null
+                      <div
+                        className={`my-3 h-[0px] overflow-hidden ${
+                          toogleAccordian.Rating ? " h-[3rem]" : null
                         } transition-all duration-300`}
-                        style={{
-                          transition: "transform",
-                          transitionDuration: "300ms",
-                          transitionTimingFunction: "ease-in",
-                        }}
-                      />
-                    </div>
-
-                    <div
-                      className={`my-3 h-[0px] overflow-hidden ${
-                        toogleAccordian.Rating ? " h-[3rem]" : null
-                      } transition-all duration-300`}
-                    >
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Provident veritatis minus libero officiis et?
+                      >
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Provident veritatis minus libero officiis et?
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             </div>
 
