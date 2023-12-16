@@ -9,7 +9,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductCard from "../Products/ProductCard";
 import Pagination from "./Pagination";
 import axios from "axios";
-
+import StarIcon from "@mui/icons-material/Star";
 const Main = () => {
   const [modifyData, SetModifyData] = useState({
     sort: {},
@@ -72,7 +72,7 @@ const Main = () => {
   };
 
   useEffect(() => {
-    console.log(modifyData.sort)
+    console.log(modifyData.sort);
   }, [modifyData]);
 
   return (
@@ -118,7 +118,7 @@ const Main = () => {
                   >
                     <ul className=" flex flex-col text-[#545252] gap-4">
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           handleToogle("sort");
                           SetModifyData((prevData) => {
@@ -132,7 +132,7 @@ const Main = () => {
                         Newest First
                       </button>
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           handleToogle("sort");
                           SetModifyData((prevData) => {
@@ -146,7 +146,7 @@ const Main = () => {
                         Alphabetically, A-Z
                       </button>
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           handleToogle("sort");
                           SetModifyData((prevData) => {
@@ -160,7 +160,7 @@ const Main = () => {
                         Alphabetically, Z-A
                       </button>
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           SetModifyData((prevData) => {
                             return {
@@ -173,7 +173,7 @@ const Main = () => {
                         Price, low to high
                       </button>
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           handleToogle("sort");
                           SetModifyData((prevData) => {
@@ -187,7 +187,7 @@ const Main = () => {
                         Price, high to low
                       </button>
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           handleToogle("sort");
                           SetModifyData((prevData) => {
@@ -201,7 +201,7 @@ const Main = () => {
                         Rating, low to high
                       </button>
                       <button
-                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
                         onClick={() => {
                           handleToogle("sort");
                           SetModifyData((prevData) => {
@@ -315,13 +315,16 @@ const Main = () => {
                         } transition-all duration-300`}
                       >
                         <p className="  flex justify-start items-center gap-1">
-                          <input type="radio" name="discount" /> 4% or more
+                          <input type="radio" name="discount" />{" "}
+                          <span>4% or more</span>
                         </p>
                         <p className="  flex justify-start items-center gap-1">
-                          <input type="radio" name="discount" /> 8% or more
+                          <input type="radio" name="discount" />{" "}
+                          <span>8% or more</span>
                         </p>
                         <p className="  flex justify-start items-center gap-1">
-                          <input type="radio" name="discount" /> 12% or more
+                          <input type="radio" name="discount" />{" "}
+                          <span> 12% or more</span>
                         </p>
                       </div>
                     </div>
@@ -410,8 +413,41 @@ const Main = () => {
                           toogleAccordian.Price ? " h-[100%]" : null
                         } transition-all duration-300`}
                       >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Provident veritatis minus libero officiis et?
+                        <p className="  flex justify-start items-center gap-2">
+                          <input type="radio" name="rating" />{" "}
+                          <span>Under $100</span>
+                        </p>
+                        <p className="flex justify-start items-center gap-2">
+                          <input type="radio" name="rating" />{" "}
+                          <span>Under $200</span>
+                        </p>
+                        <p className="flex justify-start items-center gap-2">
+                          <input type="radio" name="rating" />{" "}
+                          <span>Under $300</span>
+                        </p>
+                        <p className="flex justify-start items-center gap-2">
+                          <input type="radio" name="rating" />{" "}
+                          <span>Under $400</span>
+                        </p>
+                        <div className="flex gap-4 mt-4">
+                          <input
+                            type="number"
+                            className="border-2 w-[70px] rounded px-2 outline-none"
+                            min={0}
+                            max={1000}
+                            placeholder="$min"
+                          />
+                          <input
+                            type="number"
+                            className="border-2 w-[70px] rounded px-2 outline-none"
+                            min={0}
+                            max={1000}
+                            placeholder="$max"
+                          />
+                          <button className="border-2 flex justify-center items-center bg-black text-white w-8 rounded px-2 pt-1">
+                            Go
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -534,8 +570,30 @@ const Main = () => {
                           toogleAccordian.Rating ? " h-[100%]" : null
                         } transition-all duration-300`}
                       >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Provident veritatis minus libero officiis et?
+                        <p className="flex justify-start items-center gap-1">
+                          <input type="radio" name="rating" />{" "}
+                          {new Array(4).fill(undefined).map((items) => (
+                            <StarIcon className="text-orange-400" />
+                          ))}
+                        </p>
+                        <p className="  flex justify-start items-center gap-1">
+                          <input type="radio" name="rating" />{" "}
+                          {new Array(3).fill(undefined).map((items) => (
+                            <StarIcon className="text-orange-400" />
+                          ))}
+                        </p>
+                        <p className="  flex justify-start items-center gap-1">
+                          <input type="radio" name="rating" />{" "}
+                          {new Array(2).fill(undefined).map((items) => (
+                            <StarIcon className="text-orange-400" />
+                          ))}
+                        </p>
+                        <p className="  flex justify-start items-center gap-1">
+                          <input type="radio" name="rating" />{" "}
+                          {new Array(1).fill(undefined).map((items) => (
+                            <StarIcon className="text-orange-400" />
+                          ))}
+                        </p>
                       </div>
                     </div>
                   </div>
