@@ -103,7 +103,7 @@ const Main = () => {
                 </button>
                 {Toogle.sort && (
                   <div
-                    className="border-2  overflow-y-scroll h-[10rem] absolute w-[100%] bg-white py-6 px-6 z-[41] rounded-xl overflow-hidden"
+                    className="border-2  overflow-y-scroll  absolute w-[100%] bg-white py-6 px-6 z-[41] rounded-xl overflow-hidden"
                     style={{ overflow: "hidden" }}
                   >
                     <ul className=" flex flex-col text-[#545252] gap-4">
