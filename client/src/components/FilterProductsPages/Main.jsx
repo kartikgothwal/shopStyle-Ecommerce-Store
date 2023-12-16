@@ -72,7 +72,7 @@ const Main = () => {
   };
 
   useEffect(() => {
-    console.log(modifyData.sort);
+    console.log(modifyData);
   }, [modifyData]);
 
   return (
@@ -125,7 +125,7 @@ const Main = () => {
                             return {
                               ...prevData,
                               sort: {
-                                date: "asc",
+                                createdAt: 1,
                               },
                             };
                           });
@@ -141,7 +141,7 @@ const Main = () => {
                             return {
                               ...prevData,
                               sort: {
-                                date: "desc",
+                                createdAt: -1,
                               },
                             };
                           });
@@ -156,7 +156,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { title: "asc" },
+                              sort: { title: 1 },
                             };
                           });
                         }}
@@ -170,7 +170,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { title: "desc" },
+                              sort: { title: -1 },
                             };
                           });
                         }}
@@ -183,7 +183,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { price: "asc" },
+                              sort: { price: 1 },
                             };
                           });
                         }}
@@ -197,40 +197,12 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { price: "desc" },
+                              sort: { price: -1 },
                             };
                           });
                         }}
                       >
                         Price, high to low
-                      </button>
-                      <button
-                        className="text-[13px] capitalize  font-light hover:text-red-600"
-                        onClick={() => {
-                          handleToogle("sort");
-                          SetModifyData((prevData) => {
-                            return {
-                              ...prevData,
-                              sort: { rating: "desc" },
-                            };
-                          });
-                        }}
-                      >
-                        Rating, low to high
-                      </button>
-                      <button
-                        className="text-[13px] capitalize  font-light hover:text-red-600"
-                        onClick={() => {
-                          handleToogle("sort");
-                          SetModifyData((prevData) => {
-                            return {
-                              ...prevData,
-                              sort: { rating: "desc" },
-                            };
-                          });
-                        }}
-                      >
-                        Rating, high to low
                       </button>
                     </ul>
                   </div>
@@ -295,6 +267,28 @@ const Main = () => {
                           <input
                             type="checkbox"
                             className="peer/input hidden"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                if (modifyData.filter.availability) {
+                                  const { availability, ...restFilter } =
+                                    modifyData.filter; // Remove 'availability' field
+                                  return {
+                                    ...prevData,
+                                    filter: {
+                                      ...restFilter,
+                                    },
+                                  };
+                                } else {
+                                  return {
+                                    ...prevData,
+                                    filter: {
+                                      ...modifyData.filter,
+                                      availability: true,
+                                    },
+                                  };
+                                }
+                              });
+                            }}
                           />
                           <div className="absolute left-[3%] top-1/2 aspect-square h-[90%] -translate-y-1/2 rotate-180 rounded-full bg-white transition-all duration-500 peer-checked/input:left-[63%] peer-checked/input:-rotate-6"></div>
                         </label>{" "}
@@ -333,15 +327,76 @@ const Main = () => {
                         } transition-all duration-300`}
                       >
                         <p className="  flex justify-start items-center gap-1">
-                          <input type="radio" name="discount" />{" "}
+                          <input
+                            type="radio"
+                            name="discount"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                const { discountPercentage, restValues } =
+                                  modifyData.filter;
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...restValues,
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
+                          <span>Any discount</span>
+                        </p>
+                        <p className="  flex justify-start items-center gap-1">
+                          <input
+                            type="radio"
+                            name="discount"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    discountPercentage: { $gte: 4 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span>4% or more</span>
                         </p>
                         <p className="  flex justify-start items-center gap-1">
-                          <input type="radio" name="discount" />{" "}
+                          <input
+                            type="radio"
+                            name="discount"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    discountPercentage: { $gte: 8 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span>8% or more</span>
                         </p>
                         <p className="  flex justify-start items-center gap-1">
-                          <input type="radio" name="discount" />{" "}
+                          <input
+                            type="radio"
+                            name="discount"
+                            onChange={() => {
+                              SetModifyData((prevData) => {
+                                return {
+                                  ...prevData,
+                                  filter: {
+                                    ...modifyData.filter,
+                                    discountPercentage: { $gte: 12 },
+                                  },
+                                };
+                              });
+                            }}
+                          />{" "}
                           <span> 12% or more</span>
                         </p>
                       </div>
@@ -359,7 +414,7 @@ const Main = () => {
                           })
                         }
                       >
-                        <span>Brands </span>
+                        <span>Brands</span>
                         <KeyboardArrowDownIcon
                           className={`${
                             toogleAccordian.Brands ? "rotate-180" : null
@@ -388,6 +443,50 @@ const Main = () => {
                                   type="checkbox"
                                   id="myCheckbox"
                                   class="form-checkbox text-blue-500 h-4 w-4"
+                                  onChange={() => {
+                                    if (
+                                      modifyData.filter.brand &&
+                                      modifyData.filter.brand.length
+                                    ) {
+                                      let shorter = modifyData.filter.brand;
+                                      if (shorter.indexOf(brand) != -1) {
+                                        SetModifyData((prevData) => {
+                                          return {
+                                            ...prevData,
+                                            filter: {
+                                              ...modifyData.filter,
+                                              brand: [...shorter, brand],
+                                            },
+                                          };
+                                        });
+                                      } else {
+                                        shorter =
+                                          modifyData.filter.brand.splice(
+                                            shorter.indexOf(brand),
+                                            1
+                                          );
+                                        SetModifyData((prevData) => {
+                                          return {
+                                            ...prevData,
+                                            filter: {
+                                              ...modifyData.filter,
+                                              brand: [...shorter],
+                                            },
+                                          };
+                                        });
+                                      }
+                                    } else {
+                                      SetModifyData((prevData) => {
+                                        return {
+                                          ...prevData,
+                                          filter: {
+                                            ...modifyData.filter,
+                                            brand: [brand],
+                                          },
+                                        };
+                                      });
+                                    }
+                                  }}
                                 />
                                 <label for="myCheckbox" class="text-gray-700">
                                   {brand}
