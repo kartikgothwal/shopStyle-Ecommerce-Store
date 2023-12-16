@@ -124,12 +124,30 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: "NewestFirst",
+                              sort: {
+                                date: "asc",
+                              },
                             };
                           });
                         }}
                       >
                         Newest First
+                      </button>
+                      <button
+                        className="text-[13px] capitalize  font-light hover:text-red-600"
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: {
+                                date: "desc",
+                              },
+                            };
+                          });
+                        }}
+                      >
+                        Oldest First
                       </button>
                       <button
                         className="text-[13px] capitalize  font-light hover:text-red-600"
@@ -152,7 +170,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { title: "dec" },
+                              sort: { title: "desc" },
                             };
                           });
                         }}
@@ -179,7 +197,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { price: "dec" },
+                              sort: { price: "desc" },
                             };
                           });
                         }}
@@ -193,7 +211,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { rating: "dec" },
+                              sort: { rating: "desc" },
                             };
                           });
                         }}
@@ -207,7 +225,7 @@ const Main = () => {
                           SetModifyData((prevData) => {
                             return {
                               ...prevData,
-                              sort: { rating: "dec" },
+                              sort: { rating: "desc" },
                             };
                           });
                         }}
