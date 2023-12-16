@@ -15,7 +15,7 @@ export const navLinks = [
   {
     id: "Men",
     title: "Mens",
-    link: "Mens",
+    link: "Mens Collection",
   },
   {
     id: "Home & Living",

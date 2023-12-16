@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../HOC";
@@ -9,7 +9,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ProductCard from "../Products/ProductCard";
 import Pagination from "./Pagination";
 import axios from "axios";
+
 const Main = () => {
+  const [currentState, dispatch] = useReducer();
   const [CurrentPage, SetCurrentPage] = useState(1);
   const [TotalDetails, SetTotalDetails] = useState({
     totalPages: 0,
@@ -22,6 +24,7 @@ const Main = () => {
     Availability: false,
     Price: false,
     Discount: false,
+    Brands: false,
     Size: false,
     Price: false,
     Rating: false,
@@ -35,14 +38,14 @@ const Main = () => {
   const handlePageClick = () => {};
   useEffect(() => {
     PaginationCall();
-    SetProduct(
-      ProductData.filter((items) => items.subCategory.includes(category))
-    );
+    // SetProduct(
+    //   ProductData.filter((items) => items.subCategory.includes(category))
+    // );
     async function PaginationCall() {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/product?page=${CurrentPage}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`
       );
-      console.log(data);
+
       SetProduct(data.PaginationProducts);
       SetTotalDetails({
         totalPages: data.TotalPages,
@@ -66,6 +69,11 @@ const Main = () => {
       });
     } else return null;
   };
+  console.log(product);
+
+  const handleActions = () => {
+    console.log("clicked");
+  };
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -82,7 +90,6 @@ const Main = () => {
             </p>
           </div>
           <div className=" grid max-md:grid-rows-[70px,1fr]  gap-x-12  md:grid-cols-[minmax(200px,300px)_minmax(334px,1fr)]">
-            {/* <div className=" min-h-[36rem] max-h-[100vh] w-full grid md:grid-cols-1 grid-cols-2   "> */}
             <div className=" md:gap-4 h-[4rem] w-full flex flex-row md:flex-col gap-4  ">
               <div className="h-[4rem] w-full relative">
                 <button
@@ -107,6 +114,12 @@ const Main = () => {
                     style={{ overflow: "hidden" }}
                   >
                     <ul className=" flex flex-col text-[#545252] gap-4">
+                      <button
+                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        onClick={() => handleToogle("sort")}
+                      >
+                       Newest First
+                      </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
                         onClick={() => handleToogle("sort")}
@@ -184,7 +197,7 @@ const Main = () => {
 
                       <div
                         className={`my-3 h-[0px] overflow-hidden ${
-                          toogleAccordian.Availability ? " h-[3rem]" : null
+                          toogleAccordian.Availability ? " h-[100%]" : null
                         } transition-all duration-300 flex justify-center gap-3`}
                       >
                         <label
@@ -231,9 +244,72 @@ const Main = () => {
                           toogleAccordian.Discount ? " h-[100%]" : null
                         } transition-all duration-300`}
                       >
-                        hhekl
+                        <p className="  flex justify-start items-center gap-1">
+                          <input type="radio" name="discount" /> 4% or more
+                        </p>
+                        <p className="  flex justify-start items-center gap-1">
+                          <input type="radio" name="discount" /> 8% or more
+                        </p>
+                        <p className="  flex justify-start items-center gap-1">
+                          <input type="radio" name="discount" /> 12% or more
+                        </p>
                       </div>
                     </div>
+
+                    <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
+                      <div
+                        className="flex justify-between item-center"
+                        onClick={() =>
+                          SetToogleAccordian((prevData) => {
+                            return {
+                              ...prevData,
+                              Brands: !toogleAccordian.Brands,
+                            };
+                          })
+                        }
+                      >
+                        <span>Brands </span>
+                        <KeyboardArrowDownIcon
+                          className={`${
+                            toogleAccordian.Brands ? "rotate-180" : null
+                          } transition-all duration-300`}
+                          style={{
+                            transition: "transform",
+                            transitionDuration: "300ms",
+                            transitionTimingFunction: "ease-in",
+                          }}
+                        />
+                      </div>
+
+                      <div
+                        className={`my-3 h-[0px] overflow-hidden ${
+                          toogleAccordian.Brands ? " h-[100%]" : null
+                        } transition-all duration-300`}
+                      >
+                        {product && product.length ? (
+                          [...new Set(product.map((items) => items.brand))].map(
+                            (brand) => (
+                              <div
+                                key={brand}
+                                class="flex items-center space-x-2"
+                              >
+                                <input
+                                  type="checkbox"
+                                  id="myCheckbox"
+                                  class="form-checkbox text-blue-500 h-4 w-4"
+                                />
+                                <label for="myCheckbox" class="text-gray-700">
+                                  {brand}
+                                </label>
+                              </div>
+                            )
+                          )
+                        ) : (
+                          <p>No Brands Found</p>
+                        )}
+                      </div>
+                    </div>
+
                     <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
                       <div
                         className="flex justify-between item-center"
@@ -261,47 +337,103 @@ const Main = () => {
 
                       <div
                         className={`my-3 h-[0px] overflow-hidden ${
-                          toogleAccordian.Price ? " h-[3rem]" : null
+                          toogleAccordian.Price ? " h-[100%]" : null
                         } transition-all duration-300`}
                       >
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Provident veritatis minus libero officiis et?
                       </div>
                     </div>
-                    <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
-                      <div
-                        className="flex justify-between item-center"
-                        onClick={() => {
-                          SetToogleAccordian((prevData) => {
-                            return {
-                              ...prevData,
-                              Size: !toogleAccordian.Size,
-                            };
-                          });
-                        }}
-                      >
-                        <span>Size </span>
-                        <KeyboardArrowDownIcon
-                          className={`${
-                            toogleAccordian.Size ? "rotate-180" : null
-                          } transition-all duration-300`}
-                          style={{
-                            transition: "transform",
-                            transitionDuration: "300ms",
-                            transitionTimingFunction: "ease-in",
-                          }}
-                        />
-                      </div>
 
-                      <div
-                        className={`my-3 h-[0px] overflow-hidden ${
-                          toogleAccordian.Size ? " h-[3rem]" : null
-                        } transition-all duration-300`}
-                      >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Provident veritatis minus libero officiis et?
+                    {product &&
+                    product.length &&
+                    product.some(
+                      (item) => item.sizes && item.sizes.length > 0
+                    ) ? (
+                      <div className="flex flex-col text-[12px]  border-b  item-center   w-full cursor-pointer font-normal">
+                        <div
+                          className="flex justify-between item-center"
+                          onClick={() => {
+                            SetToogleAccordian((prevData) => {
+                              return {
+                                ...prevData,
+                                Size: !toogleAccordian.Size,
+                              };
+                            });
+                          }}
+                        >
+                          <span>Size</span>
+                          <KeyboardArrowDownIcon
+                            className={`${
+                              toogleAccordian.Size ? "rotate-180" : null
+                            } transition-all duration-300`}
+                            style={{
+                              transition: "transform",
+                              transitionDuration: "300ms",
+                              transitionTimingFunction: "ease-in",
+                            }}
+                          />
+                        </div>
+
+                        <div
+                          className={`my-3 h-[0px] overflow-hidden ${
+                            toogleAccordian.Size ? " h-[100%]" : null
+                          } transition-all duration-300`}
+                        >
+                          <div class="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              id="myCheckbox"
+                              class="form-checkbox text-blue-500 h-4 w-4"
+                            />
+                            <label for="myCheckbox" class="text-gray-700">
+                              XS
+                            </label>
+                          </div>
+                          <div class="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              id="myCheckbox"
+                              class="form-checkbox text-blue-500 h-4 w-4"
+                            />
+                            <label for="myCheckbox" class="text-gray-700">
+                              S
+                            </label>
+                          </div>
+                          <div class="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              id="myCheckbox"
+                              class="form-checkbox text-blue-500 h-4 w-4"
+                            />
+                            <label for="myCheckbox" class="text-gray-700">
+                              M
+                            </label>
+                          </div>
+                          <div class="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              id="myCheckbox"
+                              class="form-checkbox text-blue-500 h-4 w-4"
+                            />
+                            <label for="myCheckbox" class="text-gray-700">
+                              L
+                            </label>
+                          </div>
+                          <div class="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              id="myCheckbox"
+                              class="form-checkbox text-blue-500 h-4 w-4"
+                            />
+                            <label for="myCheckbox" class="text-gray-700">
+                              XL
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ) : null}
+
                     <div className="flex flex-col text-[12px]   item-center   w-full cursor-pointer font-normal">
                       <div
                         className="flex justify-between item-center"
@@ -329,7 +461,7 @@ const Main = () => {
 
                       <div
                         className={`my-3 h-[0px] overflow-hidden ${
-                          toogleAccordian.Rating ? " h-[3rem]" : null
+                          toogleAccordian.Rating ? " h-[100%]" : null
                         } transition-all duration-300`}
                       >
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
