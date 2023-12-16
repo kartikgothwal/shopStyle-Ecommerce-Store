@@ -8,7 +8,7 @@ export default function ProductCard({ items }) {
         <img
           src={items.thumbnail}
           alt={items.title}
-          className="object-cover bg-white h-full w-full"
+          className="object-contain bg-white h-full w-full"
         />
       </div>
       <div className="px-6">

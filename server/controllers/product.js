@@ -4,11 +4,6 @@ exports.getProducts = async (req, res) => {
   try {
     if (req.query.page) {
       const { page, LIMIT_PER_PAGE, category } = req.query;
-      // const PaginationProducts = await ProductModel.find({
-      //   subCategory: { $elemMatch: { $eq: category } },
-      // })
-      //   .skip(page - 1)
-      //   .limit(LIMIT_PER_PAGE);
       const PaginationProducts = await ProductModel.find({
         subCategory: { $regex: new RegExp(category, "i") },
       })

@@ -11,6 +11,10 @@ import Pagination from "./Pagination";
 import axios from "axios";
 
 const Main = () => {
+  const [modifyData, SetModifyData] = useState({
+    sort: {},
+    filter: {},
+  });
   const [currentState, dispatch] = useReducer();
   const [CurrentPage, SetCurrentPage] = useState(1);
   const [TotalDetails, SetTotalDetails] = useState({
@@ -38,9 +42,6 @@ const Main = () => {
   const handlePageClick = () => {};
   useEffect(() => {
     PaginationCall();
-    // SetProduct(
-    //   ProductData.filter((items) => items.subCategory.includes(category))
-    // );
     async function PaginationCall() {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/product?page=${CurrentPage}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`
@@ -69,11 +70,11 @@ const Main = () => {
       });
     } else return null;
   };
-  console.log(product);
 
-  const handleActions = () => {
-    console.log("clicked");
-  };
+  useEffect(() => {
+    console.log(modifyData.sort)
+  }, [modifyData]);
+
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -94,7 +95,9 @@ const Main = () => {
               <div className="h-[4rem] w-full relative">
                 <button
                   className="border-1 transition-colors duration-300 relative opacity-70 h-16 font-normal text-gray-500 bg-gray-300 text-[12px] right-0 flex justify-center items-center hover:text-gray-900 hover:opacity-80 w-full"
-                  onClick={() => handleToogle("sort")}
+                  onClick={() => {
+                    handleToogle("sort");
+                  }}
                 >
                   Sort By{" "}
                   <KeyboardArrowDownIcon
@@ -116,41 +119,108 @@ const Main = () => {
                     <ul className=" flex flex-col text-[#545252] gap-4">
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => handleToogle("sort")}
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: "NewestFirst",
+                            };
+                          });
+                        }}
                       >
-                       Newest First
+                        Newest First
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => handleToogle("sort")}
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: { title: "asc" },
+                            };
+                          });
+                        }}
                       >
                         Alphabetically, A-Z
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => handleToogle("sort")}
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: { title: "dec" },
+                            };
+                          });
+                        }}
                       >
                         Alphabetically, Z-A
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => handleToogle("sort")}
+                        onClick={() => {
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: { price: "asc" },
+                            };
+                          });
+                        }}
                       >
                         Price, low to high
                       </button>
                       <button
                         className="text-[13px] capitalize hover:text-[#373232] font-light"
-                        onClick={() => handleToogle("sort")}
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: { price: "dec" },
+                            };
+                          });
+                        }}
                       >
-                        Price, low to high
+                        Price, high to low
+                      </button>
+                      <button
+                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: { rating: "dec" },
+                            };
+                          });
+                        }}
+                      >
+                        Rating, low to high
+                      </button>
+                      <button
+                        className="text-[13px] capitalize hover:text-[#373232] font-light"
+                        onClick={() => {
+                          handleToogle("sort");
+                          SetModifyData((prevData) => {
+                            return {
+                              ...prevData,
+                              sort: { rating: "dec" },
+                            };
+                          });
+                        }}
+                      >
+                        Rating, high to low
                       </button>
                     </ul>
                   </div>
                 )}
               </div>
-              <div className="  border text-[#545252] w-full h-full flex flex-col justify-center items-center relative">
+              <div className=" border text-[#545252] w-full h-full flex flex-col justify-center items-center relative">
                 <div
-                  className="  flex-col gap-4 h-[76px] w-full flex justify-center items-center text-gray-500 bg-gray-300 text-[12px]  hover:text-gray-900 hover:opacity-80  opacity-70 cursor-pointer"
+                  className=" flex-col gap-4 h-[76px] w-full flex justify-center items-center text-gray-500 bg-gray-300 text-[12px]  hover:text-gray-900 hover:opacity-80  opacity-70 cursor-pointer"
                   onClick={() => handleToogle("filter")}
                 >
                   <h1 className="text-center ny-4 ">
