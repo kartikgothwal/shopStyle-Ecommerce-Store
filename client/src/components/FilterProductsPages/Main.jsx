@@ -429,7 +429,7 @@ const Main = () => {
                           <input type="radio" name="rating" />{" "}
                           <span>Under $400</span>
                         </p>
-                        <div className="flex gap-4 mt-4">
+                        <div className="flex gap-4 mt-4 flex-col sm:flex-row">
                           <input
                             type="number"
                             className="border-2 w-[70px] rounded px-2 outline-none"
