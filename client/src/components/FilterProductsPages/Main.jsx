@@ -12,16 +12,19 @@ import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Main = ({ setProgress, progress }) => {
+  const [AllBrands, SetAllBrands] = useState([]);
   const [CurrentPage, SetCurrentPage] = useState(1);
   const [TotalDetails, SetTotalDetails] = useState({
     totalPages: 0,
     totalDocument: 0,
   });
+
   const testArr = new Array(10).fill(undefined);
   const [product, SetProduct] = useState(null);
   let totalDocument = 0;
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
+
   const handleCurrentPage = (pageVal) => {
     SetCurrentPage(pageVal);
   };
@@ -90,7 +93,11 @@ const Main = ({ setProgress, progress }) => {
   };
 
   const handleSizeChange = (sizeValue) => {
-    if (modifyData.filter.sizes && modifyData.filter.sizes.length) {
+    if (
+      modifyData.filter &&
+      modifyData.filter.sizes &&
+      modifyData.filter.sizes.length
+    ) {
       const shorter = modifyData.filter.sizes;
       if (shorter.indexOf(sizeValue) == -1) {
         SetModifyData((prevData) => {
@@ -144,6 +151,7 @@ const Main = ({ setProgress, progress }) => {
             totalPages: data.TotalPages,
             totalDocument: data.TotalDocument,
           });
+          SetAllBrands(data.brands);
         } else {
           console.error("Request was not successful:", response);
         }
@@ -158,7 +166,7 @@ const Main = ({ setProgress, progress }) => {
       }
     }
   }, [ProductData, CurrentPage, category, modifyData]);
-
+  console.log("AllBrands", AllBrands);
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -468,7 +476,7 @@ const Main = ({ setProgress, progress }) => {
                           />{" "}
                           <span>8% or more</span>
                         </p>
-                        <p className="  flex justify-start items-center gap-1">
+                        <p className="flex justify-start items-center gap-1">
                           <input
                             type="radio"
                             name="discount"
@@ -519,38 +527,36 @@ const Main = ({ setProgress, progress }) => {
                           toogleAccordian.Brands ? " h-[100%]" : null
                         } transition-all duration-300`}
                       >
-                        {product && product.length ? (
-                          [...new Set(product.map((items) => items.brand))].map(
-                            (brand) => (
-                              <div
-                                key={brand}
-                                class="flex items-center space-x-2"
-                              >
-                                <input
-                                  type="checkbox"
-                                  id="myCheckbox"
-                                  class="form-checkbox text-blue-500 h-4 w-4"
-                                  onChange={() => {
-                                    if (
-                                      modifyData.filter.brand &&
-                                      modifyData.filter.brand.length
-                                    ) {
-                                      let shorter = modifyData.filter.brand;
-                                      if (shorter.indexOf(brand) == -1) {
-                                        SetModifyData((prevData) => {
-                                          return {
-                                            ...prevData,
-                                            filter: {
-                                              ...modifyData.filter,
-                                              brand: [...shorter, brand],
-                                            },
-                                          };
-                                        });
-                                      } else {
-                                        shorter.splice(
-                                          shorter.indexOf(brand),
-                                          1
-                                        );
+                        {AllBrands && AllBrands.length ? (
+                          AllBrands.map((brand) => (
+                            <div
+                              key={brand}
+                              class="flex items-center space-x-2"
+                            >
+                              <input
+                                type="checkbox"
+                                id="myCheckbox"
+                                class="form-checkbox text-blue-500 h-4 w-4"
+                                onChange={() => {
+                                  if (
+                                    modifyData.filter &&
+                                    modifyData.filter.brand &&
+                                    modifyData.filter.brand.length
+                                  ) {
+                                    let shorter = modifyData.filter.brand;
+                                    if (shorter.indexOf(brand) == -1) {
+                                      SetModifyData((prevData) => {
+                                        return {
+                                          ...prevData,
+                                          filter: {
+                                            ...modifyData.filter,
+                                            brand: [...shorter, brand],
+                                          },
+                                        };
+                                      });
+                                    } else {
+                                      shorter.splice(shorter.indexOf(brand), 1);
+                                      if (shorter.length) {
                                         SetModifyData((prevData) => {
                                           return {
                                             ...prevData,
@@ -560,26 +566,37 @@ const Main = ({ setProgress, progress }) => {
                                             },
                                           };
                                         });
+                                      } else {
+                                        const { brand, ...restFilter } =
+                                          modifyData.filter;
+                                        SetModifyData((prevData) => {
+                                          return {
+                                            ...prevData,
+                                            filter: {
+                                              ...restFilter,
+                                            },
+                                          };
+                                        });
                                       }
-                                    } else {
-                                      SetModifyData((prevData) => {
-                                        return {
-                                          ...prevData,
-                                          filter: {
-                                            ...modifyData.filter,
-                                            brand: [brand],
-                                          },
-                                        };
-                                      });
                                     }
-                                  }}
-                                />
-                                <label for="myCheckbox" class="text-gray-700">
-                                  {brand}
-                                </label>
-                              </div>
-                            )
-                          )
+                                  } else {
+                                    SetModifyData((prevData) => {
+                                      return {
+                                        ...prevData,
+                                        filter: {
+                                          ...modifyData.filter,
+                                          brand: [brand],
+                                        },
+                                      };
+                                    });
+                                  }
+                                }}
+                              />
+                              <label for="myCheckbox" class="text-gray-700">
+                                {brand}
+                              </label>
+                            </div>
+                          ))
                         ) : (
                           <p>No Brands Found</p>
                         )}

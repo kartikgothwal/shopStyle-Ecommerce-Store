@@ -14,6 +14,7 @@ exports.getProducts = async (req, res) => {
       let PaginationProducts;
 
       if (filter) {
+        console.log(filter);
         paginationQuery = { ...paginationQuery, ...filter };
       }
 
@@ -22,8 +23,7 @@ exports.getProducts = async (req, res) => {
           .sort(sort)
           .skip((page - 1) * LIMIT_PER_PAGE)
           .limit(LIMIT_PER_PAGE);
-      }
-       else {
+      } else {
         PaginationProducts = await ProductModel.find(paginationQuery)
           .skip((page - 1) * LIMIT_PER_PAGE)
           .limit(LIMIT_PER_PAGE);
@@ -32,7 +32,8 @@ exports.getProducts = async (req, res) => {
       const TotalDocument = await ProductModel.find(
         paginationQuery
       ).countDocuments();
-
+      const brands = await ProductModel.distinct("brand", baseQuery);
+  
       const TotalPages = Math.ceil(TotalDocument / LIMIT_PER_PAGE);
 
       return res.status(200).json({
@@ -40,6 +41,7 @@ exports.getProducts = async (req, res) => {
         PaginationProducts,
         TotalPages,
         TotalDocument,
+        brands
       });
     }
 

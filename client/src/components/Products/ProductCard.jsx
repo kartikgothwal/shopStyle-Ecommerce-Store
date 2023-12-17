@@ -21,9 +21,16 @@ export default function ProductCard({ items }) {
         <h5 className="mb-2 block font-sans capitalize   max-sm:text-[16px] font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
           {items.title}
         </h5>
-        <p className="block font-sans   lowercase text-base max-sm:text-[13px] font-light leading-relaxed text-inherit antialiased">
+        <p className="block font-sans lowercase text-base max-sm:text-[13px] font-light leading-relaxed text-inherit antialiased">
           {items.description}
         </p>
+        {items.sizes && items.sizes.length ? (
+          <h5 className="mb-2 mt-3  font-sans capitalize text-[13px]  max-sm:text-[12px]   leading-snug font-light jus tracking-normal text-blue-gray-900 antialiased flex gap-2"> <span>Sizes :</span>
+            {items.sizes.map((size) => (
+              <span>{size}</span>
+            ))}
+          </h5>
+        ):null}
       </div>
       <div className="px-6 pt-6 flex justify-between items-center ">
         <h5 className="mb-2 block font-sans  font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
