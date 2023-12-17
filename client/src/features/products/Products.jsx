@@ -1,9 +1,14 @@
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useNavigate } from "react-router";
 export default function Product({ items }) {
+  const navigate = useNavigate();
   if (items == undefined) return null;
 
   return (
-    <div className="  cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">
+    <div
+      className="  cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto"
+      onClick={() => navigate("/productoverview", { state: items })}
+    >
       <div className="relative mx-4 -mt-6 h-[10rem] lg:h-[15rem] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-blue-gray-500/40 bg-gradient-to-r  bg-transparent shadow-2xl">
         <img
           src={items.thumbnail}
@@ -25,12 +30,14 @@ export default function Product({ items }) {
           {items.description}
         </p>
         {items.sizes && items.sizes.length ? (
-          <h5 className="mb-2 mt-3  font-sans capitalize text-[13px]  max-sm:text-[12px]   leading-snug font-light jus tracking-normal text-blue-gray-900 antialiased flex gap-2"> <span>Sizes :</span>
+          <h5 className="mb-2 mt-3  font-sans capitalize text-[13px]  max-sm:text-[12px]   leading-snug font-light jus tracking-normal text-blue-gray-900 antialiased flex gap-2">
+            {" "}
+            <span>Sizes :</span>
             {items.sizes.map((size) => (
               <span>{size}</span>
             ))}
           </h5>
-        ):null}
+        ) : null}
       </div>
       <div className="px-6 pt-6 flex justify-between items-center ">
         <h5 className="mb-2 block font-sans  font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

@@ -178,7 +178,7 @@ const Main = ({ setProgress, progress }) => {
       }
     }
   }, [ProductData, CurrentPage, category, modifyData]);
-  console.log("AllBrands", AllBrands);
+  
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">

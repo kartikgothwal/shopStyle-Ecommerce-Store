@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { PaddingGiverHoc } from "../../components/HOC";
+import { useLocation } from "react-router";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -63,7 +64,8 @@ function classNames(...classes) {
   const ProductPage=() =>{
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
-
+  const location=  useLocation()
+  console.log(location)
   return (
     <div className="bg-white">
       <div className="pt-6">

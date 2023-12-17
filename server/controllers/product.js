@@ -8,7 +8,6 @@ exports.getProducts = async (req, res) => {
       let baseQuery = {
         subCategory: { $regex: new RegExp(category, "i") },
       };
-
       let paginationQuery = { ...baseQuery };
       let PaginationProducts;
 
