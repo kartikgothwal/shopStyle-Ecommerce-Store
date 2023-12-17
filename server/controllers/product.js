@@ -3,18 +3,38 @@ const ProductModel = Products.ProductModel;
 exports.getProducts = async (req, res) => {
   try {
     const { sort, filter } = req.body;
-
     if (req.query.page) {
       const { page, LIMIT_PER_PAGE, category } = req.query;
-      const PaginationProducts = await ProductModel.find({
+      let baseQuery = {
         subCategory: { $regex: new RegExp(category, "i") },
-      })
-        .skip((page - 1) * LIMIT_PER_PAGE)
-        .limit(LIMIT_PER_PAGE);
-      const TotalDocument = await ProductModel.find({
-        subCategory: { $regex: new RegExp(category, "i") },
-      }).countDocuments();
+      };
+
+      let paginationQuery = { ...baseQuery };
+
+      let PaginationProducts;
+
+      if (filter) {
+        paginationQuery = { ...paginationQuery, ...filter };
+      }
+
+      if (sort) {
+        PaginationProducts = await ProductModel.find(paginationQuery)
+          .sort(sort)
+          .skip((page - 1) * LIMIT_PER_PAGE)
+          .limit(LIMIT_PER_PAGE);
+      }
+       else {
+        PaginationProducts = await ProductModel.find(paginationQuery)
+          .skip((page - 1) * LIMIT_PER_PAGE)
+          .limit(LIMIT_PER_PAGE);
+      }
+
+      const TotalDocument = await ProductModel.find(
+        paginationQuery
+      ).countDocuments();
+
       const TotalPages = Math.ceil(TotalDocument / LIMIT_PER_PAGE);
+
       return res.status(200).json({
         message: "pagination Products fetched successfully",
         PaginationProducts,

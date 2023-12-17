@@ -11,7 +11,7 @@ import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const Main = () => {
+const Main = ({ setProgress, progress }) => {
   const [CurrentPage, SetCurrentPage] = useState(1);
   const [TotalDetails, SetTotalDetails] = useState({
     totalPages: 0,
@@ -35,7 +35,7 @@ const Main = () => {
     filter: false,
   });
   const [modifyData, SetModifyData] = useState({
-    sort:null,
+    sort: null,
     filter: null,
   });
   const [toogleAccordian, SetToogleAccordian] = useState({
@@ -128,20 +128,35 @@ const Main = () => {
   };
 
   useEffect(() => {
+    setProgress(progress + 10);
     PaginationCall();
     async function PaginationCall() {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/product?page=${CurrentPage}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`,
-        modifyData
-      );
-
-      SetProduct(data.PaginationProducts);
-      SetTotalDetails({
-        totalPages: data.TotalPages,
-        totalDocument: data.TotalDocument,
-      });
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/product?page=${CurrentPage}&LIMIT_PER_PAGE=${LIMIT_PER_PAGE}&category=${category}`,
+          modifyData
+        );
+        setProgress(progress + 20);
+        if (response.status >= 200 && response.status < 300) {
+          const { data } = response;
+          SetProduct(data.PaginationProducts);
+          SetTotalDetails({
+            totalPages: data.TotalPages,
+            totalDocument: data.TotalDocument,
+          });
+        } else {
+          console.error("Request was not successful:", response);
+        }
+        setProgress(progress + 100);
+      } catch (error) {
+        console.error("Error during request:", error);
+        alert("Error found");
+        setProgress(progress + 100);
+      } finally {
+        window.scrollTo(0, 0);
+        setProgress(progress + 100);
+      }
     }
-    window.scrollTo(0, 0);
   }, [ProductData, CurrentPage, category, modifyData]);
 
   return (

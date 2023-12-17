@@ -1,5 +1,6 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import "./App.css";
+import LoadingBar from "react-top-loading-bar";
 import { fetchProductAsync } from "./features/products/productSlice";
 import Cookies from "js-cookie";
 import { AuthUserCheck } from "./features/userAuth/UserAuthSlice";
@@ -12,8 +13,10 @@ import PageNotFound from "./components/PageNotFound";
 const Home = lazy(() => import("./components/HomeComponents/Home"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
-const Main = lazy(()=>import('./components/FilterProductsPages/Main'))
+const Main = lazy(() => import("./components/FilterProductsPages/Main"));
+
 const App = () => {
+  const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
     const getCookie = () => {
@@ -28,9 +31,15 @@ const App = () => {
     getCookie();
     getProducts();
   }, []);
+
   return (
     <>
       <Router>
+        <LoadingBar
+          color="#f11946"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <Navbar />
         <Routes>
           <Route
@@ -61,12 +70,12 @@ const App = () => {
             path="/product/:category"
             element={
               <Suspense fallback={<ComponentLoaderAnimation />}>
-                <Main />
+                <Main setProgress={setProgress} progress={progress} />
               </Suspense>
             }
           />
           <Route path="/random" element={<CardShimmerEffect />} />
-          
+
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </Router>
