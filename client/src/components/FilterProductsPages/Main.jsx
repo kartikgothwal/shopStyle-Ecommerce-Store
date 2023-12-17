@@ -5,7 +5,7 @@ import { PaddingGiverHoc } from "../HOC";
 import Footer from "../Footer";
 import { LIMIT_PER_PAGE } from "../../contants";
 import { ProductPageShimmer } from "../CardShimmerEffect";
-import ProductCard from "../Products/ProductCard";
+import ProductCard from "../../features/products/Products";
 import Pagination from "./Pagination";
 import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
