@@ -353,7 +353,10 @@ const Main = ({ setProgress, progress }) => {
                             className="peer/input hidden"
                             onChange={() => {
                               SetModifyData((prevData) => {
-                                if (modifyData.filter.availability) {
+                                if (
+                                  modifyData.filter &&
+                                  modifyData.filter.availability
+                                ) {
                                   const { availability, ...restFilter } =
                                     modifyData.filter; // Remove 'availability' field
                                   return {
@@ -415,7 +418,6 @@ const Main = ({ setProgress, progress }) => {
                             type="radio"
                             name="discount"
                             onChange={() => {
-                              console.log("ff", modifyData);
                               SetModifyData((prevData) => {
                                 const { discountPercentage, ...restValues } =
                                   modifyData.filter;
