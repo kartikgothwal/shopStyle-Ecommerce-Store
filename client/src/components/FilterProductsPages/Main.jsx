@@ -111,15 +111,27 @@ const Main = ({ setProgress, progress }) => {
         });
       } else {
         shorter.splice(shorter.indexOf(sizeValue), 1);
-        SetModifyData((prevData) => {
-          return {
-            ...prevData,
-            filter: {
-              ...modifyData.filter,
-              sizes: shorter,
-            },
-          };
-        });
+        if (shorter.length) {
+          SetModifyData((prevData) => {
+            return {
+              ...prevData,
+              filter: {
+                ...modifyData.filter,
+                sizes: shorter,
+              },
+            };
+          });
+        } else {
+          const { sizes, ...restFilter } = modifyData.filter;
+          SetModifyData((prevData) => {
+            return {
+              ...prevData,
+              filter: {
+                ...restFilter,
+              },
+            };
+          });
+        }
       }
     } else {
       SetModifyData((prevData) => {
@@ -172,8 +184,8 @@ const Main = ({ setProgress, progress }) => {
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
         <div className=" min-h-screen w-full mt-3 flex flex-col gap-8  ">
           <div className="py-2 px-8 grid grid-rows-2 lg:gap-y-8">
-            <h1 className="text-center text-2xl font-normal text-[#545252]">
-              Buy Statement Readymade Blouses Online
+            <h1 className="text-center text-2xl font-normal capitalize text-[#545252]">
+              Showing results for {category}
             </h1>
             <p className="text-center text-sm font-light">
               Shop online for Suta's stunning designer blouses that feature a

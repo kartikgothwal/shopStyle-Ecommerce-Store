@@ -15,10 +15,11 @@ exports.getProducts = async (req, res) => {
       if (filter) {
         paginationQuery = { ...paginationQuery, ...filter };
       }
-      if (paginationQuery.sizes) {
+      console.log(paginationQuery)
+      if (paginationQuery.sizes && paginationQuery.sizes.length) {
         paginationQuery.sizes = { $in: paginationQuery.sizes };
       }
-      console.log("paginationQuery", paginationQuery);
+
       if (sort) {
         PaginationProducts = await ProductModel.find(paginationQuery)
           .sort(sort)
