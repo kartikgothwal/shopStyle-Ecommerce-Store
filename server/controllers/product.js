@@ -2,6 +2,8 @@ const Products = require("../model/product");
 const ProductModel = Products.ProductModel;
 exports.getProducts = async (req, res) => {
   try {
+    const { sort, filter } = req.body;
+
     if (req.query.page) {
       const { page, LIMIT_PER_PAGE, category } = req.query;
       const PaginationProducts = await ProductModel.find({
@@ -21,7 +23,6 @@ exports.getProducts = async (req, res) => {
       });
     }
     const AllProducts = await ProductModel.find();
-
     return res
       .status(200)
       .json({ message: "Products fetched successfully", AllProducts });
@@ -47,3 +48,4 @@ exports.addProducts = async (req, res) => {
       .json({ message: "Something went wrong", error: error.message });
   }
 };
+
