@@ -6,7 +6,6 @@ const Pagination = ({
   CurrentPage,
   handleCurrentPage,
 }) => {
-  
   return (
     <>
       <div className="my-12 flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">

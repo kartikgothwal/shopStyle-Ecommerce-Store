@@ -58,7 +58,7 @@ const UserRegister = () => {
             className=" gap-4 h-full w-full  flex flex-col  "
           >
             <div className="flex flex-col  gap-1">
-              <label htmlFor="firstname">
+              <label htmlhtmlFor="firstname">
                 First name:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -79,7 +79,7 @@ const UserRegister = () => {
               />
             </div>
             <div className="flex flex-col  gap-1">
-              <label htmlFor="lastname">
+              <label htmlhtmlFor="lastname">
                 Last name:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -100,7 +100,7 @@ const UserRegister = () => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label htmlFor="email">
+              <label htmlhtmlFor="email">
                 Email:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -119,7 +119,7 @@ const UserRegister = () => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label htmlFor="password">
+              <label htmlhtmlFor="password">
                 Password:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>

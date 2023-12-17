@@ -543,12 +543,12 @@ const Main = ({ setProgress, progress }) => {
                           AllBrands.map((brand) => (
                             <div
                               key={brand}
-                              class="flex items-center space-x-2"
+                              className="flex items-center space-x-2"
                             >
                               <input
                                 type="checkbox"
                                 id="myCheckbox"
-                                class="form-checkbox text-blue-500 h-4 w-4"
+                                className="form-checkbox text-blue-500 h-4 w-4"
                                 onChange={() => {
                                   if (
                                     modifyData.filter &&
@@ -604,7 +604,7 @@ const Main = ({ setProgress, progress }) => {
                                   }
                                 }}
                               />
-                              <label for="myCheckbox" class="text-gray-700">
+                              <label htmlFor="myCheckbox" className="text-gray-700">
                                 {brand}
                               </label>
                             </div>
@@ -804,68 +804,68 @@ const Main = ({ setProgress, progress }) => {
                             toogleAccordian.Size ? " h-[100%]" : null
                           } transition-all duration-300`}
                         >
-                          <div class="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2">
                             <input
                               type="checkbox"
                               id="myCheckbox"
-                              class="form-checkbox text-blue-500 h-4 w-4"
+                              className="form-checkbox text-blue-500 h-4 w-4"
                               onChange={() => {
                                 handleSizeChange("XS");
                               }}
                             />
-                            <label for="myCheckbox" class="text-gray-700">
+                            <label htmlFor="myCheckbox" className="text-gray-700">
                               XS
                             </label>
                           </div>
-                          <div class="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2">
                             <input
                               type="checkbox"
                               id="myCheckbox"
-                              class="form-checkbox text-blue-500 h-4 w-4"
+                              className="form-checkbox text-blue-500 h-4 w-4"
                               onChange={() => {
                                 handleSizeChange("S");
                               }}
                             />
-                            <label for="myCheckbox" class="text-gray-700">
+                            <label htmlFor="myCheckbox" className="text-gray-700">
                               S
                             </label>
                           </div>
-                          <div class="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2">
                             <input
                               type="checkbox"
                               id="myCheckbox"
-                              class="form-checkbox text-blue-500 h-4 w-4"
+                              className="form-checkbox text-blue-500 h-4 w-4"
                               onChange={() => {
                                 handleSizeChange("M");
                               }}
                             />
-                            <label for="myCheckbox" class="text-gray-700">
+                            <label htmlFor="myCheckbox" className="text-gray-700">
                               M
                             </label>
                           </div>
-                          <div class="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2">
                             <input
                               type="checkbox"
                               id="myCheckbox"
-                              class="form-checkbox text-blue-500 h-4 w-4"
+                              className="form-checkbox text-blue-500 h-4 w-4"
                               onChange={() => {
                                 handleSizeChange("L");
                               }}
                             />
-                            <label for="myCheckbox" class="text-gray-700">
+                            <label htmlFor="myCheckbox" className="text-gray-700">
                               L
                             </label>
                           </div>
-                          <div class="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2">
                             <input
                               type="checkbox"
                               id="myCheckbox"
-                              class="form-checkbox text-blue-500 h-4 w-4"
+                              className="form-checkbox text-blue-500 h-4 w-4"
                               onChange={() => {
                                 handleSizeChange("XL");
                               }}
                             />
-                            <label for="myCheckbox" class="text-gray-700">
+                            <label htmlFor="myCheckbox" className="text-gray-700">
                               XL
                             </label>
                           </div>

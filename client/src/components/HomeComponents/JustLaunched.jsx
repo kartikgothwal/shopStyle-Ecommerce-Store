@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from "react";
-import { navLinks } from "../../contants";
 import { styles } from "../../utils/Style";
 import { PaddingGiverHoc } from "../HOC";
 import { electronicsOne, electronicsTwo } from "../../assets";
@@ -109,12 +108,12 @@ const JustLaunched = () => {
               ? product.map((items, index) => {
                   return (
                     <>
-                      <ProductCategoryCard key={index} items={items} />
+                      <ProductCategoryCard key={items.id} items={items} />
                     </>
                   );
                 })
-              : testArr.map((items) => {
-                  return <BigCardShimmerEffect />;
+              : testArr.map((items, index) => {
+                  return <BigCardShimmerEffect key={index} />;
                 })}
           </div>
         </div>
