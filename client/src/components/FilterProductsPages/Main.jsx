@@ -22,7 +22,6 @@ const Main = () => {
   let totalDocument = 0;
   const ProductData = useSelector((state) => state.product.productdata);
   const { category } = useParams();
-
   const handleCurrentPage = (pageVal) => {
     SetCurrentPage(pageVal);
   };

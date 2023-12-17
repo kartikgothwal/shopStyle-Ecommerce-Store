@@ -22,6 +22,7 @@ exports.getProducts = async (req, res) => {
         TotalDocument,
       });
     }
+
     const AllProducts = await ProductModel.find();
     return res
       .status(200)
@@ -48,4 +49,3 @@ exports.addProducts = async (req, res) => {
       .json({ message: "Something went wrong", error: error.message });
   }
 };
-
