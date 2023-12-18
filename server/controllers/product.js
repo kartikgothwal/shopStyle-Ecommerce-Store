@@ -14,7 +14,7 @@ exports.getProducts = async (req, res) => {
       if (filter) {
         paginationQuery = { ...paginationQuery, ...filter };
       }
-      console.log(paginationQuery);
+
       if (paginationQuery.sizes && paginationQuery.sizes.length) {
         paginationQuery.sizes = { $in: paginationQuery.sizes };
       }
