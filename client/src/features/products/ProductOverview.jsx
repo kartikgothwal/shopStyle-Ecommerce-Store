@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import PageNotFound from "../../components/PageNotFound";
+import { BigCardShimmerEffect } from "../../components/CardShimmerEffect";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -65,16 +66,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ProductPage = ({setProgress,progress}) => {
+const ProductPage = ({ setProgress, progress }) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [productVal, SetProductVal] = useState({});
   const { productID } = useParams();
-
   const productData = useSelector((state) => state.product.productdata);
   useEffect(() => {
     console.log(productID);
-    setProgress(progress+40)
+    setProgress(progress + 40);
     const value = productData.filter((items) => items._id == productID);
     if (value.length) {
       SetProductVal(value[0]);
@@ -90,14 +90,14 @@ const ProductPage = ({setProgress,progress}) => {
           SetProductVal(null);
         });
     }
-    
-    setProgress(progress+100)
+    setProgress(progress + 100);
+    window.scrollTo(0, 0);
   }, []);
-  console.log("prodcut", productVal);
+  console.log("product", productVal);
   return (
     <>
       {productVal ? (
-        <div className="bg-white mt-4">
+        <div className="bg-white mt-20 max-sm:mt-16">
           <div className="pt-6">
             <nav aria-label="Breadcrumb">
               <ol
@@ -109,74 +109,64 @@ const ProductPage = ({setProgress,progress}) => {
                     <div className="flex items-center">
                       <p
                         href={productVal.category}
-                        className="mr-2 text-sm font-medium text-gray-900"
+                        className="mr-2 sm:text-sm text-[12px] max-mobileSize:text-[8px]  font-medium text-gray-900"
                       >
-                        Product Overview / {productVal.category}
+                        Product Overview / {productVal.category} /{" "}
+                        <span className="text-gray-400">
+                          {productVal.title}
+                        </span>
                       </p>
-                      <svg
-                        width={16}
-                        height={20}
-                        viewBox="0 0 16 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                        className="h-5 w-4 text-gray-300"
-                      >
-                        <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-                      </svg>
                     </div>
                   </li>
                 )}
-                <li className="text-sm">
-                  <p
-                    href={product.href}
-                    aria-current="page"
-                    className="font-medium text-gray-500 hover:text-gray-600"
-                  >
-                    {productVal.title}
-                  </p>
-                </li>
               </ol>
             </nav>
 
-  
-            <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-              <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-                <img
-                  src={product.images[0].src}
-                  alt={product.images[0].alt}
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                  <img
-                    src={product.images[1].src}
-                    alt={product.images[1].alt}
-                    className="h-full w-full object-cover object-center"
-                  />
+            {productVal && productVal.images ? (
+              <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8 lg:h-[20rem]">
+                {productVal.images[0] && (
+                  <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+                    <img
+                      src={productVal.images[0]}
+                      alt={"product-image-1"}
+                      className="h-full w-full object-contain object-center"
+                    />
+                  </div>
+                )}
+                <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+                  {productVal.images[1] && (
+                    <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+                      <img
+                        src={productVal.images[1]}
+                        alt={"product-image-2"}
+                        className="h-full w-full object-contain object-center"
+                      />
+                    </div>
+                  )}
                 </div>
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                  <img
-                    src={product.images[2].src}
-                    alt={product.images[2].alt}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
+                {productVal.images[2] && (
+                  <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+                    <img
+                      src={productVal.images[2]}
+                      alt={"product-image-4"}
+                      className="h-full w-full object-contain object-center"
+                    />
+                  </div>
+                )}
               </div>
-              <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-                <img
-                  src={product.images[3].src}
-                  alt={product.images[3].alt}
-                  className="h-full w-full object-cover object-center"
-                />
+            ) : (
+              <div className="flex gap-4 ">
+                {new Array(3).fill(undefined).map((items, index) => (
+                  <BigCardShimmerEffect key={index} />
+                ))}
               </div>
-            </div>
+            )}
 
             {/* Product info */}
-            <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+            <div className="mx-auto lg:mt-8 max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
               <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                  {product.name}
+                  {productVal.title}
                 </h1>
               </div>
 
@@ -184,7 +174,7 @@ const ProductPage = ({setProgress,progress}) => {
               <div className="mt-4 lg:row-span-3 lg:mt-0">
                 <h2 className="sr-only">Product information</h2>
                 <p className="text-3xl tracking-tight text-gray-900">
-                  {product.price}
+                  ${Number(productVal.price).toFixed(2)}
                 </p>
 
                 {/* Reviews */}
@@ -357,7 +347,7 @@ const ProductPage = ({setProgress,progress}) => {
 
                   <div className="space-y-6">
                     <p className="text-base text-gray-900">
-                      {product.description}
+                      {productVal.description}
                     </p>
                   </div>
                 </div>
@@ -372,11 +362,13 @@ const ProductPage = ({setProgress,progress}) => {
                       role="list"
                       className="list-disc space-y-2 pl-4 text-sm"
                     >
-                      {product.highlights.map((highlight) => (
-                        <li key={highlight} className="text-gray-400">
-                          <span className="text-gray-600">{highlight}</span>
-                        </li>
-                      ))}
+                      {productVal &&
+                        productVal.highlights &&
+                        productVal.highlights.map((highlight) => (
+                          <li key={highlight} className="text-gray-400">
+                            <span className="text-gray-600">{highlight}</span>
+                          </li>
+                        ))}
                     </ul>
                   </div>
                 </div>
@@ -385,7 +377,9 @@ const ProductPage = ({setProgress,progress}) => {
                   <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                   <div className="mt-4 space-y-6">
-                    <p className="text-sm text-gray-600">{product.details}</p>
+                    <p className="text-sm text-gray-600">
+                      {productVal.details}
+                    </p>
                   </div>
                 </div>
               </div>

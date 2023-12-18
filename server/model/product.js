@@ -28,6 +28,8 @@ const productSchema = new Schema(
     ],
     category: { type: String, required: true },
     subCategory: [String],
+    highlights: [String],
+    details: String,
     sizes: [{ type: String, minlength: 1, required: false }],
     faq: [
       {
