@@ -1,4 +1,4 @@
-import { PaddingGiverHoc } from "../HOC";
+import { PaddingGiverHoc } from  "../hoc";
 import { styles } from "../../utils/Style";
 import { weddingOne, weddingTwo } from "../../assets";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";

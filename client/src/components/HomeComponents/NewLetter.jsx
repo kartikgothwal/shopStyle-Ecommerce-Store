@@ -1,6 +1,6 @@
 import React from "react";
 import { styles } from "../../utils/Style";
-import { PaddingGiverHoc } from "../HOC";
+import { PaddingGiverHoc } from  "../hoc";
 const NewLetter = () => {
   return (
     <section className="  py-8 px-[7rem] max-lg:px-[5rem] flex justify-center items-center h-[100%] bg-[#116dff] text-white">

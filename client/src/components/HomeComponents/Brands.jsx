@@ -1,6 +1,6 @@
 import React from "react";
 import { styles } from "../../utils/Style";
-import { PaddingGiverHoc } from "../HOC";
+import { PaddingGiverHoc } from  "../hoc";
 import { CollabBrands } from "../../constants";
 const Brands = () => {
   return (

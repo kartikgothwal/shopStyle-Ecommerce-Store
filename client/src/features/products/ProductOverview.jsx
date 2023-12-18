@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { RadioGroup } from "@headlessui/react";
-import { PaddingGiverHoc } from "../../components/HOC";
+import { PaddingGiverHoc } from "../../components/hoc";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import PageNotFound from "../../layout/PageNotFound";
-import { BigCardShimmerEffect } from "../../layout/CardShimmerEffect";
+import { BigCardShimmerEffect } from  "../../layout";
 import { toast } from "react-toastify";
 
 const product = {

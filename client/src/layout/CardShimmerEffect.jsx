@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardShimmerEffect = () => {
+export const CardShimmerEffect = () => {
   return (
     <div className="rounded-xl p-1 bg-gray-100  flex items-center justify-center ">
       <div className="h-full rounded-xl w-full mx-auto bg-white shadow-lg p-1 animate__animated animate__fadeIn">
@@ -28,4 +28,4 @@ export const ProductPageShimmer = () => {
     </>
   );
 };
-export default CardShimmerEffect;
+ 

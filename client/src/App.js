@@ -12,10 +12,10 @@ import Navbar from "./layout/Navbar";
 import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation";
 import Footer from "./layout/Footer";
 const PageNotFound = lazy(() => import("./layout/PageNotFound"));
-const Home = lazy(() => import("./components/HomeComponents/Home"));
+const Home = lazy(() => import("./components/homecomponents"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
-const Main = lazy(() => import("./components/FilterProductsPages/Main"));
+const Main = lazy(() => import("./components/filterproductspages/Main"));
 const Cart = lazy(() => import("./features/cart/Cart"));
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")

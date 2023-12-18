@@ -1,5 +1,5 @@
 import React from "react";
-import { PaddingGiverHoc } from "../HOC";
+import { PaddingGiverHoc } from  "../hoc";
 import { styles } from "../../utils/Style";
 import { mens, women, kids } from "../../assets";
 

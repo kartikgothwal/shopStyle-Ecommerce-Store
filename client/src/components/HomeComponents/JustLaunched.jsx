@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import { styles } from "../../utils/Style";
-import { PaddingGiverHoc } from "../HOC";
+import { PaddingGiverHoc } from  "../hoc";
 import { electronicsOne, electronicsTwo } from "../../assets";
 import StarIcon from "@mui/icons-material/Star";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { useSelector } from "react-redux";
-import { BigCardShimmerEffect } from "../../layout/CardShimmerEffect";
+import { BigCardShimmerEffect } from  "../../layout";
 import { useNavigate } from "react-router-dom";
 
 const ProductCategoryCard = ({ items }) => {

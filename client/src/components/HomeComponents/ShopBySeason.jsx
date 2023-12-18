@@ -1,4 +1,4 @@
-import { PaddingGiverHoc } from "../HOC";
+import { PaddingGiverHoc } from  "../hoc";
 import { styles } from "../../utils/Style";
 
 import { winterOne, winterThree, winterTwo } from "../../assets";

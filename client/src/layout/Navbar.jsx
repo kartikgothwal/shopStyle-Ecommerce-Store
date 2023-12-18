@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LIMIT_PER_PAGE, navLinks } from "../contants";
+import { LIMIT_PER_PAGE, navLinks } from "../constants";
 import { NavLink } from "react-router-dom";
 import { Logo } from "../assets";
 import { toast } from "react-toastify";
