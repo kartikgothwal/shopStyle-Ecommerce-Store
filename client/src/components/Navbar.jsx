@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LIMIT_PER_PAGE, navLinks } from "../contants";
 import { NavLink } from "react-router-dom";
 import { Logo } from "../assets";
+import { toast } from "react-toastify";
 import PersonIcon from "@mui/icons-material/Person";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
@@ -16,7 +17,6 @@ import Cookies from "js-cookie";
 
 const Navbar = () => {
   const userData = useSelector((state) => state.user.userData);
-  // const [cookieRemoved, setCookieRemoved] = useState(false);
   const navigate = useNavigate();
   const [toggleSidebar, setToogleSidebar] = useState(false);
   const toggleSidebarFunction = () => {
@@ -32,8 +32,10 @@ const Navbar = () => {
   const removeCookie = () => {
     Cookies.remove("refresh-token");
     window.location.reload();
-    alert("Your have been logged out");
-    navigate("/user-login");
+    toast("Your have been logged out");
+    setTimeout(() => {
+      navigate("/user-login");
+    }, 2000);
   };
 
   return (
@@ -143,7 +145,7 @@ const Navbar = () => {
                   style={{ fontSize: "30px", color: "#563131" }}
                 />
               </Tooltip>
-              <Tooltip title="cart">
+              <Tooltip title="cart" onClick={() => navigate("/cart")}>
                 <ShoppingCartCheckoutIcon
                   className="cursor-pointer "
                   size="large"

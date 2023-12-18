@@ -1,5 +1,7 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LoadingBar from "react-top-loading-bar";
 import { fetchProductAsync } from "./features/products/productSlice";
 import Cookies from "js-cookie";
@@ -22,6 +24,7 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
+
     const getCookie = () => {
       const UserRefreshToken = Cookies.get("refresh-token");
       if (UserRefreshToken) {
@@ -44,6 +47,7 @@ const App = () => {
           onLoaderFinished={() => setProgress(0)}
         />
         <Navbar />
+        <ToastContainer />
         <Routes>
           <Route
             path="/"
