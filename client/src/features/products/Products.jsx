@@ -18,9 +18,11 @@ export default function Product({ items }) {
     if (userData && userData._id) {
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
-      console.log(data);
       if (data) {
-        localStorage.setItem("cartArray", JSON.stringify([...data, value]));
+        if (data.find((value) => value.product == items._id)) {
+        } else {
+          localStorage.setItem("cartArray", JSON.stringify([...data, value]));
+        }
       } else {
         localStorage.setItem("cartArray", JSON.stringify([value]));
       }
