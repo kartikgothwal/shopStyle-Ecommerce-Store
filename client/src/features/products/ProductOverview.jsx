@@ -98,7 +98,7 @@ const ProductPage = ({ setProgress, progress }) => {
   return (
     <>
       {productVal ? (
-        <div className="bg-white mt-20 max-sm:mt-16">
+        <div className="bg-white mt-20 max-sm:mt-20">
           <div className="pt-6">
             <nav aria-label="Breadcrumb">
               <ol
