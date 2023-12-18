@@ -14,6 +14,7 @@ const Home = lazy(() => import("./components/HomeComponents/Home"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
 const Main = lazy(() => import("./components/FilterProductsPages/Main"));
+const Cart = lazy(() => import("./features/cart/Cart"));
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")
 );
@@ -84,6 +85,14 @@ const App = () => {
                   setProgress={setProgress}
                   progress={progress}
                 />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <Cart setProgress={setProgress} progress={progress} />
               </Suspense>
             }
           />
