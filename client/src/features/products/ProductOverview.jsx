@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
-
 import { RadioGroup } from "@headlessui/react";
 import { PaddingGiverHoc } from "../../components/HOC";
 import { useParams } from "react-router";
@@ -8,6 +7,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import PageNotFound from "../../components/PageNotFound";
 import { BigCardShimmerEffect } from "../../components/CardShimmerEffect";
+import { toast } from "react-toastify";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -68,6 +68,7 @@ function classNames(...classes) {
 }
 
 const ProductPage = ({ setProgress, progress }) => {
+  const userData = useSelector((state) => state.user.userData);
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [productVal, SetProductVal] = useState({});
@@ -94,7 +95,37 @@ const ProductPage = ({ setProgress, progress }) => {
     setProgress(progress + 100);
     window.scrollTo(0, 0);
   }, []);
-  // console.log("product", productVal);
+  const AddToCartClickHandle = (items) => {
+
+    let value = {
+      product: items._id,
+      quantity: 1,
+      createdAt: new Date(),
+    };
+
+    if (userData && userData._id) {
+    } else {
+      const data = JSON.parse(localStorage.getItem("cartArray"));
+      if (data) {
+        if (data.find((value) => value.product == items._id)) {
+        } else {
+          localStorage.setItem("cartArray", JSON.stringify([...data, value]));
+        }
+      } else {
+        localStorage.setItem("cartArray", JSON.stringify([value]));
+      }
+      toast.success("Added to the cart", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
   return (
     <>
       {productVal ? (
@@ -206,7 +237,7 @@ const ProductPage = ({ setProgress, progress }) => {
                   </div>
                 </div>
 
-                <form className="mt-10">
+                <div className="mt-10">
                   {/* Colors */}
                   {/* <div>
                     <h3 className="text-sm font-medium text-gray-900">Color</h3>
@@ -287,7 +318,7 @@ const ProductPage = ({ setProgress, progress }) => {
                                     "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
                                   )
                                 }
-                                onClick={()=>console.log(size)}
+                                onClick={() => console.log(size)}
                               >
                                 {({ active, checked }) => (
                                   <>
@@ -336,12 +367,12 @@ const ProductPage = ({ setProgress, progress }) => {
                   )}
 
                   <button
-                    type="submit"
                     className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    onClick={() => AddToCartClickHandle(productVal)}
                   >
                     Add to bag
                   </button>
-                </form>
+                </div>
               </div>
 
               <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PaddingGiverHoc } from "../../components/HOC";
-
+import { useSelector } from "react-redux";
 const products = [
   {
     id: 1,
@@ -26,12 +26,12 @@ const products = [
     imageAlt:
       "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
   },
-  // More products...
 ];
 
 const Cart = () => {
   const [open, setOpen] = useState(true);
-
+  const userData = useSelector((state) => state.user.userData);
+  useEffect(() => {});
   return (
     <>
       <section className="mt-[8rem] lg:mx-[10rem]  ">
