@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
+import StarIcon from "@mui/icons-material/Star";
+
 import { RadioGroup } from "@headlessui/react";
 import { PaddingGiverHoc } from "../../components/HOC";
 import { useParams } from "react-router";
