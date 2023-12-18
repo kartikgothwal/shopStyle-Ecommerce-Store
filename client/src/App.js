@@ -76,7 +76,7 @@ const App = () => {
             }
           />
           <Route
-            path="/productoverview"
+            path="/productoverview/:productID"
             element={
               <Suspense fallback={<ComponentLoaderAnimation />}>
                 <ProductOverview

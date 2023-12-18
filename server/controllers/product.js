@@ -14,7 +14,7 @@ exports.getProducts = async (req, res) => {
       if (filter) {
         paginationQuery = { ...paginationQuery, ...filter };
       }
-      console.log(paginationQuery)
+      console.log(paginationQuery);
       if (paginationQuery.sizes && paginationQuery.sizes.length) {
         paginationQuery.sizes = { $in: paginationQuery.sizes };
       }
@@ -66,6 +66,20 @@ exports.addProducts = async (req, res) => {
     return res
       .status(201)
       .json({ message: "Products added successfully", result });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
+  }
+};
+exports.getProductByID = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    const doc = await ProductModel.findById(id);
+    return res.status(200).json({ message: "Products found", doc });
   } catch (error) {
     return res
       .status(500)
