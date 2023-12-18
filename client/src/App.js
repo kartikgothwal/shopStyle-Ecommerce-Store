@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ComponentLoaderAnimation from "./components/ComponentLoaderAnimation";
+import Footer from "./components/Footer";
 const PageNotFound = lazy(() => import("./components/PageNotFound"));
 const Home = lazy(() => import("./components/HomeComponents/Home"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
@@ -95,6 +96,7 @@ const App = () => {
             }
           />
         </Routes>
+        <Footer />
       </Router>
     </>
   );

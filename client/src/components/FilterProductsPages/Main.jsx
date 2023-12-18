@@ -959,7 +959,7 @@ const Main = ({ setProgress, progress }) => {
           CurrentPage={CurrentPage}
           handleCurrentPage={handleCurrentPage}
         />
-        <Footer />
+      
       </section>
     </>
   );
