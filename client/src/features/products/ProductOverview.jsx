@@ -5,8 +5,8 @@ import { PaddingGiverHoc } from "../../components/HOC";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import PageNotFound from "../../components/PageNotFound";
-import { BigCardShimmerEffect } from "../../components/CardShimmerEffect";
+import PageNotFound from "../../layout/PageNotFound";
+import { BigCardShimmerEffect } from "../../layout/CardShimmerEffect";
 import { toast } from "react-toastify";
 
 const product = {
@@ -96,7 +96,6 @@ const ProductPage = ({ setProgress, progress }) => {
     window.scrollTo(0, 0);
   }, []);
   const AddToCartClickHandle = (items) => {
-
     let value = {
       product: items._id,
       quantity: 1,

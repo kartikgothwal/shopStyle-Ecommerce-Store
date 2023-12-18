@@ -8,10 +8,10 @@ import Cookies from "js-cookie";
 import { AuthUserCheck } from "./features/userAuth/UserAuthSlice";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import ComponentLoaderAnimation from "./components/ComponentLoaderAnimation";
-import Footer from "./components/Footer";
-const PageNotFound = lazy(() => import("./components/PageNotFound"));
+import Navbar from "./layout/Navbar";
+import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation";
+import Footer from "./layout/Footer";
+const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/HomeComponents/Home"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
@@ -24,7 +24,6 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
-
     const getCookie = () => {
       const UserRefreshToken = Cookies.get("refresh-token");
       if (UserRefreshToken) {

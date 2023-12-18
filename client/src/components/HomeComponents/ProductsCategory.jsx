@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { navLinks } from "../../contants";
+import { navLinks } from  "../../constants";
 import { styles } from "../../utils/Style";
 import { PaddingGiverHoc } from "../HOC";
-import CardShimmerEffect from "../CardShimmerEffect";
+import CardShimmerEffect from "../../layout/CardShimmerEffect";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { useSelector } from "react-redux";

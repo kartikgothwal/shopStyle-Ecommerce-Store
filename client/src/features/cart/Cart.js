@@ -31,7 +31,13 @@ const products = [
 const Cart = () => {
   const [open, setOpen] = useState(true);
   const userData = useSelector((state) => state.user.userData);
-  useEffect(() => {});
+  useEffect(() => {
+     if(userData && userData._id){
+
+     }else{
+      
+     }
+  });
   return (
     <>
       <section className="mt-[8rem] lg:mx-[10rem]  ">

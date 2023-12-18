@@ -12,7 +12,7 @@ const NewLetter = () => {
         <div className=" my-2 relative      w-full h-full flex items-center justify-center  max-md:flex-col ">
           <div className="  relative gap-2  flex w-[50%] justify-center flex-col items-center max-md:items-center">
             <label
-              htmlhtmlFor="email"
+               htmlFor="email"
               className="max-md:text-xs after:contents:(*)"
             >
               Email

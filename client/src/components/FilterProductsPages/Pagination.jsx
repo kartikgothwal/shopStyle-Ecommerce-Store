@@ -1,5 +1,5 @@
 import React from "react";
-import { LIMIT_PER_PAGE } from "../../contants";
+import { LIMIT_PER_PAGE } from "../../constants";
 const Pagination = ({
   totalPages,
   totalDocument,

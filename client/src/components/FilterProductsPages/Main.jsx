@@ -2,9 +2,9 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../HOC";
-import Footer from "../Footer";
-import { LIMIT_PER_PAGE } from "../../contants";
-import { ProductPageShimmer } from "../CardShimmerEffect";
+ 
+import { LIMIT_PER_PAGE } from "../../constants";
+import { ProductPageShimmer } from "../../layout/CardShimmerEffect";
 import ProductCard from "../../features/products/Products";
 import Pagination from "./Pagination";
 import axios from "axios";
