@@ -11,9 +11,13 @@ import { BigCardShimmerEffect } from "../CardShimmerEffect";
 import { useNavigate } from "react-router-dom";
 
 const ProductCategoryCard = ({ items }) => {
+  const navigate = useNavigate();
   return (
     <div className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col">
-      <aside className="h-full w-full overflow-hidden">
+      <aside
+        className="h-full w-full overflow-hidden"
+        onClick={() => navigate(`productoverview/${items._id}`)}
+      >
         <img
           loading="lazy"
           src={items.images[1]}

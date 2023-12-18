@@ -10,9 +10,11 @@ import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { useSelector } from "react-redux";
 import { BigCardShimmerEffect } from "../CardShimmerEffect";
 import { useNavigate } from "react-router-dom";
+
 const ProductCategoryCard = ({ items }) => {
+  const navigate = useNavigate()
   return (
-    <div className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col">
+    <div className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col" onClick={()=>navigate(`productoverview/${items._id}`)}>
       <aside className="h-full w-full overflow-hidden">
         <img
           src={items.images[0]}
