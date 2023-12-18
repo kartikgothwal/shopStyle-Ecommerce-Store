@@ -1,6 +1,4 @@
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { PaddingGiverHoc } from "../../components/HOC";
 
 const products = [
@@ -37,7 +35,9 @@ const Cart = () => {
   return (
     <>
       <section className="mt-[8rem] lg:mx-[10rem]  ">
-        <h1 className="text-3xl font-bold text-gray-900 font-rubik">Shopping cart</h1>
+        <h1 className="text-3xl font-bold text-gray-900 font-rubik">
+          Shopping cart
+        </h1>
         <div className="mt-8">
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">

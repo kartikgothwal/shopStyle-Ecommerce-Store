@@ -79,7 +79,7 @@ export const userAuth = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(AuthUserLogin.fulfilled, (state, action) => {
-        console.log("fulfilledLogin", action.payload);
+    
         const { data, message } = action.payload;
         const { _doc, RefreshToken } = data;
         setCookie(RefreshToken);

@@ -18,7 +18,6 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {},
-
   extraReducers: (builder) => {
     builder
       .addCase(incrementAsync.pending, (state) => {

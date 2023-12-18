@@ -1,8 +1,41 @@
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+
 export default function Product({ items }) {
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.user.userData);
   if (items == undefined) return null;
+  const AddToCartClickHandle = (items) => {
+    let value = {
+      product: items._id,
+      quantity: 1,
+      createdAt: new Date(),
+    };
+
+    if (userData && userData._id) {
+    } else {
+      const data = JSON.parse(localStorage.getItem("cartArray"));
+      console.log(data);
+      if (data) {
+        localStorage.setItem("cartArray", JSON.stringify([...data, value]));
+      } else {
+        localStorage.setItem("cartArray", JSON.stringify([value]));
+      }
+      toast.success("Added to the cart", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   return (
     <div className="  cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">
@@ -47,7 +80,7 @@ export default function Product({ items }) {
           {" "}
           <button
             className="overflow-hidden relative w-32 p-2 h-12 bg-black text-white border-none rounded-md text-[16px] font-normal cursor-pointer flex items-center justify-center  z-10 group max-mobileSize:w-[6rem] max-mobileSize:h-[2.5rem]"
-            onClick={() => alert("hello world")}
+            onClick={() => AddToCartClickHandle(items)}
           >
             Add to cart
             <span className="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>

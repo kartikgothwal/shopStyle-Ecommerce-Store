@@ -14,7 +14,6 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
-
 const Navbar = () => {
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
@@ -33,9 +32,7 @@ const Navbar = () => {
     Cookies.remove("refresh-token");
     window.location.reload();
     toast("Your have been logged out");
-    setTimeout(() => {
-      navigate("/user-login");
-    }, 2000);
+    navigate("/user-login");
   };
 
   return (
