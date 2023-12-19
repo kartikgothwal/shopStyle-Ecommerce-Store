@@ -45,6 +45,7 @@ const Cart = ({ setProgress, progress }) => {
   }, [productData, userData]);
 
   useEffect(() => {
+    
     const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
     if (cart && cart.length) {
       let doc;

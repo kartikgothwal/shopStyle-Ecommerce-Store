@@ -106,18 +106,6 @@ const ProductPage = ({ setProgress, progress }) => {
     };
 
     if (userData && userData._id) {
-      const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
-      if (localStorageData && localStorageData.length) {
-        const itemdoc = localStorageData.map((itemVal) => {
-          const newItem = {
-            user: userData._id,
-            ...itemVal,
-          };
-          return newItem;
-        });
-        dispatch(addCartItemAsync(itemdoc));
-        localStorage.clear();
-      }
       const newItem = {
         user: userData._id,
         product: items._id,

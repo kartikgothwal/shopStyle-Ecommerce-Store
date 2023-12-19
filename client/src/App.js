@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./layout/Navbar";
 import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation";
 import Footer from "./layout/Footer";
+import { addCartItemAsync } from "./features/cart/cartSlice.js";
 const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/homecomponents/index"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
