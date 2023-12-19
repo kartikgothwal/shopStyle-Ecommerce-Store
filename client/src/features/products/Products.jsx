@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-export default function Product({ items }) {
+export default function Product({ items, setProgress, progress }) {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
   if (items == undefined) return null;
   const AddToCartClickHandle = (items) => {
+    setProgress(progress + 10);
     let value = {
       product: items._id,
       quantity: 1,
@@ -15,8 +16,10 @@ export default function Product({ items }) {
     };
 
     if (userData && userData._id) {
+      setProgress(progress + 20);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
+      setProgress(progress + 30);
       if (data) {
         if (data.find((value) => value.product == items._id)) {
         } else {
@@ -36,6 +39,7 @@ export default function Product({ items }) {
         theme: "colored",
       });
     }
+    setProgress(progress + 100);
   };
 
   return (

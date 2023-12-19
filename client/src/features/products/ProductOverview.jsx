@@ -96,6 +96,7 @@ const ProductPage = ({ setProgress, progress }) => {
     window.scrollTo(0, 0);
   }, []);
   const AddToCartClickHandle = (items) => {
+    setProgress(progress + 10);
     let value = {
       product: items._id,
       quantity: 1,
@@ -113,6 +114,7 @@ const ProductPage = ({ setProgress, progress }) => {
       } else {
         localStorage.setItem("cartArray", JSON.stringify([value]));
       }
+      setProgress(progress + 30);
       toast.success("Added to the cart", {
         position: "top-right",
         autoClose: 5000,
@@ -124,6 +126,7 @@ const ProductPage = ({ setProgress, progress }) => {
         theme: "colored",
       });
     }
+    setProgress(progress + 100);
   };
   return (
     <>

@@ -940,6 +940,8 @@ const Main = ({ setProgress, progress }) => {
                   ? product.map((items) => {
                       return (
                         <ProductCard
+                        setProgress={setProgress}
+                        progress={progress}
                           key={items.id}
                           items={items}
                           totalDocument={totalDocument}
