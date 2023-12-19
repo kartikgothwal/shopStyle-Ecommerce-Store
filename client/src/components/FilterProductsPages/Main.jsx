@@ -1,4 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
+import axios from "axios";
+import StarIcon from "@mui/icons-material/Star";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../hoc";
@@ -6,9 +9,6 @@ import { LIMIT_PER_PAGE } from "../../constants";
 import { ProductPageShimmer } from "../../layout";
 import ProductCard from "../../features/products/Products";
 import Pagination from "./Pagination";
-import axios from "axios";
-import StarIcon from "@mui/icons-material/Star";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Main = ({ setProgress, progress }) => {
   const [AllBrands, SetAllBrands] = useState([]);
