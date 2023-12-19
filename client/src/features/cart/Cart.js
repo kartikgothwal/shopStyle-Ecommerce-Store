@@ -3,7 +3,6 @@ import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
@@ -11,7 +10,9 @@ const Cart = ({ setProgress, progress }) => {
   const productData = useSelector((state) => state.product.productdata);
   const userData = useSelector((state) => state.user.userData);
   useEffect(() => {
+    setProgress(progress + 10);
     if (userData && userData._id) {
+      setProgress(progress + 30);
     } else {
       const cartVal = JSON.parse(localStorage.getItem("cartArray"));
       if (cartVal && cartVal.length && productData.length) {
@@ -22,15 +23,19 @@ const Cart = ({ setProgress, progress }) => {
             });
           })
         );
+        setProgress(progress + 30);
       } else {
         setCart(null);
       }
     }
     window.scrollTo(0, 0);
+    setProgress(progress + 100);
   }, [productData, userData]);
 
   const RemoveCartHandle = (item) => {
+    setProgress(progress + 10);
     try {
+      setProgress(progress + 30);
       if (userData && userData._id) {
       } else {
         const remainingItems = cart.filter((values) => {
@@ -60,7 +65,9 @@ const Cart = ({ setProgress, progress }) => {
         progress: undefined,
         theme: "colored",
       });
+      setProgress(progress + 30);
     } catch (error) {
+      setProgress(progress + 100);
       toast.error("Removing failed", {
         position: "top-right",
         autoClose: 5000,
@@ -88,22 +95,31 @@ const Cart = ({ setProgress, progress }) => {
                 {cart.map((cartval) => (
                   <li key={cartval._id} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 cursor-pointer">
-                      <a href={`productoverview/${cartval._id}`}>
+                      <div
+                        onClick={() =>
+                          navigate(`/productoverview/${cartval._id}`)
+                        }
+                      >
                         <img
                           src={cartval.thumbnail}
                           alt={cartval.title}
                           className="h-full w-full object-cover object-center"
                         />
-                      </a>
+                      </div>
                     </div>
 
                     <div className="ml-4 flex flex-1 flex-col">
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={`productoverview/${cartval._id}`}>
+                            <p
+                              className="cursor-pointer"
+                              onClick={() =>
+                                navigate(`/productoverview/${cartval._id}`)
+                              }
+                            >
                               {cartval.title}
-                            </a>
+                            </p>
                           </h3>
                           <p className="ml-4">
                             ${Number(cartval.price).toFixed(2)}
@@ -134,8 +150,15 @@ const Cart = ({ setProgress, progress }) => {
           </div>
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
             <div className="flex justify-between text-base font-medium text-gray-900">
-              <p>Subtotal</p>
-              <p>$262.00</p>
+              <p>Grand Total</p>
+              <p>
+                $
+                {cart
+                  .reduce((acc, currEle) => {
+                    return acc + currEle.price;
+                  }, 0)
+                  .toFixed(2)}
+              </p>
             </div>
             <p className="mt-0.5 text-sm text-gray-500">
               Shipping and taxes calculated at checkout.
