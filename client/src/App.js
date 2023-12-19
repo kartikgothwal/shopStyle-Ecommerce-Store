@@ -15,7 +15,7 @@ const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/homecomponents/index"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
-const Main = lazy(() => import("./components/filterproductspages/Main"));
+const Main = lazy(() => import("./components/filterproductspages/Main.jsx"));
 const Cart = lazy(() => import("./features/cart/Cart"));
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")

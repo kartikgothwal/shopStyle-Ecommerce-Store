@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from  "../hoc";
- 
 import { LIMIT_PER_PAGE } from "../../constants";
 import { ProductPageShimmer } from  "../../layout";
 import ProductCard from "../../features/products/Products";
