@@ -1,13 +1,15 @@
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { addCartItemAsync } from "../cart/cartSlice";
 
 export default function Product({ items, setProgress, progress }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
   if (items == undefined) return null;
-  const AddToCartClickHandle = (items) => {
+  const AddToCartClickHandle = async (items) => {
     setProgress(progress + 10);
     let value = {
       product: items._id,
@@ -16,6 +18,24 @@ export default function Product({ items, setProgress, progress }) {
     };
 
     if (userData && userData._id) {
+      const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
+      if (localStorageData && localStorageData.length) {
+        const itemdoc = localStorageData.map((itemVal) => {
+          const newItem = {
+            user: userData._id,
+            ...itemVal,
+          };
+          return newItem;
+        });
+        dispatch(addCartItemAsync(itemdoc));
+        localStorage.clear();
+      }
+      const newItem = {
+        user: userData._id,
+        product: items._id,
+        quantity: 1,
+      };
+      dispatch(addCartItemAsync(newItem));
       setProgress(progress + 20);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));

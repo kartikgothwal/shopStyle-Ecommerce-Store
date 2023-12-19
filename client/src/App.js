@@ -6,7 +6,7 @@ import LoadingBar from "react-top-loading-bar";
 import { fetchProductAsync } from "./features/products/productSlice";
 import Cookies from "js-cookie";
 import { AuthUserCheck } from "./features/userAuth/UserAuthSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./layout/Navbar";
 import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation";
@@ -23,6 +23,7 @@ const ProductOverview = lazy(() =>
 const App = () => {
   const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
   useEffect(() => {
     const getCookie = () => {
       const UserRefreshToken = Cookies.get("refresh-token");
@@ -36,6 +37,22 @@ const App = () => {
     getCookie();
     getProducts();
   }, []);
+  useEffect(() => {
+    if (userData && userData._id) {
+      const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
+      if (localStorageData && localStorageData.length) {
+        const itemdoc = localStorageData.map((itemVal) => {
+          const newItem = {
+            user: userData._id,
+            ...itemVal,
+          };
+          return newItem;
+        });
+        dispatch(addCartItemAsync(itemdoc));
+        localStorage.clear();
+      }
+    }
+  }, [userData]);
 
   return (
     <>

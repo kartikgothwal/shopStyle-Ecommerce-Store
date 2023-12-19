@@ -1,15 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchCount } from "./cartAPI";
+import { addCartItem } from "./cartAPI";
+import { toast } from "react-toastify";
 
 const initialState = {
-  value: 0,
-  status: "idle",
+  cartvalue: [],
+  pending: false,
 };
 
-export const incrementAsync = createAsyncThunk(
-  "counter/fetchCount",
-  async (amount) => {
-    const response = await fetchCount(amount);
+// export const incrementAsync = createAsyncThunk(
+//   "counter/fetchCount",
+//   async (amount) => {
+//     const response = await fetchCount(amount);
+//     return response.data;
+//   }
+// );
+export const addCartItemAsync = createAsyncThunk(
+  "cart/addItem",
+  async (item) => {
+    console.log("item to add ", item);
+    const response = await addCartItem(item);
     return response.data;
   }
 );
@@ -20,12 +29,43 @@ export const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.pending, (state) => {
-        state.status = "loading";
+      .addCase(addCartItemAsync.pending, (state) => {
+        state.pending = true;
       })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.value += action.payload;
+      .addCase(addCartItemAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        const { items, message } = action.payload;
+        if (Array.isArray(items)) {
+          items.forEach((element) => {
+            state.cartvalue.push(element);
+          });
+        } else {
+          state.cartvalue.push(items);
+        }
+        toast.success("Added to the cart", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .addCase(addCartItemAsync.rejected, (state, action) => {
+        state.pending = false;
+        state.error = action.error.message;
+        toast.error("adding to the cart failed", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   },
 });

@@ -3,11 +3,12 @@ import StarIcon from "@mui/icons-material/Star";
 import { RadioGroup } from "@headlessui/react";
 import { PaddingGiverHoc } from "../../components/hoc";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import PageNotFound from "../../layout/PageNotFound";
 import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
+import { addCartItemAsync } from "../cart/cartSlice";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -68,6 +69,7 @@ function classNames(...classes) {
 }
 
 const ProductPage = ({ setProgress, progress }) => {
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userData);
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
@@ -104,6 +106,25 @@ const ProductPage = ({ setProgress, progress }) => {
     };
 
     if (userData && userData._id) {
+      const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
+      if (localStorageData && localStorageData.length) {
+        const itemdoc = localStorageData.map((itemVal) => {
+          const newItem = {
+            user: userData._id,
+            ...itemVal,
+          };
+          return newItem;
+        });
+        dispatch(addCartItemAsync(itemdoc));
+        localStorage.clear();
+      }
+      const newItem = {
+        user: userData._id,
+        product: items._id,
+        quantity: 1,
+      };
+      dispatch(addCartItemAsync(newItem));
+      setProgress(progress + 20);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
       if (data) {
@@ -128,7 +149,7 @@ const ProductPage = ({ setProgress, progress }) => {
     }
     setProgress(progress + 100);
   };
-  
+
   return (
     <>
       {productVal ? (
