@@ -1,7 +1,15 @@
 const Cart = require("../model/cart");
 const cartModel = Cart.cartModel;
 exports.getCart = async (req, res) => {
-  console.log(req.body);
+  try {
+    const { userID } = req.body;
+    const doc = await cartModel.find({ user: userID }).populate("product");
+    return res.status(200).json({ message: "items found successfully", doc });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "failed to fetch cart items", error: error.message });
+  }
 };
 exports.addCartItem = async (req, res) => {
   try {
@@ -10,7 +18,7 @@ exports.addCartItem = async (req, res) => {
       item = [item];
     }
     const doc = await cartModel.insertMany(item);
-    console.log("doc", doc);
+
     return res.status(201).json({
       items: doc,
       message: "Added to the cart",

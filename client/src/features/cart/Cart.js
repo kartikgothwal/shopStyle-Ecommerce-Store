@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
 import { PaddingGiverHoc } from "../../components/hoc";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { getCartItemAsync } from "./cartSlice";
 const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
   const [cart, setCart] = useState([]);
   const productData = useSelector((state) => state.product.productdata);
   const userData = useSelector((state) => state.user.userData);
+  const cartStoreValue = useSelector((state) => state.cart.cartval);
   useEffect(() => {
     setProgress(progress + 10);
     if (userData && userData._id) {
-      setProgress(progress + 30);
+      dispatch(getCartItemAsync(userData._id));
+      setCart(cartStoreValue);
+      console.log("cartStoreValue", cartStoreValue);
     } else {
       const cartVal = JSON.parse(localStorage.getItem("cartArray"));
       if (cartVal && cartVal.length && productData.length) {
@@ -42,23 +47,26 @@ const Cart = ({ setProgress, progress }) => {
     }
     window.scrollTo(0, 0);
     setProgress(progress + 100);
-  }, [productData, userData]);
+  }, [productData, userData, cartStoreValue]);
 
   useEffect(() => {
-    
-    const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
-    if (cart && cart.length) {
-      let doc;
-      const values = localStorageData.map((items) => {
-        doc = cart.find((val) => {
-          return val._id == items.product;
+    if (userData && userData._id) {
+      console.log("dsfsdjk");
+    } else {
+      const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
+      if (cart && cart.length) {
+        let doc;
+        const values = localStorageData.map((items) => {
+          doc = cart.find((val) => {
+            return val._id == items.product;
+          });
+          if (doc) {
+            const newItem = { ...items, quantity: doc.quantity };
+            return newItem;
+          }
         });
-        if (doc) {
-          const newItem = { ...items, quantity: doc.quantity };
-          return newItem;
-        }
-      });
-      localStorage.setItem("cartArray", JSON.stringify(values));
+        localStorage.setItem("cartArray", JSON.stringify(values));
+      }
     }
   }, [cart]);
 

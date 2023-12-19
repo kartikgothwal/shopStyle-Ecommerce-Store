@@ -116,7 +116,15 @@ const ProductPage = ({ setProgress, progress }) => {
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
       if (data) {
-        if (data.find((value) => value.product == items._id)) {
+        const dataVal = data.find((value) => value.product == items._id);
+        if (dataVal) {
+          const value = data.map((items) => {
+            if (items.product == dataVal.product) {
+              items.quantity = items.quantity + 1;
+            }
+            return items;
+          });
+          localStorage.setItem("cartArray", JSON.stringify(value));
         } else {
           localStorage.setItem("cartArray", JSON.stringify([...data, value]));
         }

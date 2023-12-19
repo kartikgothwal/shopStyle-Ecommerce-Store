@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addCartItem } from "./cartAPI";
+import { addCartItem, getCartItem } from "./cartAPI";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -14,10 +14,16 @@ const initialState = {
 //     return response.data;
 //   }
 // );
+export const getCartItemAsync = createAsyncThunk(
+  "cart/getitems",
+  async (userID) => {
+    const response = await getCartItem(userID);
+    return response.data;
+  }
+);
 export const addCartItemAsync = createAsyncThunk(
   "cart/addItem",
   async (item) => {
-    console.log("item to add ", item);
     const response = await addCartItem(item);
     return response.data;
   }
@@ -29,6 +35,28 @@ export const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getCartItemAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(getCartItemAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        const { doc } = action.payload;
+        state.cartvalue = doc;
+      })
+      .addCase(getCartItemAsync.rejected, (state, action) => {
+        state.pending = false;
+        console.log("rejected", action);
+        toast.error("failed to fetch cart", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
       .addCase(addCartItemAsync.pending, (state) => {
         state.pending = true;
       })
