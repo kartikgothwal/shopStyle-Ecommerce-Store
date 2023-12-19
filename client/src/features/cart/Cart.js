@@ -3,6 +3,8 @@ import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
@@ -16,12 +18,22 @@ const Cart = ({ setProgress, progress }) => {
     } else {
       const cartVal = JSON.parse(localStorage.getItem("cartArray"));
       if (cartVal && cartVal.length && productData.length) {
+        let cartdoc;
         setCart(
-          productData.filter((items) => {
-            return cartVal.find((values) => {
-              return values.product == items._id;
-            });
-          })
+          productData
+            .map((items) => {
+              cartdoc = cartVal.find((values) => {
+                return values.product == items._id;
+              });
+              if (cartdoc) {
+                // console.log("card", cartdoc);
+                // cartdoc.quantity
+                const newItem = { ...items, quantity: cartdoc.quantity };
+                return newItem;
+              }
+              return null;
+            })
+            .filter(Boolean)
         );
         setProgress(progress + 30);
       } else {
@@ -31,6 +43,23 @@ const Cart = ({ setProgress, progress }) => {
     window.scrollTo(0, 0);
     setProgress(progress + 100);
   }, [productData, userData]);
+
+  useEffect(() => {
+    const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
+    if (cart && cart.length) {
+      let doc;
+      const values = localStorageData.map((items) => {
+        doc = cart.find((val) => {
+          return val._id == items.product;
+        });
+        if (doc) {
+          const newItem = { ...items, quantity: doc.quantity };
+          return newItem;
+        }
+      });
+      localStorage.setItem("cartArray", JSON.stringify(values));
+    }
+  }, [cart]);
 
   const RemoveCartHandle = (item) => {
     setProgress(progress + 10);
@@ -43,15 +72,28 @@ const Cart = ({ setProgress, progress }) => {
         });
         setCart(remainingItems);
         const cartVal = JSON.parse(localStorage.getItem("cartArray"));
-        const value = cartVal.filter((items) => {
-          return remainingItems.find((values) => {
-            return items.product == values._id;
-          });
-        });
+        // let value = cartVal.filter((items) => {
+        //   return remainingItems.find((values) => {
+        //     return items.product == values._id;
+        //   });
+        // });
+        let doc;
+        let value = cartVal
+          .map((items) => {
+            doc = remainingItems.find((values) => {
+              return items.product == values._id;
+            });
+            if (doc) {
+              const newItem = { ...items, quantity: doc.quantity };
+              return newItem;
+            }
+            return null;
+          })
+          .filter(Boolean);
+
         if (remainingItems.length && value.length) {
           localStorage.setItem("cartArray", JSON.stringify(value));
         } else {
-          console.log("clear all");
           localStorage.clear();
         }
       }
@@ -65,7 +107,7 @@ const Cart = ({ setProgress, progress }) => {
         progress: undefined,
         theme: "colored",
       });
-      setProgress(progress + 30);
+      setProgress(progress + 100);
     } catch (error) {
       setProgress(progress + 100);
       toast.error("Removing failed", {
@@ -80,8 +122,30 @@ const Cart = ({ setProgress, progress }) => {
       });
     }
   };
+  const handleQuantityChange = (choice, item) => {
+    if (choice == "dec") {
+      setCart(
+        cart.map((values) => {
+          if (values._id == item._id) {
+            if (values.quantity != 1) {
+              values.quantity = values.quantity - 1;
+            }
+          }
+          return values;
+        })
+      );
+    } else if (choice == "inc") {
+      setCart(
+        cart.map((values) => {
+          if (values._id == item._id) {
+            values.quantity = values.quantity + 1;
+          }
+          return values;
+        })
+      );
+    }
+  };
 
-  console.log("cart", cart);
   return (
     <>
       {cart && cart.length ? (
@@ -122,7 +186,9 @@ const Cart = ({ setProgress, progress }) => {
                             </p>
                           </h3>
                           <p className="ml-4">
-                            ${Number(cartval.price).toFixed(2)}
+                            $
+                            {Number(cartval.price).toFixed(2) *
+                              cartval.quantity}
                           </p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
@@ -130,7 +196,23 @@ const Cart = ({ setProgress, progress }) => {
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
-                        <p className="text-gray-500">Qty {1}</p>
+                        <div className="text-gray-500 flex gap-2">
+                          <button
+                            class="cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                            onClick={() => handleQuantityChange("dec", cartval)}
+                            disabled={cartval.quantity == 1}
+                          >
+                            <RemoveIcon />
+                          </button>
+
+                          <p> Qty {Number(cartval.quantity)}</p>
+                          <button
+                            class="cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                            onClick={() => handleQuantityChange("inc", cartval)}
+                          >
+                            <AddIcon />
+                          </button>
+                        </div>
 
                         <div className="flex">
                           <button
@@ -155,7 +237,7 @@ const Cart = ({ setProgress, progress }) => {
                 $
                 {cart
                   .reduce((acc, currEle) => {
-                    return acc + currEle.price;
+                    return acc + currEle.price * currEle.quantity;
                   }, 0)
                   .toFixed(2)}
               </p>
