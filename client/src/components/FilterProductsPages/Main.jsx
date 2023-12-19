@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { PaddingGiverHoc } from  "../hoc";
+import { PaddingGiverHoc } from "../hoc";
 import { LIMIT_PER_PAGE } from "../../constants";
-import { ProductPageShimmer } from  "../../layout";
+import { ProductPageShimmer } from "../../layout";
 import ProductCard from "../../features/products/Products";
 import Pagination from "./Pagination";
 import axios from "axios";
@@ -177,7 +177,7 @@ const Main = ({ setProgress, progress }) => {
       }
     }
   }, [ProductData, CurrentPage, category, modifyData]);
-  
+
   return (
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
@@ -603,7 +603,10 @@ const Main = ({ setProgress, progress }) => {
                                   }
                                 }}
                               />
-                              <label htmlFor="myCheckbox" className="text-gray-700">
+                              <label
+                                htmlFor="myCheckbox"
+                                className="text-gray-700"
+                              >
                                 {brand}
                               </label>
                             </div>
@@ -812,7 +815,10 @@ const Main = ({ setProgress, progress }) => {
                                 handleSizeChange("XS");
                               }}
                             />
-                            <label htmlFor="myCheckbox" className="text-gray-700">
+                            <label
+                              htmlFor="myCheckbox"
+                              className="text-gray-700"
+                            >
                               XS
                             </label>
                           </div>
@@ -825,7 +831,10 @@ const Main = ({ setProgress, progress }) => {
                                 handleSizeChange("S");
                               }}
                             />
-                            <label htmlFor="myCheckbox" className="text-gray-700">
+                            <label
+                              htmlFor="myCheckbox"
+                              className="text-gray-700"
+                            >
                               S
                             </label>
                           </div>
@@ -838,7 +847,10 @@ const Main = ({ setProgress, progress }) => {
                                 handleSizeChange("M");
                               }}
                             />
-                            <label htmlFor="myCheckbox" className="text-gray-700">
+                            <label
+                              htmlFor="myCheckbox"
+                              className="text-gray-700"
+                            >
                               M
                             </label>
                           </div>
@@ -851,7 +863,10 @@ const Main = ({ setProgress, progress }) => {
                                 handleSizeChange("L");
                               }}
                             />
-                            <label htmlFor="myCheckbox" className="text-gray-700">
+                            <label
+                              htmlFor="myCheckbox"
+                              className="text-gray-700"
+                            >
                               L
                             </label>
                           </div>
@@ -864,7 +879,10 @@ const Main = ({ setProgress, progress }) => {
                                 handleSizeChange("XL");
                               }}
                             />
-                            <label htmlFor="myCheckbox" className="text-gray-700">
+                            <label
+                              htmlFor="myCheckbox"
+                              className="text-gray-700"
+                            >
                               XL
                             </label>
                           </div>
@@ -939,8 +957,8 @@ const Main = ({ setProgress, progress }) => {
                   ? product.map((items) => {
                       return (
                         <ProductCard
-                        setProgress={setProgress}
-                        progress={progress}
+                          setProgress={setProgress}
+                          progress={progress}
                           key={items.id}
                           items={items}
                           totalDocument={totalDocument}
@@ -960,7 +978,6 @@ const Main = ({ setProgress, progress }) => {
           CurrentPage={CurrentPage}
           handleCurrentPage={handleCurrentPage}
         />
-      
       </section>
     </>
   );
