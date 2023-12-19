@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
- 
 
 const products = [
   {
@@ -32,7 +31,7 @@ const products = [
 ];
 
 const Cart = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const [cart, setCart] = useState([]);
   const productData = useSelector((state) => state.product.productdata);
@@ -82,11 +81,13 @@ const Cart = () => {
                           <h3>
                             <a href={""}>{cartval.title}</a>
                           </h3>
-                          <p className="ml-4">{cartval.price}</p>
+                          <p className="ml-4">
+                            ${Number(cartval.price).toFixed(2)}
+                          </p>
                         </div>
-                        {/* <p className="mt-1 text-sm text-gray-500">
-                          {product.color}
-                        </p> */}
+                        <p className="mt-1 text-sm text-gray-500">
+                          Price: {Number(cartval.price).toFixed(2)}
+                        </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <p className="text-gray-500">Qty {1}</p>
@@ -138,9 +139,9 @@ const Cart = () => {
           </div>
         </section>
       ) : (
-          <div className="mt-[10rem]">
-            <p className="mt-6 text-xl text-center leading-7 text-gray-600">
-              No items inside cart
+        <div className="mt-[10rem]">
+          <p className="mt-6 text-xl text-center leading-7 text-gray-600">
+            No items inside cart
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
@@ -148,10 +149,10 @@ const Cart = () => {
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onClick={() => navigate(-1)}
             >
-             Explore products
+              Explore products
             </a>
           </div>
-          </div>
+        </div>
       )}
     </>
   );
