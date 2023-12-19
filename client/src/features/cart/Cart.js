@@ -2,35 +2,9 @@ import { useEffect, useState } from "react";
 import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-];
-
-const Cart = () => {
+const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const [cart, setCart] = useState([]);
@@ -40,7 +14,6 @@ const Cart = () => {
     if (userData && userData._id) {
     } else {
       const cartVal = JSON.parse(localStorage.getItem("cartArray"));
-
       if (cartVal && cartVal.length && productData.length) {
         setCart(
           productData.filter((items) => {
@@ -53,7 +26,54 @@ const Cart = () => {
         setCart(null);
       }
     }
+    window.scrollTo(0, 0);
   }, [productData, userData]);
+
+  const RemoveCartHandle = (item) => {
+    try {
+      if (userData && userData._id) {
+      } else {
+        const remainingItems = cart.filter((values) => {
+          return values._id !== item._id;
+        });
+        setCart(remainingItems);
+        const cartVal = JSON.parse(localStorage.getItem("cartArray"));
+        const value = cartVal.filter((items) => {
+          return remainingItems.find((values) => {
+            return items.product == values._id;
+          });
+        });
+        if (remainingItems.length && value.length) {
+          localStorage.setItem("cartArray", JSON.stringify(value));
+        } else {
+          console.log("clear all");
+          localStorage.clear();
+        }
+      }
+      toast.success("Item removed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } catch (error) {
+      toast.error("Removing failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
   console.log("cart", cart);
   return (
     <>
@@ -100,6 +120,7 @@ const Cart = () => {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
+                            onClick={() => RemoveCartHandle(cartval)}
                           >
                             Remove
                           </button>

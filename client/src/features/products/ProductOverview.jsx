@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import PageNotFound from "../../layout/PageNotFound";
-import { BigCardShimmerEffect } from  "../../layout";
+import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
 
 const product = {
@@ -128,6 +128,7 @@ const ProductPage = ({ setProgress, progress }) => {
     }
     setProgress(progress + 100);
   };
+  
   return (
     <>
       {productVal ? (
