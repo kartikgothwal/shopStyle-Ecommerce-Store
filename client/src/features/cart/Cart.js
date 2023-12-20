@@ -12,7 +12,6 @@ const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cart, setCart] = useState([]);
-  const [message, setMessage] = useState("");
   const productData = useSelector((state) => state.product.productdata);
   const userData = useSelector((state) => state.user.userData);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
@@ -69,7 +68,6 @@ const Cart = ({ setProgress, progress }) => {
 
   useEffect(() => {
     if (cartStoreValue && cartStoreValue.length) {
-      setMessage("Setting cart from store value");
       setCart(
         cartStoreValue.map((items) => ({
           ...items.product,
@@ -77,7 +75,7 @@ const Cart = ({ setProgress, progress }) => {
         }))
       );
     } else {
-      setMessage("No cart data in store");
+      setCart(null);
     }
   }, [cartStoreValue]);
 
@@ -94,7 +92,10 @@ const Cart = ({ setProgress, progress }) => {
       try {
         setProgress(progress + 30);
         if (userData && userData._id) {
-          dispatch(deleteCartItemAsync(userData._id, item._id));
+          // console.log("Datavalue", userData._id, item._id);
+          dispatch(
+            deleteCartItemAsync({ userID: userData._id, productID: item._id })
+          );
         } else {
           const remainingItems = cart.filter((values) => {
             return values._id !== item._id;
@@ -177,7 +178,6 @@ const Cart = ({ setProgress, progress }) => {
   );
   return (
     <>
-      {message && <p>{message}</p>}
       {cart && cart.length ? (
         <section className="mt-[8rem] lg:mx-[10rem]  ">
           <h1 className="text-3xl font-bold text-gray-900 font-rubik">

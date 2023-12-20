@@ -4,7 +4,6 @@ exports.getCart = async (req, res) => {
   try {
     const { userID } = req.body;
     const doc = await cartModel.find({ user: userID }).populate("product");
-    console.log("data", doc);
     return res.status(200).json({ message: "items found successfully", doc });
   } catch (error) {
     return res
@@ -30,9 +29,16 @@ exports.addCartItem = async (req, res) => {
       .json({ message: "Adding to cart failed", error: error.message });
   }
 };
-exports.deleteCartItems = (req, res) => {
+exports.deleteCartItems = async (req, res) => {
   try {
-    console.log("delete", req.body);
+    const { userID, ProductID } = req.body;
+    const doc = await cartModel.deleteOne({ user: userID, product: ProductID });
+    return res
+      .status(200)
+      .json({
+        message: "Item removed successfully",
+        doc: { userID, ProductID },
+      });
   } catch (error) {
     return res
       .status(500)

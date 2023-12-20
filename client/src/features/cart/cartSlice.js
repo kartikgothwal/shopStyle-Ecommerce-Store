@@ -30,10 +30,9 @@ export const addCartItemAsync = createAsyncThunk(
 );
 export const deleteCartItemAsync = createAsyncThunk(
   "cart/deleteitem",
-  async (userID, productID) => {
-    console.log("deleteitem", userID, productID);
-    // const response = await deleteCartItem(item);
-    // return response.data;
+  async ({ userID, productID }) => {
+    const response = await deleteCartItem(userID, productID);
+    return response.data;
   }
 );
 
@@ -71,14 +70,6 @@ export const cartSlice = createSlice({
       })
       .addCase(addCartItemAsync.fulfilled, (state, action) => {
         state.pending = false;
-        const { items } = action.payload;
-        // if (Array.isArray(items)) {
-        //   items.forEach((element) => {
-        //     state.cartvalue.push(element);
-        //   });
-        // } else {
-        //   state.cartvalue.push(items);
-        // }
         toast.success("Added to the cart", {
           position: "top-right",
           autoClose: 5000,
@@ -94,6 +85,30 @@ export const cartSlice = createSlice({
         state.pending = false;
         state.error = action.error.message;
         toast.error("adding to the cart failed", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .addCase(deleteCartItemAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(deleteCartItemAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        const { doc } = action.payload;
+        const { userID, ProductID } = doc;
+        state.cartvalue = state.cartvalue.filter((item) => {
+          return item._id !== userID && item.product._id !== ProductID;
+        });
+      })
+      .addCase(deleteCartItemAsync.rejected, (state) => {
+        state.pending = false;
+        toast.error("Failed to remove", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
