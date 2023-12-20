@@ -25,7 +25,7 @@ export default function Product({ items, setProgress, progress }) {
     const isItemInCart =
       cartStoreValue &&
       cartStoreValue.find((cartItem) => cartItem.product._id == items._id);
-    console.log("isItemInCart", isItemInCart);
+  
     if (isItemInCart) {
       const change = { quantity: isItemInCart.quantity + 1 };
       dispatch(

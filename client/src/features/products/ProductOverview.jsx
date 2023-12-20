@@ -8,7 +8,11 @@ import axios from "axios";
 import PageNotFound from "../../layout/PageNotFound";
 import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
-import { addCartItemAsync } from "../cart/cartSlice";
+import {
+  addCartItemAsync,
+  getCartItemAsync,
+  updateCartItemAsync,
+} from "../cart/cartSlice";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -70,12 +74,13 @@ function classNames(...classes) {
 
 const ProductPage = ({ setProgress, progress }) => {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user.userData);
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [productVal, SetProductVal] = useState({});
   const { productID } = useParams();
   const productData = useSelector((state) => state.product.productdata);
+  const cartStoreValue = useSelector((state) => state.cart.cartvalue);
+  const userData = useSelector((state) => state.user.userData);
   useEffect(() => {
     // console.log(productID);
     setProgress(progress + 40);
@@ -99,6 +104,24 @@ const ProductPage = ({ setProgress, progress }) => {
   }, []);
   const AddToCartClickHandle = (items) => {
     setProgress(progress + 10);
+    const isItemInCart =
+      cartStoreValue &&
+      cartStoreValue.find((cartItem) => cartItem.product._id == items._id);
+
+    if (isItemInCart) {
+      const change = { quantity: isItemInCart.quantity + 1 };
+      dispatch(
+        updateCartItemAsync({
+          userID: userData._id,
+          productID: items._id,
+          change: change,
+        })
+      ).then(() => {
+        dispatch(getCartItemAsync(userData._id));
+        setProgress(progress + 100);
+      });
+      return;
+    }
     let value = {
       product: items._id,
       quantity: 1,
@@ -111,7 +134,10 @@ const ProductPage = ({ setProgress, progress }) => {
         product: items._id,
         quantity: 1,
       };
-      dispatch(addCartItemAsync(newItem));
+      dispatch(addCartItemAsync(newItem)).then(() => {
+        dispatch(getCartItemAsync(userData._id));
+        setProgress(progress + 100);
+      });
       setProgress(progress + 20);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));

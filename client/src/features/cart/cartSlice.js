@@ -136,25 +136,40 @@ export const cartSlice = createSlice({
       .addCase(updateCartItemAsync.fulfilled, (state, action) => {
         const { doc } = action.payload;
         const targetIndex = state.cartvalue.findIndex(
-          (item) => item._id == doc._id
+          (item) => item?._id == doc?._id
         );
-
-        state.cartvalue.splice(targetIndex, 1, doc);
-        state.cartvalue = [...state.cartvalue];
-        toast(
-          ` You've changed ${doc.product.title} QUANTITY to ${doc.quantity}`,
-          {
-            position: "bottom-center",
-            autoClose: 2000,
+        if (targetIndex !== -1) {
+          state.cartvalue.splice(targetIndex, 1, doc);
+          state.cartvalue = [...state.cartvalue];
+          toast(
+            ` You've changed ${doc.product?.title} QUANTITY to ${doc.quantity}`,
+            {
+              position: "bottom-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              style: { width: "30rem", textAlign: "center" },
+            }
+          );
+        } else {
+          toast.warn("Something went Wrong, wait!!", {
+            position: "top-right",
+            autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "dark",
-            style: { width: "30rem", textAlign: "center" },
-          }
-        );
+            theme: "colored",
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
         state.pending = false;
       })
       .addCase(updateCartItemAsync.rejected, (state, action) => {
