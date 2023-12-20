@@ -539,9 +539,9 @@ const Main = ({ setProgress, progress }) => {
                         } transition-all duration-300`}
                       >
                         {AllBrands && AllBrands.length ? (
-                          AllBrands.map((brand) => (
+                          AllBrands.map((brand, index) => (
                             <div
-                              key={brand}
+                              key={index}
                               className="flex items-center space-x-2"
                             >
                               <input
@@ -922,26 +922,26 @@ const Main = ({ setProgress, progress }) => {
                       >
                         <p className="flex justify-start items-center gap-1">
                           <input type="radio" name="rating" />{" "}
-                          {new Array(4).fill(undefined).map((items) => (
-                            <StarIcon className="text-orange-400" />
+                          {new Array(4).fill(undefined).map((items, index) => (
+                            <StarIcon key={index} className="text-orange-400" />
                           ))}
                         </p>
                         <p className="  flex justify-start items-center gap-1">
                           <input type="radio" name="rating" />{" "}
-                          {new Array(3).fill(undefined).map((items) => (
-                            <StarIcon className="text-orange-400" />
+                          {new Array(3).fill(undefined).map((items, index) => (
+                            <StarIcon key={index} className="text-orange-400" />
                           ))}
                         </p>
                         <p className="  flex justify-start items-center gap-1">
                           <input type="radio" name="rating" />{" "}
-                          {new Array(2).fill(undefined).map((items) => (
-                            <StarIcon className="text-orange-400" />
+                          {new Array(2).fill(undefined).map((items, index) => (
+                            <StarIcon key={index} className="text-orange-400" />
                           ))}
                         </p>
                         <p className="  flex justify-start items-center gap-1">
                           <input type="radio" name="rating" />{" "}
-                          {new Array(1).fill(undefined).map((items) => (
-                            <StarIcon className="text-orange-400" />
+                          {new Array(1).fill(undefined).map((items, index) => (
+                            <StarIcon key={index} className="text-orange-400" />
                           ))}
                         </p>
                       </div>
