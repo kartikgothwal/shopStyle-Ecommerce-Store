@@ -15,9 +15,9 @@ export default function Product({ items, setProgress, progress }) {
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
 
-  useEffect(() => {
-    console.log("cartStoreValue", cartStoreValue);
-  }, [cartStoreValue]);
+  // useEffect(() => {
+  //   console.log("cartStoreValue", cartStoreValue);
+  // }, [cartStoreValue]);
   if (items == undefined) return null;
 
   const AddToCartClickHandle = async (items) => {
@@ -25,7 +25,7 @@ export default function Product({ items, setProgress, progress }) {
     const isItemInCart =
       cartStoreValue &&
       cartStoreValue.find((cartItem) => cartItem.product._id == items._id);
-  
+
     if (isItemInCart) {
       const change = { quantity: isItemInCart.quantity + 1 };
       dispatch(

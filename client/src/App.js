@@ -21,7 +21,6 @@ const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
 const Main = lazy(() => import("./components/filterproductspages/Main.jsx"));
 const Cart = lazy(() => import("./features/cart/Cart"));
-
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")
 );
@@ -60,12 +59,16 @@ const App = () => {
     }
   }, [userData]);
 
-  // useEffect(() => {
-  //   if (userData && userData._id) {
-  //     console.log("changed");
-  //     dispatch(getCartItemAsync(userData._id));
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    console.log("cartStoreValuejmm", cartStoreValue);
+  }, [cartStoreValue]);
+
+  useEffect(() => {
+    if (userData && userData._id) {
+      console.log("dispatch");
+      dispatch(getCartItemAsync(userData._id));
+    }
+  }, [userData, dispatch]);
 
   return (
     <>
