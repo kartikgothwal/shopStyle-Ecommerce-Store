@@ -4,10 +4,10 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
   addCartItemAsync,
-  updateCartItemAsync,
   getCartItemAsync,
+  updateCartItemAsync,
 } from "../cart/cartSlice";
- 
+import { useEffect } from "react";
 
 export default function Product({ items, setProgress, progress }) {
   const dispatch = useDispatch();
@@ -15,6 +15,9 @@ export default function Product({ items, setProgress, progress }) {
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
 
+  useEffect(() => {
+    console.log("cartStoreValue", cartStoreValue);
+  }, [cartStoreValue]);
   if (items == undefined) return null;
 
   const AddToCartClickHandle = async (items) => {
@@ -31,7 +34,10 @@ export default function Product({ items, setProgress, progress }) {
           productID: items._id,
           change: change,
         })
-      );
+      ).then(() => {
+        dispatch(getCartItemAsync(userData._id));
+        setProgress(progress + 100);
+      });
       return;
     }
 
@@ -47,7 +53,9 @@ export default function Product({ items, setProgress, progress }) {
         product: items._id,
         quantity: 1,
       };
-      dispatch(addCartItemAsync(newItem));
+      dispatch(addCartItemAsync(newItem)).then(() => {
+        dispatch(getCartItemAsync(userData._id));
+      });
       setProgress(progress + 20);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
