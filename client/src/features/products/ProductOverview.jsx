@@ -8,11 +8,7 @@ import axios from "axios";
 import PageNotFound from "../../layout/PageNotFound";
 import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
-import {
-  addCartItemAsync,
-  getCartItemAsync,
-  updateCartItemAsync,
-} from "../cart/cartSlice";
+import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -82,7 +78,6 @@ const ProductPage = ({ setProgress, progress }) => {
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
   useEffect(() => {
-    // console.log(productID);
     setProgress(progress + 40);
     const value = productData.filter((items) => items._id == productID);
     if (value.length) {
@@ -107,7 +102,6 @@ const ProductPage = ({ setProgress, progress }) => {
     const isItemInCart =
       cartStoreValue &&
       cartStoreValue.find((cartItem) => cartItem.product._id == items._id);
-
     if (isItemInCart) {
       const change = { quantity: isItemInCart.quantity + 1 };
       dispatch(
@@ -116,10 +110,8 @@ const ProductPage = ({ setProgress, progress }) => {
           productID: items._id,
           change: change,
         })
-      ).then(() => {
-        dispatch(getCartItemAsync(userData._id));
-        setProgress(progress + 100);
-      });
+      );
+      setProgress(progress + 100);
       return;
     }
     let value = {
@@ -127,18 +119,14 @@ const ProductPage = ({ setProgress, progress }) => {
       quantity: 1,
       createdAt: new Date(),
     };
-
     if (userData && userData._id) {
       const newItem = {
         user: userData._id,
         product: items._id,
         quantity: 1,
       };
-      dispatch(addCartItemAsync(newItem)).then(() => {
-        dispatch(getCartItemAsync(userData._id));
-        setProgress(progress + 100);
-      });
-      setProgress(progress + 20);
+      dispatch(addCartItemAsync(newItem));
+      setProgress(progress + 100);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
       if (data) {

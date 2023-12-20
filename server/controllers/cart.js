@@ -18,9 +18,9 @@ exports.addCartItem = async (req, res) => {
       item = [item];
     }
     const doc = await cartModel.insertMany(item);
-
+    const populatedDoc = await cartModel.populate(doc, { path: "product" });
     return res.status(201).json({
-      items: doc,
+      items: populatedDoc,
       message: "Added to the cart",
     });
   } catch (error) {

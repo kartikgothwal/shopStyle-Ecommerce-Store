@@ -81,6 +81,8 @@ export const cartSlice = createSlice({
       })
       .addCase(addCartItemAsync.fulfilled, (state, action) => {
         state.pending = false;
+        const { items } = action.payload;
+        state.cartvalue = state.cartvalue.concat(items);
         toast.success("Added to the cart", {
           position: "top-right",
           autoClose: 3000,
@@ -156,7 +158,7 @@ export const cartSlice = createSlice({
             }
           );
         } else {
-          toast.warn("Something went Wrong, wait!!", {
+          toast.warn("Item no longer exists in the cart", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,

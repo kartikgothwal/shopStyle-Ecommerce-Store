@@ -8,8 +8,9 @@ import Cookies from "js-cookie";
 import { AuthUserCheck } from "./features/userAuth/UserAuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./layout/Navbar";
-import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation";
+import Navbar from "./layout/Navbar.jsx";
+import Main from "./components/filterproductspages/Main.jsx";
+import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation.jsx";
 import {
   addCartItemAsync,
   getCartItemAsync,
@@ -19,7 +20,7 @@ const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/homecomponents/index"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
-const Main = lazy(() => import("./components/filterproductspages/Main.jsx"));
+
 const Cart = lazy(() => import("./features/cart/Cart"));
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")
@@ -60,15 +61,15 @@ const App = () => {
   }, [userData]);
 
   useEffect(() => {
-    console.log("cartStoreValuejmm", cartStoreValue);
+    console.log("cartStoreValue changed", cartStoreValue);
   }, [cartStoreValue]);
 
   useEffect(() => {
     if (userData && userData._id) {
-      console.log("dispatch");
+      console.log("fromm App fetching cart");
       dispatch(getCartItemAsync(userData._id));
     }
-  }, [userData, dispatch]);
+  }, [dispatch, userData]);
 
   return (
     <>

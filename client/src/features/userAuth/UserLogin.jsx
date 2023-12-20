@@ -54,7 +54,7 @@ const UserLogin = () => {
             className="gap-4 h-full w-full  flex flex-col"
           >
             <div className="flex flex-col gap-2">
-              <label  htmlFor="email">
+              <label htmlFor="email">
                 Email:{" "}
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -73,7 +73,7 @@ const UserLogin = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label  htmlFor="password">
+              <label htmlFor="password">
                 Password:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>

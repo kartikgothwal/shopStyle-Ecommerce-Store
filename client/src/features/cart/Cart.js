@@ -22,7 +22,6 @@ const Cart = ({ setProgress, progress }) => {
 
   useEffect(() => {
     if (userData && userData._id) {
-      
     } else {
       const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
       if (cart && cart.length) {
@@ -43,7 +42,9 @@ const Cart = ({ setProgress, progress }) => {
 
   const fetchData = async () => {
     if (userData && userData._id) {
-      dispatch(getCartItemAsync(userData._id));
+      if (!setStateFromCart()) {
+        dispatch(getCartItemAsync(userData._id));
+      }
     } else {
       const cartVal = JSON.parse(localStorage.getItem("cartArray"));
       if (cartVal && cartVal.length && productData.length) {
@@ -66,8 +67,7 @@ const Cart = ({ setProgress, progress }) => {
       }
     }
   };
-
-  useEffect(() => {
+  function setStateFromCart() {
     if (cartStoreValue && cartStoreValue.length) {
       setCart(
         cartStoreValue.map((items) => ({
@@ -75,9 +75,14 @@ const Cart = ({ setProgress, progress }) => {
           quantity: items.quantity,
         }))
       );
+      return true;
     } else {
       setCart(null);
+      return true;
     }
+  }
+  useEffect(() => {
+    setStateFromCart();
   }, [cartStoreValue]);
 
   useEffect(() => {
@@ -93,7 +98,6 @@ const Cart = ({ setProgress, progress }) => {
       try {
         setProgress(progress + 30);
         if (userData && userData._id) {
-         
           dispatch(
             deleteCartItemAsync({ userID: userData._id, productID: item._id })
           );

@@ -2,12 +2,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import {
-  addCartItemAsync,
-  getCartItemAsync,
-  updateCartItemAsync,
-} from "../cart/cartSlice";
-import { useEffect } from "react";
+import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 
 export default function Product({ items, setProgress, progress }) {
   const dispatch = useDispatch();
@@ -15,9 +10,6 @@ export default function Product({ items, setProgress, progress }) {
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
 
-  // useEffect(() => {
-  //   console.log("cartStoreValue", cartStoreValue);
-  // }, [cartStoreValue]);
   if (items == undefined) return null;
 
   const AddToCartClickHandle = async (items) => {
@@ -25,7 +17,6 @@ export default function Product({ items, setProgress, progress }) {
     const isItemInCart =
       cartStoreValue &&
       cartStoreValue.find((cartItem) => cartItem.product._id == items._id);
-
     if (isItemInCart) {
       const change = { quantity: isItemInCart.quantity + 1 };
       dispatch(
@@ -34,28 +25,22 @@ export default function Product({ items, setProgress, progress }) {
           productID: items._id,
           change: change,
         })
-      ).then(() => {
-        dispatch(getCartItemAsync(userData._id));
-        setProgress(progress + 100);
-      });
+      );
+      setProgress(progress + 100);
       return;
     }
-
     let value = {
       product: items._id,
       quantity: 1,
       createdAt: new Date(),
     };
-
     if (userData && userData._id) {
       const newItem = {
         user: userData._id,
         product: items._id,
         quantity: 1,
       };
-      dispatch(addCartItemAsync(newItem)).then(() => {
-        dispatch(getCartItemAsync(userData._id));
-      });
+      dispatch(addCartItemAsync(newItem));
       setProgress(progress + 20);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
@@ -88,6 +73,7 @@ export default function Product({ items, setProgress, progress }) {
       });
     }
     setProgress(progress + 100);
+    navigate("/cart");
   };
 
   return (
