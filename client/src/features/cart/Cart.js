@@ -1,57 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { getCartItemAsync } from "./cartSlice";
+import { deleteCartItemAsync, getCartItemAsync } from "./cartSlice";
+import { DataLoaderAnimation } from "../../layout";
 const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(true);
   const [cart, setCart] = useState([]);
+  const [message, setMessage] = useState("");
   const productData = useSelector((state) => state.product.productdata);
   const userData = useSelector((state) => state.user.userData);
-  const cartStoreValue = useSelector((state) => state.cart.cartval);
-  useEffect(() => {
-    setProgress(progress + 10);
-    if (userData && userData._id) {
-      dispatch(getCartItemAsync(userData._id));
-      setCart(cartStoreValue);
-      console.log("cartStoreValue", cartStoreValue);
-    } else {
-      const cartVal = JSON.parse(localStorage.getItem("cartArray"));
-      if (cartVal && cartVal.length && productData.length) {
-        let cartdoc;
-        setCart(
-          productData
-            .map((items) => {
-              cartdoc = cartVal.find((values) => {
-                return values.product == items._id;
-              });
-              if (cartdoc) {
-                // console.log("card", cartdoc);
-                // cartdoc.quantity
-                const newItem = { ...items, quantity: cartdoc.quantity };
-                return newItem;
-              }
-              return null;
-            })
-            .filter(Boolean)
-        );
-        setProgress(progress + 30);
-      } else {
-        setCart(null);
-      }
-    }
-    window.scrollTo(0, 0);
-    setProgress(progress + 100);
-  }, [productData, userData, cartStoreValue]);
+  const cartStoreValue = useSelector((state) => state.cart.cartvalue);
+  const pending = useSelector((state) => state.cart.pending);
 
   useEffect(() => {
     if (userData && userData._id) {
-      console.log("dsfsdjk");
+      console.log("cart affected");
     } else {
       const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
       if (cart && cart.length) {
@@ -70,93 +39,145 @@ const Cart = ({ setProgress, progress }) => {
     }
   }, [cart]);
 
-  const RemoveCartHandle = (item) => {
-    setProgress(progress + 10);
-    try {
-      setProgress(progress + 30);
-      if (userData && userData._id) {
-      } else {
-        const remainingItems = cart.filter((values) => {
-          return values._id !== item._id;
-        });
-        setCart(remainingItems);
-        const cartVal = JSON.parse(localStorage.getItem("cartArray"));
-        // let value = cartVal.filter((items) => {
-        //   return remainingItems.find((values) => {
-        //     return items.product == values._id;
-        //   });
-        // });
-        let doc;
-        let value = cartVal
+  const fetchData = async () => {
+    if (userData && userData._id) {
+      dispatch(getCartItemAsync(userData._id));
+    } else {
+      const cartVal = JSON.parse(localStorage.getItem("cartArray"));
+      if (cartVal && cartVal.length && productData.length) {
+        const updatedCart = productData
           .map((items) => {
-            doc = remainingItems.find((values) => {
-              return items.product == values._id;
-            });
-            if (doc) {
-              const newItem = { ...items, quantity: doc.quantity };
-              return newItem;
+            const cartdoc = cartVal.find(
+              (values) => values.product === items._id
+            );
+            if (cartdoc) {
+              return { ...items, quantity: cartdoc.quantity };
             }
             return null;
           })
           .filter(Boolean);
 
-        if (remainingItems.length && value.length) {
-          localStorage.setItem("cartArray", JSON.stringify(value));
-        } else {
-          localStorage.clear();
-        }
+        console.log("Setting cart from local storage:", updatedCart);
+        setCart(updatedCart);
+        setProgress((prevProgress) => prevProgress + 30);
+      } else {
+        console.log("No cart data in local storage");
+        setCart([]);
       }
-      toast.success("Item removed", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      setProgress(progress + 100);
-    } catch (error) {
-      setProgress(progress + 100);
-      toast.error("Removing failed", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
-  };
-  const handleQuantityChange = (choice, item) => {
-    if (choice == "dec") {
-      setCart(
-        cart.map((values) => {
-          if (values._id == item._id) {
-            if (values.quantity != 1) {
-              values.quantity = values.quantity - 1;
-            }
-          }
-          return values;
-        })
-      );
-    } else if (choice == "inc") {
-      setCart(
-        cart.map((values) => {
-          if (values._id == item._id) {
-            values.quantity = values.quantity + 1;
-          }
-          return values;
-        })
-      );
     }
   };
 
+  useEffect(() => {
+    if (cartStoreValue && cartStoreValue.length) {
+      setMessage("Setting cart from store value");
+      setCart(
+        cartStoreValue.map((items) => ({
+          ...items.product,
+          quantity: items.quantity,
+        }))
+      );
+    } else {
+      setMessage("No cart data in store");
+    }
+  }, [cartStoreValue]);
+
+  useEffect(() => {
+    setProgress((prevProgress) => prevProgress + 10);
+    fetchData();
+    window.scrollTo(0, 0);
+    setProgress((prevProgress) => prevProgress + 100);
+  }, [productData, userData]);
+
+  const RemoveCartHandle = useCallback(
+    (item) => {
+      setProgress(progress + 10);
+      try {
+        setProgress(progress + 30);
+        if (userData && userData._id) {
+          dispatch(deleteCartItemAsync(userData._id, item._id));
+        } else {
+          const remainingItems = cart.filter((values) => {
+            return values._id !== item._id;
+          });
+          setCart(remainingItems);
+          const cartVal = JSON.parse(localStorage.getItem("cartArray"));
+          let doc;
+          let value = cartVal
+            .map((items) => {
+              doc = remainingItems.find((values) => {
+                return items.product == values._id;
+              });
+              if (doc) {
+                const newItem = { ...items, quantity: doc.quantity };
+                return newItem;
+              }
+              return null;
+            })
+            .filter(Boolean);
+
+          if (remainingItems.length && value.length) {
+            localStorage.setItem("cartArray", JSON.stringify(value));
+          } else {
+            localStorage.clear();
+          }
+        }
+        toast.success("Item removed", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setProgress(progress + 100);
+      } catch (error) {
+        setProgress(progress + 100);
+        toast.error("Removing failed", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    },
+    [cart, setProgress, userData]
+  );
+
+  const handleQuantityChange = useCallback(
+    (choice, item) => {
+      if (choice === "dec") {
+        setCart(
+          cart.map((values) => {
+            if (values._id === item._id) {
+              if (values.quantity !== 1) {
+                values.quantity = values.quantity - 1;
+              }
+            }
+            return values;
+          })
+        );
+      } else if (choice === "inc") {
+        setCart(
+          cart.map((values) => {
+            if (values._id === item._id) {
+              values.quantity = values.quantity + 1;
+            }
+            return values;
+          })
+        );
+      }
+    },
+    [cart, setCart]
+  );
   return (
     <>
+      {message && <p>{message}</p>}
       {cart && cart.length ? (
         <section className="mt-[8rem] lg:mx-[10rem]  ">
           <h1 className="text-3xl font-bold text-gray-900 font-rubik">
@@ -207,7 +228,7 @@ const Cart = ({ setProgress, progress }) => {
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="text-gray-500 flex gap-2">
                           <button
-                            class="cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                            className="cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                             onClick={() => handleQuantityChange("dec", cartval)}
                             disabled={cartval.quantity == 1}
                           >
@@ -216,7 +237,7 @@ const Cart = ({ setProgress, progress }) => {
 
                           <p> Qty {Number(cartval.quantity)}</p>
                           <button
-                            class="cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+                            className="cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                             onClick={() => handleQuantityChange("inc", cartval)}
                           >
                             <AddIcon />
@@ -268,7 +289,7 @@ const Cart = ({ setProgress, progress }) => {
                 <button
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
-                  onClick={() => setOpen(false)}
+                  onClick={() => navigate(-1)}
                 >
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>
@@ -279,21 +300,29 @@ const Cart = ({ setProgress, progress }) => {
         </section>
       ) : (
         <div className="mt-[10rem]">
-          <p className="mt-6 text-xl text-center leading-7 text-gray-600">
-            No items inside cart
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              href="#"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => navigate(-1)}
-            >
-              Explore products
-            </a>
-          </div>
+          {pending ? (
+            <div role="status mx-auto">
+              <DataLoaderAnimation />
+            </div>
+          ) : (
+            <>
+              <p className="mt-6 text-xl text-center leading-7 text-gray-600">
+                No items inside cart
+              </p>
+              <div className="mt-10 flex items-center justify-center gap-x-6">
+                <a
+                  href="#"
+                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={() => navigate(-1)}
+                >
+                  Explore products
+                </a>
+              </div>
+            </>
+          )}
         </div>
       )}
     </>
   );
 };
-export default PaddingGiverHoc(Cart);
+export default React.memo(PaddingGiverHoc(Cart));

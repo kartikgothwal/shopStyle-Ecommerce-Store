@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addCartItem, getCartItem } from "./cartAPI";
+import { addCartItem, deleteCartItem, getCartItem } from "./cartAPI";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -28,6 +28,14 @@ export const addCartItemAsync = createAsyncThunk(
     return response.data;
   }
 );
+export const deleteCartItemAsync = createAsyncThunk(
+  "cart/deleteitem",
+  async (userID, productID) => {
+    console.log("deleteitem", userID, productID);
+    // const response = await deleteCartItem(item);
+    // return response.data;
+  }
+);
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -42,6 +50,7 @@ export const cartSlice = createSlice({
         state.pending = false;
         const { doc } = action.payload;
         state.cartvalue = doc;
+        // console.log("cartvalue", state.cartvalue);
       })
       .addCase(getCartItemAsync.rejected, (state, action) => {
         state.pending = false;
@@ -62,14 +71,14 @@ export const cartSlice = createSlice({
       })
       .addCase(addCartItemAsync.fulfilled, (state, action) => {
         state.pending = false;
-        const { items, message } = action.payload;
-        if (Array.isArray(items)) {
-          items.forEach((element) => {
-            state.cartvalue.push(element);
-          });
-        } else {
-          state.cartvalue.push(items);
-        }
+        const { items } = action.payload;
+        // if (Array.isArray(items)) {
+        //   items.forEach((element) => {
+        //     state.cartvalue.push(element);
+        //   });
+        // } else {
+        //   state.cartvalue.push(items);
+        // }
         toast.success("Added to the cart", {
           position: "top-right",
           autoClose: 5000,
