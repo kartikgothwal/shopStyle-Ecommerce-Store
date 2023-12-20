@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addCartItem, deleteCartItem, getCartItem } from "./cartAPI";
+import {
+  addCartItem,
+  deleteCartItem,
+  getCartItem,
+  updateCartItem,
+} from "./cartAPI";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -38,7 +43,7 @@ export const deleteCartItemAsync = createAsyncThunk(
 export const updateCartItemAsync = createAsyncThunk(
   "cart/updateitem",
   async ({ userID, productID, change }) => {
-    const response = await deleteCartItem(userID, productID, change);
+    const response = await updateCartItem(userID, productID, change);
     return response.data;
   }
 );
@@ -125,6 +130,36 @@ export const cartSlice = createSlice({
           progress: undefined,
           theme: "colored",
         });
+      })
+      .addCase(updateCartItemAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(updateCartItemAsync.fulfilled, (state, action) => {
+        const { doc } = action.payload;
+        const targetIndex = state.cartvalue.findIndex(
+          (item) => item._id == doc._id
+        );
+
+        state.cartvalue.splice(targetIndex, 1, doc);
+        state.cartvalue = [...state.cartvalue];
+        toast(
+          ` You've changed ${doc.product.title} QUANTITY to ${doc.quantity}`,
+          {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+        state.pending = false;
+      })
+      .addCase(updateCartItemAsync.rejected, (state, action) => {
+        state.pending = false;
+        state.error = action.error.message;
       });
   },
 });

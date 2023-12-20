@@ -43,9 +43,19 @@ exports.deleteCartItems = async (req, res) => {
       .json({ message: "Failed to remove", error: error.message });
   }
 };
-exports.deleteCartItems = async (req, res) => {
+exports.updateCartItems = async (req, res) => {
   try {
-    console.log(req.body);
+    const { userID, productID, change } = req.body;
+    const filter = { user: userID, product: productID };
+    const doc = await cartModel
+      .findOneAndUpdate(filter, change, {
+        new: true,
+      })
+      .populate("product");
+    return res.status(200).json({
+      message: "Item updated successfully",
+      doc: doc,
+    });
   } catch (error) {
     return res
       .status(500)

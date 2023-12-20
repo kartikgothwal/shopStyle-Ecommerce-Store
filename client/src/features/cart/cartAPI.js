@@ -12,9 +12,10 @@ export async function getCartItem(userID) {
   );
 }
 export async function updateCartItem(userID, productID, change) {
+  console.log("update", userID, productID, change);
   return await axios.patch(
     `${process.env.REACT_APP_BACKEND_URL}/cart/updateitem`,
-    { userID: userID }
+    { userID: userID, productID: productID, change: change }
   );
 }
 export async function deleteCartItem(userID, ProductID) {
