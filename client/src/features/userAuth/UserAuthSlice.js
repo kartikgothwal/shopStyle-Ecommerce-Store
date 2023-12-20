@@ -79,7 +79,6 @@ export const userAuth = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(AuthUserLogin.fulfilled, (state, action) => {
-    
         const { data, message } = action.payload;
         const { _doc, RefreshToken } = data;
         setCookie(RefreshToken);
@@ -88,7 +87,7 @@ export const userAuth = createSlice({
         // alert(message);
         toast.success(message, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -106,7 +105,7 @@ export const userAuth = createSlice({
         // alert(action.error.message);
         toast.error(action.error.message, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -123,7 +122,7 @@ export const userAuth = createSlice({
         state.pending = false;
         toast.success(message, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -140,7 +139,7 @@ export const userAuth = createSlice({
         state.error = action.error.message;
         toast.error(action.error.message, {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

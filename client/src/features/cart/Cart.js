@@ -155,7 +155,18 @@ const Cart = ({ setProgress, progress }) => {
     (choice, item) => {
       if (choice === "dec") {
         if (userData && userData._id) {
-          console.log("decrement");
+          if (item.quantity == 1) {
+            return null;
+          } else {
+            const change = { quantity: item.quantity - 1 };
+            dispatch(
+              updateCartItemAsync({
+                userID: userData._id,
+                productID: item._id,
+                change: change,
+              })
+            );
+          }
         } else {
           setCart(
             cart.map((values) => {
@@ -245,7 +256,10 @@ const Cart = ({ setProgress, progress }) => {
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="text-gray-500 flex gap-2">
                           <button
-                            className={`cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] 
+                            className={`cursor-pointer transition-all bg-blue-500 text-white  rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]   ${
+                              cartval.quantity === 1
+                                ? "opacity-75"
+                                : "opacity-100"
                             }`}
                             // ${pending ? "opacity-50" : "opacity-100"
                             onClick={() => handleQuantityChange("dec", cartval)}

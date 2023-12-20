@@ -68,7 +68,7 @@ export const cartSlice = createSlice({
         console.log("rejected", action);
         toast.error("failed to fetch cart", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -84,7 +84,7 @@ export const cartSlice = createSlice({
         state.pending = false;
         toast.success("Added to the cart", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -98,7 +98,7 @@ export const cartSlice = createSlice({
         state.error = action.error.message;
         toast.error("adding to the cart failed", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -122,7 +122,7 @@ export const cartSlice = createSlice({
         state.pending = false;
         toast.error("Failed to remove", {
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -153,6 +153,7 @@ export const cartSlice = createSlice({
             draggable: true,
             progress: undefined,
             theme: "dark",
+            style: { width: "30rem", textAlign: "center" },
           }
         );
         state.pending = false;
