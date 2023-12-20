@@ -5,4 +5,5 @@ router
   .post("/getitems", cartController.getCart)
   .post("/additem", cartController.addCartItem)
   .delete("/deleteitem", cartController.deleteCartItems)
+  .delete("/updateitem", cartController.deleteCartItems);
 exports.router = router;

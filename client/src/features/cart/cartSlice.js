@@ -35,6 +35,13 @@ export const deleteCartItemAsync = createAsyncThunk(
     return response.data;
   }
 );
+export const updateCartItemAsync = createAsyncThunk(
+  "cart/updateitem",
+  async ({ userID, productID, change }) => {
+    const response = await deleteCartItem(userID, productID, change);
+    return response.data;
+  }
+);
 
 export const cartSlice = createSlice({
   name: "cart",

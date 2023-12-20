@@ -3,10 +3,13 @@ import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { deleteCartItemAsync, getCartItemAsync } from "./cartSlice";
+import {
+  deleteCartItemAsync,
+  getCartItemAsync,
+  updateCartItemAsync,
+} from "./cartSlice";
 import { DataLoaderAnimation } from "../../layout";
 const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
@@ -56,11 +59,9 @@ const Cart = ({ setProgress, progress }) => {
           })
           .filter(Boolean);
 
-        console.log("Setting cart from local storage:", updatedCart);
         setCart(updatedCart);
         setProgress((prevProgress) => prevProgress + 30);
       } else {
-        console.log("No cart data in local storage");
         setCart([]);
       }
     }
@@ -153,25 +154,34 @@ const Cart = ({ setProgress, progress }) => {
   const handleQuantityChange = useCallback(
     (choice, item) => {
       if (choice === "dec") {
-        setCart(
-          cart.map((values) => {
-            if (values._id === item._id) {
-              if (values.quantity !== 1) {
-                values.quantity = values.quantity - 1;
+        if (userData && userData._id) {
+          console.log("decrement");
+        } else {
+          setCart(
+            cart.map((values) => {
+              if (values._id === item._id) {
+                if (values.quantity !== 1) {
+                  values.quantity = values.quantity - 1;
+                }
               }
-            }
-            return values;
-          })
-        );
+              return values;
+            })
+          );
+        }
       } else if (choice === "inc") {
-        setCart(
-          cart.map((values) => {
-            if (values._id === item._id) {
-              values.quantity = values.quantity + 1;
-            }
-            return values;
-          })
-        );
+        if (userData && userData._id) {
+          const change = { quantity: item.quantity + 1 };
+          dispatch(updateCartItemAsync(userData._id, item._id, change));
+        } else {
+          setCart(
+            cart.map((values) => {
+              if (values._id === item._id) {
+                values.quantity = values.quantity + 1;
+              }
+              return values;
+            })
+          );
+        }
       }
     },
     [cart, setCart]

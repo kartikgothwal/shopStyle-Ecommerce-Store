@@ -11,8 +11,13 @@ export async function getCartItem(userID) {
     { userID: userID }
   );
 }
+export async function updateCartItem(userID, productID, change) {
+  return await axios.patch(
+    `${process.env.REACT_APP_BACKEND_URL}/cart/updateitem`,
+    { userID: userID }
+  );
+}
 export async function deleteCartItem(userID, ProductID) {
-  console.log("vf", userID, ProductID);
   return await axios.delete(
     `${process.env.REACT_APP_BACKEND_URL}/cart/deleteitem`,
     {

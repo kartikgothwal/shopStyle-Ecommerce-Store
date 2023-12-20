@@ -33,15 +33,22 @@ exports.deleteCartItems = async (req, res) => {
   try {
     const { userID, ProductID } = req.body;
     const doc = await cartModel.deleteOne({ user: userID, product: ProductID });
-    return res
-      .status(200)
-      .json({
-        message: "Item removed successfully",
-        doc: { userID, ProductID },
-      });
+    return res.status(200).json({
+      message: "Item removed successfully",
+      doc: { userID, ProductID },
+    });
   } catch (error) {
     return res
       .status(500)
       .json({ message: "Failed to remove", error: error.message });
+  }
+};
+exports.deleteCartItems = async (req, res) => {
+  try {
+    console.log(req.body);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to update", error: error.message });
   }
 };
