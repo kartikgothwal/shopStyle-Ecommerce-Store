@@ -74,6 +74,7 @@ const Pagination = ({
               </a>
               {new Array(totalPages).fill(undefined).map((item, index) => (
                 <a
+                  key={index}
                   href="#"
                   aria-current="page"
                   className={`relative z-10 inline-flex items-center ${

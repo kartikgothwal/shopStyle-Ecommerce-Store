@@ -22,7 +22,7 @@ const Cart = ({ setProgress, progress }) => {
 
   useEffect(() => {
     if (userData && userData._id) {
-      console.log("cart affected", cart);
+      
     } else {
       const localStorageData = JSON.parse(localStorage.getItem("cartArray"));
       if (cart && cart.length) {
@@ -93,7 +93,7 @@ const Cart = ({ setProgress, progress }) => {
       try {
         setProgress(progress + 30);
         if (userData && userData._id) {
-          // console.log("Datavalue", userData._id, item._id);
+         
           dispatch(
             deleteCartItemAsync({ userID: userData._id, productID: item._id })
           );

@@ -2,15 +2,35 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { addCartItemAsync } from "../cart/cartSlice";
+import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 
 export default function Product({ items, setProgress, progress }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
   if (items == undefined) return null;
   const AddToCartClickHandle = async (items) => {
     setProgress(progress + 10);
+
+    const isItemInCart =
+      cartStoreValue &&
+      cartStoreValue.find((cartItem) => cartItem.product._id == items._id);
+
+    if (isItemInCart) {
+      const change = { quantity: isItemInCart.quantity + 1 };
+      // console.log("data", userData._id, items._id, change, isItemInCart)
+      dispatch(
+        updateCartItemAsync({
+          userID: userData._id,
+          productID: items._id,
+          change: change,
+        })
+      );
+
+      return;
+    }
+
     let value = {
       product: items._id,
       quantity: 1,

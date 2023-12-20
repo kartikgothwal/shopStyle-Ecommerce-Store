@@ -61,11 +61,11 @@ export const cartSlice = createSlice({
         state.pending = false;
         const { doc } = action.payload;
         state.cartvalue = doc;
-        // console.log("cartvalue", state.cartvalue);
+    
       })
       .addCase(getCartItemAsync.rejected, (state, action) => {
         state.pending = false;
-        console.log("rejected", action);
+         
         toast.error("failed to fetch cart", {
           position: "top-right",
           autoClose: 3000,
