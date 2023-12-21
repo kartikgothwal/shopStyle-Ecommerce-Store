@@ -51,10 +51,25 @@ export default function Product({ items, setProgress, progress }) {
           const value = data.map((items) => {
             if (items.product == dataVal.product) {
               items.quantity = items.quantity + 1;
+              toast(
+                ` You've changed ${items.title} QUANTITY to ${items.quantity}`,
+                {
+                  position: "bottom-center",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  style: { width: "30rem", textAlign: "center" },
+                }
+              );
             }
             return items;
           });
           localStorage.setItem("cartArray", JSON.stringify(value));
+          return;
         } else {
           localStorage.setItem("cartArray", JSON.stringify([...data, value]));
         }

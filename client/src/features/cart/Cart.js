@@ -177,6 +177,20 @@ const Cart = ({ setProgress, progress }) => {
               if (values._id === item._id) {
                 if (values.quantity !== 1) {
                   values.quantity = values.quantity - 1;
+                  toast(
+                    ` You've changed ${values.title} QUANTITY to ${values.quantity}`,
+                    {
+                      position: "bottom-center",
+                      autoClose: 2000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                      style: { width: "30rem", textAlign: "center" },
+                    }
+                  );
                 }
               }
               return values;
@@ -198,6 +212,20 @@ const Cart = ({ setProgress, progress }) => {
             cart.map((values) => {
               if (values._id === item._id) {
                 values.quantity = values.quantity + 1;
+                toast(
+                  ` You've changed ${values.title} QUANTITY to ${values.quantity}`,
+                  {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    style: { width: "30rem", textAlign: "center" },
+                  }
+                );
               }
               return values;
             })

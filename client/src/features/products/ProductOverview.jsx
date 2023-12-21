@@ -9,7 +9,7 @@ import PageNotFound from "../../layout/PageNotFound";
 import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
-
+import { useNavigate } from "react-router-dom";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -74,6 +74,7 @@ const ProductPage = ({ setProgress, progress }) => {
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [productVal, SetProductVal] = useState({});
   const { productID } = useParams();
+  const navigate = useNavigate();
   const productData = useSelector((state) => state.product.productdata);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
@@ -126,6 +127,7 @@ const ProductPage = ({ setProgress, progress }) => {
         quantity: 1,
       };
       dispatch(addCartItemAsync(newItem));
+      navigate("/cart");
       setProgress(progress + 100);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
@@ -135,10 +137,27 @@ const ProductPage = ({ setProgress, progress }) => {
           const value = data.map((items) => {
             if (items.product == dataVal.product) {
               items.quantity = items.quantity + 1;
+              toast(
+                ` You've changed ${items.title} QUANTITY to ${items.quantity}`,
+                {
+                  position: "bottom-center",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  style: { width: "30rem", textAlign: "center" },
+                }
+              );
             }
+
             return items;
           });
           localStorage.setItem("cartArray", JSON.stringify(value));
+
+          return;
         } else {
           localStorage.setItem("cartArray", JSON.stringify([...data, value]));
         }
