@@ -378,8 +378,11 @@ const Cart = ({ setProgress, progress }) => {
             <div className="mt-6">
               <button
                 href="#"
-                className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                className={`flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 ${
+                  pending ? "opacity-75" : "opacity-100"
+                }`}
                 onClick={() => handleCheckoutNavigate()}
+                disabled={pending}
               >
                 Checkout
               </button>

@@ -60,13 +60,12 @@ const App = () => {
     }
   }, [userData]);
 
-  useEffect(() => {
-    console.log("cartStoreValue changed", cartStoreValue);
-  }, [cartStoreValue]);
+  // useEffect(() => {
+  //   console.log("cartStoreValue changed", cartStoreValue);
+  // }, [cartStoreValue]);
 
   useEffect(() => {
     if (userData && userData._id) {
-      console.log("fromm App fetching cart");
       dispatch(getCartItemAsync(userData._id));
     }
   }, [dispatch, userData]);

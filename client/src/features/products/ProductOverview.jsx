@@ -479,7 +479,10 @@ const ProductPage = ({ setProgress, progress }) => {
           </div>
         </div>
       ) : (
-        <PageNotFound message="Invaild product" items={"product"} />
+        <PageNotFound
+          message="Invaild product"
+          items={"Sorry, we couldn’t find the product you’re looking for."}
+        />
       )}
     </>
   );

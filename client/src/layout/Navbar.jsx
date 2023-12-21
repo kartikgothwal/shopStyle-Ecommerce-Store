@@ -30,9 +30,9 @@ const Navbar = () => {
 
   const removeCookie = () => {
     Cookies.remove("refresh-token");
+    navigate("/user-login");
     window.location.reload();
     toast("Your have been logged out");
-    navigate("/user-login");
   };
 
   return (

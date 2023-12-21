@@ -44,7 +44,6 @@ export async function updateCartItem(userID, productID, change) {
   }
 }
 export async function deleteCartItem(userID, ProductID) {
-  console.log(getToken());
   try {
     return await axios.delete(
       `${process.env.REACT_APP_BACKEND_URL}/cart/deleteitem`,
