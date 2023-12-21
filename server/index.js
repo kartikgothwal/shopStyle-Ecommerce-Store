@@ -27,8 +27,9 @@ app.get("/", (req, res) => {
 const UserAuthRouter = require("./routes/auth");
 const ProductRouter = require("./routes/product");
 const CartRouter = require("./routes/cart");
-//Middlewares
+const OrderRouter = require("./routes/order");
 
+//Middlewares
 app.use("/static", express.static("static"));
 app.use(cookieParser());
 app.use(cors());
@@ -36,8 +37,7 @@ app.use(express.json());
 app.use("/auth/user", UserAuthRouter.router);
 app.use("/product", ProductRouter.router);
 app.use("/cart", CartRouter.router);
-
+app.use("/order", OrderRouter.router);
 app.listen(port, () => {
   console.log(`listening to the port http://localhost:${port}`);
 });
-  
