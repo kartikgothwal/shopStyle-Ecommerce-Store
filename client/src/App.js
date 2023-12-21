@@ -15,6 +15,7 @@ import {
   addCartItemAsync,
   getCartItemAsync,
 } from "./features/cart/cartSlice.js";
+const Address = lazy(() => import("./features/address/Address.js"));
 const Footer = lazy(() => import("./layout/Footer"));
 const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/homecomponents/index"));
@@ -59,10 +60,6 @@ const App = () => {
       }
     }
   }, [userData]);
-
-  // useEffect(() => {
-  //   console.log("cartStoreValue changed", cartStoreValue);
-  // }, [cartStoreValue]);
 
   useEffect(() => {
     if (userData && userData._id) {
@@ -137,6 +134,14 @@ const App = () => {
             element={
               <Suspense fallback={<ComponentLoaderAnimation />}>
                 <Order setProgress={setProgress} progress={progress} />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/myaddress"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <Address setProgress={setProgress} progress={progress} />
               </Suspense>
             }
           />

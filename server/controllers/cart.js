@@ -41,7 +41,7 @@ exports.deleteCartItems = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Failed to remove", error: error.message });
-  }
+  } 
 };
 exports.updateCartItems = async (req, res) => {
   try {
