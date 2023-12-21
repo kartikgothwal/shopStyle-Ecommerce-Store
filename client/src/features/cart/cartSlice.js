@@ -15,29 +15,62 @@ const initialState = {
 export const getCartItemAsync = createAsyncThunk(
   "cart/getitems",
   async (userID) => {
-    const response = await getCartItem(userID);
-    return response.data;
+    try {
+      const response = await getCartItem(userID);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 export const addCartItemAsync = createAsyncThunk(
   "cart/addItem",
   async (item) => {
-    const response = await addCartItem(item);
-    return response.data;
+    try {
+      const response = await addCartItem(item);
+
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 export const deleteCartItemAsync = createAsyncThunk(
   "cart/deleteitem",
   async ({ userID, productID }) => {
-    const response = await deleteCartItem(userID, productID);
-    return response.data;
+    try {
+      const response = await deleteCartItem(userID, productID);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 export const updateCartItemAsync = createAsyncThunk(
   "cart/updateitem",
   async ({ userID, productID, change }) => {
-    const response = await updateCartItem(userID, productID, change);
-    return response.data;
+    try {
+      const response = await updateCartItem(userID, productID, change);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 
@@ -57,8 +90,8 @@ export const cartSlice = createSlice({
       })
       .addCase(getCartItemAsync.rejected, (state, action) => {
         state.pending = false;
-        console.log("rejected", action);
-        toast.error("failed to fetch cart", {
+        const { message } = action.error;
+        toast.error(message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -89,8 +122,8 @@ export const cartSlice = createSlice({
       })
       .addCase(addCartItemAsync.rejected, (state, action) => {
         state.pending = false;
-        state.error = action.error.message;
-        toast.error("adding to the cart failed", {
+        const { message } = action.error;
+        toast.error(message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -106,15 +139,26 @@ export const cartSlice = createSlice({
       })
       .addCase(deleteCartItemAsync.fulfilled, (state, action) => {
         state.pending = false;
-        const { doc } = action.payload;
+        const { doc, message } = action.payload;
         const { userID, ProductID } = doc;
         state.cartvalue = state.cartvalue.filter((item) => {
           return item._id !== userID && item.product._id !== ProductID;
         });
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       })
-      .addCase(deleteCartItemAsync.rejected, (state) => {
+      .addCase(deleteCartItemAsync.rejected, (state, action) => {
         state.pending = false;
-        toast.error("Failed to remove", {
+        const { message } = action.error;
+        toast.error(message, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -169,7 +213,17 @@ export const cartSlice = createSlice({
       })
       .addCase(updateCartItemAsync.rejected, (state, action) => {
         state.pending = false;
-        state.error = action.error.message;
+        const { message } = action.error;
+        toast.error(message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   },
 });

@@ -9,6 +9,7 @@ export default function Product({ items, setProgress, progress }) {
   const navigate = useNavigate();
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
+  const pending = useSelector((state) => state.cart.pending);
 
   if (items == undefined) return null;
 
@@ -88,7 +89,7 @@ export default function Product({ items, setProgress, progress }) {
       });
     }
     setProgress(progress + 100);
-    navigate("/cart");
+    // navigate("/cart");
   };
 
   return (
@@ -133,8 +134,11 @@ export default function Product({ items, setProgress, progress }) {
         <p className="block font-sans text-base  max-sm:text-[13px] font-light leading-relaxed text-inherit antialiased">
           {" "}
           <button
-            className="overflow-hidden relative w-32 p-2 h-12 bg-black text-white border-none rounded-md text-[16px] font-normal cursor-pointer flex items-center justify-center  z-10 group max-mobileSize:w-[6rem] max-mobileSize:h-[2.5rem]"
+            className={`overflow-hidden relative w-32 p-2 h-12 bg-black text-white border-none rounded-md text-[16px] font-normal cursor-pointer flex items-center justify-center  z-10 group max-mobileSize:w-[6rem] max-mobileSize:h-[2.5rem] ${
+              pending ? "opacity-60" : "opacity-100"
+            }`}
             onClick={() => AddToCartClickHandle(items)}
+            disabled={pending}
           >
             Add to cart
             <span className="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>

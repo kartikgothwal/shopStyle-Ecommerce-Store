@@ -126,17 +126,17 @@ const Cart = ({ setProgress, progress }) => {
           } else {
             localStorage.clear();
           }
+          toast.success("Item removed", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
-        toast.success("Item removed", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
         setProgress(progress + 100);
       } catch (error) {
         setProgress(progress + 100);

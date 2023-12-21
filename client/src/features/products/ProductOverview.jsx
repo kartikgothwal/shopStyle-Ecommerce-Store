@@ -78,6 +78,7 @@ const ProductPage = ({ setProgress, progress }) => {
   const productData = useSelector((state) => state.product.productdata);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
+  const pending = useSelector((state) => state.cart.pending);
   useEffect(() => {
     setProgress(progress + 40);
     const value = productData.filter((items) => items._id == productID);
@@ -127,7 +128,7 @@ const ProductPage = ({ setProgress, progress }) => {
         quantity: 1,
       };
       dispatch(addCartItemAsync(newItem));
-      navigate("/cart");
+      // navigate("/cart");
       setProgress(progress + 100);
     } else {
       const data = JSON.parse(localStorage.getItem("cartArray"));
@@ -420,8 +421,11 @@ const ProductPage = ({ setProgress, progress }) => {
                   )}
 
                   <button
-                    className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className={`mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+                      pending ? "opacity-60" : "opacity-100"
+                    }`}
                     onClick={() => AddToCartClickHandle(productVal)}
+                    disabled={pending}
                   >
                     Add to bag
                   </button>
