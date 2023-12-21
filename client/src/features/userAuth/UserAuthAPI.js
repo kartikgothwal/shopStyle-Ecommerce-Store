@@ -23,7 +23,6 @@ export async function userRegistrationFunction(userData) {
 
 export async function checkUserWithRefreshTokenCookie(UserRefreshToken) {
   try {
-     
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/auth/user/authuser`,
       UserRefreshToken

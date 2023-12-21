@@ -12,13 +12,6 @@ const initialState = {
   pending: false,
 };
 
-// export const incrementAsync = createAsyncThunk(
-//   "counter/fetchCount",
-//   async (amount) => {
-//     const response = await fetchCount(amount);
-//     return response.data;
-//   }
-// );
 export const getCartItemAsync = createAsyncThunk(
   "cart/getitems",
   async (userID) => {
@@ -64,7 +57,7 @@ export const cartSlice = createSlice({
       })
       .addCase(getCartItemAsync.rejected, (state, action) => {
         state.pending = false;
-
+        console.log("rejected", action);
         toast.error("failed to fetch cart", {
           position: "top-right",
           autoClose: 3000,
