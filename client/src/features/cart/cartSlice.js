@@ -191,7 +191,7 @@ export const cartSlice = createSlice({
               draggable: true,
               progress: undefined,
               theme: "dark",
-              style: { width: "30rem", textAlign: "center" },
+              // style: { width: "30rem", textAlign: "center" },
             }
           );
         } else {
