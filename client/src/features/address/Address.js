@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import countryCityState from "countrycitystatejson";
-
 import { useFormik } from "formik";
 import { PaddingGiverHoc } from "../../components/hoc";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +32,6 @@ const Address = () => {
         return {};
       },
     });
-  console.log("🚀 ~ file: address.js:28 ~ Address ~ error:", errors);
 
   return (
     <>
@@ -153,8 +151,24 @@ const Address = () => {
                           onBlur={handleBlur}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                          <option value="AF">Afghanistan</option>
-                          <option value="AX">Åland Islands</option>
+                          {countryCityState
+                            .getCountries()
+                            .sort((a, b) => {
+                              const nameA = a.name.toLowerCase();
+                              const nameB = b.name.toLowerCase();
+                              if (nameA < nameB) {
+                                return -1;
+                              } else if (nameA > nameB) {
+                                return 1;
+                              } else {
+                                return 0;
+                              }
+                            })
+                            .map((item) => {
+                              return (
+                                <option value={item.name}>{item.name}</option>
+                              );
+                            })}
                         </select>
                         {errors.country && touched.country ? (
                           <span className="text-red-600 text-[10px]">
@@ -198,15 +212,16 @@ const Address = () => {
                       City
                     </label>
                     <div className="mt-2">
-                      <input
-                        type="text"
-                        name="city"
+                      <select
                         id="city"
+                        name="city"
                         values={values.city}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
-                      />
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      >
+                        {/* { values.country && } */}
+                      </select>
                       {errors.city && touched.city ? (
                         <span className="text-red-600 text-[10px]">
                           {errors.city}
