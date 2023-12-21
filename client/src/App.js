@@ -20,7 +20,7 @@ const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/homecomponents/index"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
-
+const Order = lazy(() => import("./features/order/Order.js"));
 const Cart = lazy(() => import("./features/cart/Cart"));
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")
@@ -130,6 +130,14 @@ const App = () => {
             element={
               <Suspense fallback={<ComponentLoaderAnimation />}>
                 <Cart setProgress={setProgress} progress={progress} />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/order"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <Order setProgress={setProgress} progress={progress} />
               </Suspense>
             }
           />

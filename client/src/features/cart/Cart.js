@@ -236,6 +236,37 @@ const Cart = ({ setProgress, progress }) => {
     },
     [cart, setCart]
   );
+  const handleCheckoutNavigate = () => {
+    if (!cart.length) {
+      toast.error("Cart is empty, Add items", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+    if (userData && userData._id) {
+      navigate("/order");
+    } else {
+      toast.error("Please login before checkout", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+
+      navigate("/user-login");
+    }
+  };
   return (
     <>
       {cart && cart.length ? (
@@ -292,8 +323,7 @@ const Cart = ({ setProgress, progress }) => {
                               cartval.quantity === 1
                                 ? "opacity-75"
                                 : "opacity-100"
-                            }`}
-                            // ${pending ? "opacity-50" : "opacity-100"
+                            } `}
                             onClick={() => handleQuantityChange("dec", cartval)}
                             disabled={cartval.quantity === 1 || pending}
                           >
@@ -314,8 +344,11 @@ const Cart = ({ setProgress, progress }) => {
                         <div className="flex">
                           <button
                             type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                            className={`font-medium text-indigo-600 hover:text-indigo-500  ${
+                              pending ? "opacity-50" : "opacity-100"
+                            }`}
                             onClick={() => RemoveCartHandle(cartval)}
+                            disabled={pending}
                           >
                             Remove
                           </button>
@@ -343,12 +376,13 @@ const Cart = ({ setProgress, progress }) => {
               Shipping and taxes calculated at checkout.
             </p>
             <div className="mt-6">
-              <a
+              <button
                 href="#"
-                className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                onClick={() => handleCheckoutNavigate()}
               >
                 Checkout
-              </a>
+              </button>
             </div>
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
               <p>
