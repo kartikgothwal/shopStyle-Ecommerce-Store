@@ -13,16 +13,16 @@ export const addressValidation = Yup.object({
   country: Yup.string()
     .min(2, "should be min 2 characters!")
     .required("Please select the country"),
-  contact: Yup.number()
-    .min(10, "contact should be 10 digits")
-    .max(10, "contact should be 10 digits")
+  contact: Yup.string()
+    .matches(/^\d{10}$/, "Contact should be exactly 10 digits")
     .required("Please enter the contact"),
+
   countryCode: Yup.string()
     .min(2, "should be min 2 characters!")
     .min(5, "should be max 5 characters!")
     .required("Please select the countryCode"),
-  zipCode: Yup.string()
+  zipCode: Yup.number()
     .min(6, "should be min 6 characters!")
-    .min(8, "should be max 8 characters!")
+    .max(8, "should be max 8 characters!")
     .required("Please select the zipCode"),
 });

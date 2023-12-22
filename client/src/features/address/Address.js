@@ -154,7 +154,7 @@ const Address = () => {
                       </label>
                       <div className="mt-2">
                         <input
-                          type="text"
+                          type="number"
                           name="contact"
                           id="contact"
                           pattern="[0-9]*"
@@ -162,6 +162,7 @@ const Address = () => {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+                          placeholder="e.g.: 8391119900"
                         />
                         {errors.contact && touched.contact ? (
                           <span className="text-red-600 text-[10px]">
