@@ -32,3 +32,18 @@ export async function getAddress(user) {
     return error.response;
   }
 }
+export async function deleteAddress(addressID) {
+  console.log(
+    "🚀 ~ file: addressAPI.js:36 ~ deleteAddress ~ addressID:",
+    addressID
+  );
+  // try {
+  //   return await axios.post(
+  //     `${process.env.REACT_APP_BACKEND_URL}/address/delereaddress`,
+  //     addressID,
+  //     { headers: getToken() }
+  //   );
+  // } catch (error) {
+  //   return error.response;
+  // }
+}

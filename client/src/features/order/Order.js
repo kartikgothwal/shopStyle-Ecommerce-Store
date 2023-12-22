@@ -5,16 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { PageNotFound } from "../../layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Address from "../address/Address";
+import { deleteAddressAsync } from "../address/addressSlice";
 
 const Order = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, SetUser] = useState(null);
   const userData = useSelector((state) => state.user.userData);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
+  const cartDataPending = useSelector((state) => state.cart.pending);
   const userAddress = useSelector((state) => state.address.useraddress);
-  console.log("🚀 ~ file: Order.js:15 ~ Order ~ userAddress:", userAddress);
+  const addressPending = useSelector((state) => state.address.pending);
   useEffect(() => {
     SetUser(userData);
+    window.scrollTo(0, 0);
   }, [userData]);
 
   return (
@@ -164,11 +168,6 @@ const Order = () => {
               <form className="mt-5 grid gap-6">
                 {userAddress && userAddress.length ? (
                   userAddress.map((addressItem) => {
-                    console.log(
-                      "🚀 ~ file: Order.js:167 ~ userAddress.map ~ addressItem:",
-                      addressItem
-                    );
-
                     return (
                       <div className="relative">
                         <input
@@ -204,6 +203,12 @@ const Order = () => {
                             <p className="text-slate-500 text-sm leading-6">
                               {addressItem.contact}
                             </p>
+                            <button
+                              className="mt-4 flex mb-8 w-[4rem] rounded-md bg-transparent  px-1 py-1 font-medium text-blue-600"
+                              onClick={() => dispatch}
+                            >
+                              <span>Remove</span>
+                            </button>
                           </div>
                         </label>
                       </div>

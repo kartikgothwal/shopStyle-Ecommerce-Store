@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addAddress, getAddress } from "./addressAPI";
+import { addAddress, deleteAddress, getAddress } from "./addressAPI";
 import { toast } from "react-toastify";
 const initialState = {
   useraddress: [],
@@ -14,6 +14,14 @@ const initialState = {
 //     return response.data;
 //   }
 // );
+export const deleteAddressAsync = createAsyncThunk(
+  "address/fetch",
+  async (amount) => {
+    const response = await deleteAddress(amount);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
 export const getAddressAsync = createAsyncThunk(
   "address/getaddress",
   async (userID) => {

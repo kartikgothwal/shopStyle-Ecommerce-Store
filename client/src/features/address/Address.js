@@ -27,24 +27,18 @@ const Address = ({ valid }) => {
   useEffect(() => {
     SetUser(userData);
   }, [userData]);
-  const {
-    values,
-    errors,
-    handleSubmit,
-    touched,
-    handleBlur,
-    handleChange,
-  } = useFormik({
-    initialValues: initialValues,
-    validationSchema: addressValidation,
-    onSubmit: (values, action) => {
-      let newItem = {
-        ...values,
-        user: userData._id,
-      };
-      dispatch(addAddressAsync(newItem));
-    },
-  });
+  const { values, errors, handleSubmit, touched, handleBlur, handleChange } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: addressValidation,
+      onSubmit: (values, action) => {
+        let newItem = {
+          ...values,
+          user: userData._id,
+        };
+        dispatch(addAddressAsync(newItem));
+      },
+    });
 
   const handleCountryChange = (event) => {
     const selectedCountry = event.target.value;
@@ -76,7 +70,7 @@ const Address = ({ valid }) => {
   //   }
   // }, [dispatch]);
 
-   return (
+  return (
     <>
       {user && user._id ? (
         <section
@@ -386,8 +380,10 @@ const Address = ({ valid }) => {
                 Cancel
               </button>
               <button
-                type="submit"
-                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                class="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg
+border-blue-600
+border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
               >
                 Save
               </button>

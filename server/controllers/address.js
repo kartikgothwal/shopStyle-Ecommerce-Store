@@ -17,12 +17,23 @@ exports.getaddress = async (req, res) => {
   try {
     const { user } = req.body;
     const doc = await AddressModel.find({ user: user });
-    return res
-      .status(201)
-      .json({ message: "Address fetched", doc: doc });
+    return res.status(201).json({ message: "Address fetched", doc: doc });
   } catch (error) {
     return res
       .status(500)
       .json({ message: "Failed to fetch user address", error: error.message });
+  }
+};
+exports.deleteaddress = async (req, res) => {
+  try {
+    const { addressID } = req.body;
+    console.log(
+      "🚀 ~ file: address.js:32 ~ exports.deleteaddress ~ addressID:",
+      addressID
+    );
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to add address", error: error.message });
   }
 };
