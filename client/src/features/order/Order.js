@@ -225,7 +225,19 @@ const Order = () => {
               <div class="mt-6 border-t border-b py-2">
                 <div class="flex items-center justify-between">
                   <p class="text-sm font-medium text-gray-900">Subtotal</p>
-                  <p class="font-semibold text-gray-900">$399.00</p>
+                  <p class="font-semibold text-gray-900">
+                    ${" "}
+                    {cartStoreValue &&
+                      cartStoreValue
+                        .reduce((acc, currEle) => {
+                          console.log(
+                            "🚀 ~ file: Order.js:241 ~ .reduce ~ currEle:",
+                            currEle
+                          );
+                          return acc + currEle.product.price * currEle.quantity;
+                        }, 0)
+                        .toFixed(2)}
+                  </p>
                 </div>
                 <div class="flex items-center justify-between">
                   <p class="text-sm font-medium text-gray-900">Shipping</p>
@@ -233,7 +245,19 @@ const Order = () => {
                 </div>
                 <div class="mt-6 flex items-center justify-between">
                   <p class="text-sm font-medium text-gray-900">Grand Total</p>
-                  <p class="text-2xl font-semibold text-gray-900">$408.00</p>
+                  <p class="text-2xl font-semibold text-gray-900">
+                    ${" "}
+                    {cartStoreValue &&
+                      (
+                        cartStoreValue.reduce((acc, currEle) => {
+                          console.log(
+                            "🚀 ~ file: Order.js:241 ~ .reduce ~ currEle:",
+                            currEle
+                          );
+                          return acc + currEle.product.price * currEle.quantity;
+                        }, 0) + 8
+                      ).toFixed(2)}
+                  </p>
                 </div>
               </div>
               <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
