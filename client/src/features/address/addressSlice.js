@@ -88,16 +88,16 @@ export const addressSlice = createSlice({
         state.pending = false;
         const { doc, message } = action.payload;
         state.useraddress = doc;
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        // toast.success(message, {
+        //   position: "top-right",
+        //   autoClose: 3000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "colored",
+        // });
       })
       .addCase(getAddressAsync.rejected, (state, action) => {
         state.pending = false;

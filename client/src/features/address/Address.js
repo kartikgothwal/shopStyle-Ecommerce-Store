@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import countryCityState from "countrycitystatejson";
 import { useFormik } from "formik";
-import { PaddingGiverHoc } from "../../components/hoc";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { PageNotFound } from "../../layout";
@@ -13,6 +12,7 @@ const Address = ({ valid }) => {
   const [citiesVal, SetcitiesVal] = useState([]);
   const userData = useSelector((state) => state.user.userData);
   const userAddress = useSelector((state) => state.address.useraddress);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
@@ -30,7 +30,6 @@ const Address = ({ valid }) => {
   const {
     values,
     errors,
-    setValues,
     handleSubmit,
     touched,
     handleBlur,
@@ -71,12 +70,13 @@ const Address = ({ valid }) => {
     SetcitiesVal(countryCityState.getCities(shortname, selectedState));
   };
   // useEffect(() => {
-  //   console.log("again inside")
+  //   console.log("again inside");
   //   if (userData && userData._id) {
   //     dispatch(getAddressAsync({ user: userData._id }));
   //   }
-  // }, [userAddress]);
-  return (
+  // }, [dispatch]);
+
+   return (
     <>
       {user && user._id ? (
         <section

@@ -15,6 +15,7 @@ import {
   addCartItemAsync,
   getCartItemAsync,
 } from "./features/cart/cartSlice.js";
+import { getAddressAsync } from "./features/address/addressSlice.js";
 const Address = lazy(() => import("./features/address/Address.js"));
 const Footer = lazy(() => import("./layout/Footer"));
 const PageNotFound = lazy(() => import("./layout/PageNotFound"));
@@ -64,6 +65,8 @@ const App = () => {
   useEffect(() => {
     if (userData && userData._id) {
       dispatch(getCartItemAsync(userData._id));
+      dispatch(getAddressAsync({ user: userData._id }));
+
     }
   }, [dispatch, userData]);
 
