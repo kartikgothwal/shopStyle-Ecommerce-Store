@@ -5,7 +5,6 @@ import CartReducer from "../features/cart/cartSlice";
 import AddressReducer from "../features/address/addressSlice";
 import orderReducer from "../features/order/orderSlice";
 
-addressSlice;
 export const store = configureStore({
   reducer: {
     user: UserAuthReducer,

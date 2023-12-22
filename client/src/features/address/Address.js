@@ -18,7 +18,6 @@ const Address = () => {
     state: "",
     country: "",
     contact: "",
- 
     zipCode: "",
   };
   const [user, SetUser] = useState(null);
