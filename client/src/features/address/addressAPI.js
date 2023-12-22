@@ -33,17 +33,12 @@ export async function getAddress(user) {
   }
 }
 export async function deleteAddress(addressID) {
-  console.log(
-    "🚀 ~ file: addressAPI.js:36 ~ deleteAddress ~ addressID:",
-    addressID
-  );
-  // try {
-  //   return await axios.post(
-  //     `${process.env.REACT_APP_BACKEND_URL}/address/delereaddress`,
-  //     addressID,
-  //     { headers: getToken() }
-  //   );
-  // } catch (error) {
-  //   return error.response;
-  // }
+  try {
+    return await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/address/deleteaddress/${addressID}`,
+      { headers: getToken() }
+    );
+  } catch (error) {
+    return error.response;
+  }
 }

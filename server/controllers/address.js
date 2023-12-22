@@ -26,11 +26,9 @@ exports.getaddress = async (req, res) => {
 };
 exports.deleteaddress = async (req, res) => {
   try {
-    const { addressID } = req.body;
-    console.log(
-      "🚀 ~ file: address.js:32 ~ exports.deleteaddress ~ addressID:",
-      addressID
-    );
+    const { addressID } = req.params;
+    const doc = await AddressModel.findByIdAndUpdate(addressID);
+    return res.status(201).json({ message: "Address removed", doc: doc });
   } catch (error) {
     return res
       .status(500)

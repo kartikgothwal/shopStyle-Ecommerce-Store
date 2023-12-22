@@ -21,6 +21,11 @@ const Order = () => {
     window.scrollTo(0, 0);
   }, [userData]);
 
+  const handleSavedAddressRemove = (e, addressID) => {
+    e.preventDefault();
+     dispatch(deleteAddressAsync(addressID))
+    
+  };
   return (
     <>
       {user && user._id ? (
@@ -120,48 +125,62 @@ const Order = () => {
                 <span>Back</span>
               </button>
               <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                {cartStoreValue && cartStoreValue.length
-                  ? cartStoreValue.map((item) => {
-                      return (
-                        <div
-                          key={item._id}
-                          className="flex flex-col rounded-lg bg-white sm:flex-row"
-                        >
-                          <div className="h-24 w-28">
-                            {" "}
-                            <img
-                              className="m-2 h-full w-full rounded-md border object-contain object-center cursor-pointer"
-                              src={item.product.thumbnail}
-                              alt={item.product.title}
-                              onClick={() =>
-                                navigate(`/productoverview/${item.product._id}`)
-                              }
-                            />{" "}
-                          </div>
-
-                          <div className="flex w-full flex-col px-4 py-4">
-                            <span
-                              className="font-semibold text-lg cursor-pointer"
-                              onClick={() =>
-                                navigate(`/productoverview/${item.product._id}`)
-                              }
-                            >
-                              {item.product.title}
-                            </span>
-                            <span className="float-right sm:text-sm text-sm   text-gray-400">
-                              ${item.product.price}*{item.quantity}
-                            </span>
-                            <p className="sm:text-base text-sm  font-semibold">
-                              Subtotal: ${" "}
-                              {Number(
-                                item.product.price * item.quantity
-                              ).toFixed(2)}
-                            </p>
-                          </div>
+                {cartStoreValue && cartStoreValue.length ? (
+                  cartStoreValue.map((item) => {
+                    return (
+                      <div
+                        key={item._id}
+                        className="flex flex-col rounded-lg bg-white sm:flex-row"
+                      >
+                        <div className="h-24 w-28">
+                          {" "}
+                          <img
+                            className="m-2 h-full w-full rounded-md border object-contain object-center cursor-pointer"
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
+                            onClick={() =>
+                              navigate(`/productoverview/${item.product._id}`)
+                            }
+                          />{" "}
                         </div>
-                      );
-                    })
-                  : null}
+
+                        <div className="flex w-full flex-col px-4 py-4">
+                          <span
+                            className="font-semibold text-lg cursor-pointer"
+                            onClick={() =>
+                              navigate(`/productoverview/${item.product._id}`)
+                            }
+                          >
+                            {item.product.title}
+                          </span>
+                          <span className="float-right sm:text-sm text-sm   text-gray-400">
+                            ${item.product.price}*{item.quantity}
+                          </span>
+                          <p className="sm:text-base text-sm  font-semibold">
+                            Subtotal: ${" "}
+                            {Number(item.product.price * item.quantity).toFixed(
+                              2
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <>
+                    {cartDataPending &&
+                      new Array(2).fill(undefined).map((values, index) => {
+                        <div className="relative flex w-full animate-pulse gap-2 p-4 border">
+                          <div className="h-12 w-12 rounded- bg-slate-400"></div>
+                          <div className="flex-1">
+                            <div className="mb-1 h-5 w-3/5 rounded-lg bg-slate-400 text-lg"></div>
+                            <div className="h-5 w-[90%] rounded-lg bg-slate-400 text-sm"></div>
+                          </div>
+                          <div className="absolute bottom-5 right-0 h-4 w-4 rounded-full bg-slate-400"></div>
+                        </div>;
+                      })}
+                  </>
+                )}
               </div>
 
               <p className="mt-8 text-lg font-medium">Saved Addresses</p>
@@ -169,7 +188,7 @@ const Order = () => {
                 {userAddress && userAddress.length ? (
                   userAddress.map((addressItem) => {
                     return (
-                      <div className="relative">
+                      <div key={addressItem._id} className="relative">
                         <input
                           className="peer hidden"
                           id="radio_1"
@@ -205,7 +224,9 @@ const Order = () => {
                             </p>
                             <button
                               className="mt-4 flex mb-8 w-[4rem] rounded-md bg-transparent  px-1 py-1 font-medium text-blue-600"
-                              onClick={() => dispatch}
+                              onClick={(e) =>
+                                handleSavedAddressRemove(e, addressItem._id)
+                              }
                             >
                               <span>Remove</span>
                             </button>
@@ -215,7 +236,16 @@ const Order = () => {
                     );
                   })
                 ) : (
-                  <p>No Address has been saved</p>
+                  <>
+                    <div className="relative flex w-full animate-pulse gap-2 p-4 border">
+                      <div className="h-12 w-12 rounded-full bg-slate-400"></div>
+                      <div className="flex-1">
+                        <div className="mb-1 h-5 w-3/5 rounded-lg bg-slate-400 text-lg"></div>
+                        <div className="h-5 w-[90%] rounded-lg bg-slate-400 text-sm"></div>
+                      </div>
+                      <div className="absolute bottom-5 right-0 h-4 w-4 rounded-full bg-slate-400"></div>
+                    </div>
+                  </>
                 )}
               </form>
             </div>
@@ -258,7 +288,8 @@ const Order = () => {
                   </p>
                 </div>
               </div>
-              <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
+              <button className="mt-4 w-full bg-neutral-950 text-neutral-400 border border-neutral-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">
+                <span className="bg-neutral-400 shadow-neutral-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                 Place Order
               </button>
             </div>

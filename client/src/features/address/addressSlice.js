@@ -15,11 +15,18 @@ const initialState = {
 //   }
 // );
 export const deleteAddressAsync = createAsyncThunk(
-  "address/fetch",
-  async (amount) => {
-    const response = await deleteAddress(amount);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
+  "address/deleteaddress",
+  async (addressID) => {
+    try {
+      const response = await deleteAddress(addressID);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 export const getAddressAsync = createAsyncThunk(
@@ -120,6 +127,45 @@ export const addressSlice = createSlice({
           progress: undefined,
           theme: "colored",
         });
+      })
+      .addCase(deleteAddressAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(deleteAddressAsync.rejected, (state, action) => {
+        state.pending = false;
+
+        const { message } = action.error;
+        toast.error(message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .addCase(deleteAddressAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        const { doc, message } = action.payload;
+        const targetIndex = state.useraddress.findIndex((items) => {
+          return items._id == doc._id;
+        });
+        if (targetIndex !== -1) {
+          state.useraddress.splice(targetIndex, 1);
+          state.useraddress = state.useraddress;
+          toast.success(message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
       });
   },
 });

@@ -7,8 +7,8 @@ const addressController = require("../controllers/address");
 router
   .post("/getaddress", UserTokenAuthorization, addressController.getaddress)
   .post("/addaddress", UserTokenAuthorization, addressController.addaddress)
-  .post(
-    "/deleteaddress",
+  .delete(
+    "/deleteaddress/:addressID",
     UserTokenAuthorization,
     addressController.deleteaddress
   );
