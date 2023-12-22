@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchCount } from "./addressAPI";
 
 const initialState = {
-  value: 0,
+  useraddress: {},
   pending: false,
 };
 

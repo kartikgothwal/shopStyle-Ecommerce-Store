@@ -16,13 +16,8 @@ export const addressValidation = Yup.object({
   contact: Yup.string()
     .matches(/^\d{10}$/, "Contact should be exactly 10 digits")
     .required("Please enter the contact"),
-
-  countryCode: Yup.string()
-    .min(2, "should be min 2 characters!")
-    .min(5, "should be max 5 characters!")
-    .required("Please select the countryCode"),
   zipCode: Yup.number()
     .min(6, "should be min 6 characters!")
-    
+
     .required("Please enter the zipCode"),
 });

@@ -14,12 +14,11 @@ const Address = () => {
   const navigate = useNavigate();
   const initialValues = {
     street: "",
-    countryshort: "",
     city: "",
     state: "",
     country: "",
     contact: "",
-    countryCode: "",
+ 
     zipCode: "",
   };
   const [user, SetUser] = useState(null);
@@ -39,10 +38,11 @@ const Address = () => {
     initialValues: initialValues,
     validationSchema: addressValidation,
     onSubmit: (values, action) => {
-      console.log("🚀 ~ file: address.js:43 ~ Address ~ values:", values)
+      console.log("Values", values);
     },
   });
  
+
   const handleCountryChange = (event) => {
     const selectedCountry = event.target.value;
     handleChange(event);
@@ -237,7 +237,7 @@ const Address = () => {
                         type="text"
                         name="street"
                         id="street"
-                        values={values.street}
+                        value={values.street}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
@@ -278,7 +278,9 @@ const Address = () => {
                         )}
                         {statesVal && statesVal.length
                           ? statesVal.map((stateItems) => (
-                              <option key={stateItems} value={stateItems}>{stateItems}</option>
+                              <option key={stateItems} value={stateItems}>
+                                {stateItems}
+                              </option>
                             ))
                           : null}
                       </select>
@@ -319,7 +321,9 @@ const Address = () => {
                         )}
                         {citiesVal && citiesVal.length
                           ? citiesVal.map((cityItems) => (
-                              <option key={cityItems} value={cityItems}>{cityItems}</option>
+                              <option key={cityItems} value={cityItems}>
+                                {cityItems}
+                              </option>
                             ))
                           : null}
                       </select>
@@ -343,7 +347,7 @@ const Address = () => {
                         type="text"
                         name="zipCode"
                         id="zipCode"
-                        values={values.zipCode}
+                        value={values.zipCode}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
