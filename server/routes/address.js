@@ -3,8 +3,8 @@ const router = express.Router();
 const {
   UserTokenAuthorization,
 } = require("../middlewares/validation/usertokenverify");
-
 const addressController = require("../controllers/address");
-
-router.post("/addadress", UserTokenAuthorization, addressController.addadress);
+router
+  .post("/getaddress", UserTokenAuthorization, addressController.getaddress)
+  .post("/addaddress", UserTokenAuthorization, addressController.addaddress);
 exports.router = router;

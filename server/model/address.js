@@ -25,16 +25,12 @@ const AddressSchema = new Schema({
     type: Number,
     validate: {
       validator: function (value) {
-        const isNumberBetweenZeroAndNine = /^[0-9]$/.test(value);
-        const hasTenDigits = /^\d{10}$/.test(value);
-        return isNumberBetweenZeroAndNine && hasTenDigits;
+        return /^\d{10}$/.test(value);
       },
+      message: "Contact must be a 10-digit number",
     },
   },
-  countryCode: {
-    type: String,
-    required: true,
-  },
+
   zipCode: {
     type: String,
     required: true,

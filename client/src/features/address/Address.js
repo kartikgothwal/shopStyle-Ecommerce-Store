@@ -3,14 +3,17 @@ import countryCityState from "countrycitystatejson";
 import { useFormik } from "formik";
 import { PaddingGiverHoc } from "../../components/hoc";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { PageNotFound } from "../../layout";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { addressValidation } from "../../schemas/address";
+import { addAddressAsync, getAddressAsync } from "./addressSlice";
+
 const Address = ({ valid }) => {
   const [statesVal, SetStateval] = useState([]);
   const [citiesVal, SetcitiesVal] = useState([]);
-
+  const userData = useSelector((state) => state.user.userData);
+  const userAddress = useSelector((state) => state.address.useraddress);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
     street: "",
@@ -21,7 +24,6 @@ const Address = ({ valid }) => {
     zipCode: "",
   };
   const [user, SetUser] = useState(null);
-  const userData = useSelector((state) => state.user.userData);
   useEffect(() => {
     SetUser(userData);
   }, [userData]);
@@ -37,7 +39,11 @@ const Address = ({ valid }) => {
     initialValues: initialValues,
     validationSchema: addressValidation,
     onSubmit: (values, action) => {
-      console.log("Values", values);
+      let newItem = {
+        ...values,
+        user: userData._id,
+      };
+      dispatch(addAddressAsync(newItem));
     },
   });
 
@@ -64,13 +70,21 @@ const Address = ({ valid }) => {
       .find((country) => country.name == values.country).shortName;
     SetcitiesVal(countryCityState.getCities(shortname, selectedState));
   };
-
+  // useEffect(() => {
+  //   console.log("again inside")
+  //   if (userData && userData._id) {
+  //     dispatch(getAddressAsync({ user: userData._id }));
+  //   }
+  // }, [userAddress]);
   return (
     <>
       {user && user._id ? (
-        // <section className="mt-[8rem] lg:mx-[10rem]  ">
         <section
-          className={`${valid ? "mt-[2rem]" : "max-sm:mt-[9rem] mt-[11rem] mb-[2rem] lg:mx-[10rem] px-4"}`}
+          className={`${
+            valid
+              ? "mt-[2rem]"
+              : "max-sm:mt-[9rem] mt-[11rem] mb-[2rem] lg:mx-[10rem] px-4"
+          }`}
         >
           <form onSubmit={handleSubmit}>
             <div className="space-y-12">

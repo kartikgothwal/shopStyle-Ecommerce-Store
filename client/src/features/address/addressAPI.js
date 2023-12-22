@@ -1,6 +1,34 @@
 // A mock function to mimic making an async request for data
-export function fetchCount(amount = 1) {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve({ data: amount }), 500)
-  );
+import axios from "axios";
+import Cookies from "js-cookie";
+function getToken() {
+  const refreshToken = Cookies.get("refresh-token");
+  const headers = {
+    Authorization: `Bearer ${refreshToken}`,
+  };
+  return headers;
+}
+export async function addAddress(item) {
+  try {
+    return await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/address/addaddress`,
+      {
+        item: item,
+      },
+      { headers: getToken() }
+    );
+  } catch (error) {
+    return error.response;
+  }
+}
+export async function getAddress(user) {
+  try {
+    return await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/address/getaddress`,
+      user,
+      { headers: getToken() }
+    );
+  } catch (error) {
+    return error.response;
+  }
 }
