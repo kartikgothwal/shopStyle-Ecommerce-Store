@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { PageNotFound } from "../../layout";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { addressValidation } from "../../schemas/address";
-const Address = () => {
+const Address = ({ valid }) => {
   const [statesVal, SetStateval] = useState([]);
   const [citiesVal, SetcitiesVal] = useState([]);
 
@@ -40,7 +40,6 @@ const Address = () => {
       console.log("Values", values);
     },
   });
- 
 
   const handleCountryChange = (event) => {
     const selectedCountry = event.target.value;
@@ -69,11 +68,14 @@ const Address = () => {
   return (
     <>
       {user && user._id ? (
-        <section className="mt-[8rem] lg:mx-[10rem]  ">
+        // <section className="mt-[8rem] lg:mx-[10rem]  ">
+        <section
+          className={`${valid ? "mt-[2rem]" : "max-sm:mt-[9rem] mt-[11rem] mb-[2rem] lg:mx-[10rem] px-4"}`}
+        >
           <form onSubmit={handleSubmit}>
             <div className="space-y-12">
               <div className="border-b border-gray-900/10 pb-12">
-                <h2 className="text-base lg:text-2xl font-semibold leading-7 text-gray-900">
+                <h2 className="text-xl lg:text-2xl font-semibold leading-7 text-gray-900">
                   Personal Information
                 </h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -387,5 +389,4 @@ const Address = () => {
     </>
   );
 };
-
-export default PaddingGiverHoc(Address);
+export default Address;
