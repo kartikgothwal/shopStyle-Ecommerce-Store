@@ -8,9 +8,13 @@ import { PageNotFound } from "../../layout";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { addressValidation } from "../../schemas/address";
 const Address = () => {
+  const [statesVal, SetStateval] = useState([]);
+  const [citiesVal, SetcitiesVal] = useState([]);
+
   const navigate = useNavigate();
   const initialValues = {
     street: "",
+    countryshort: "",
     city: "",
     state: "",
     country: "",
@@ -23,15 +27,46 @@ const Address = () => {
   useEffect(() => {
     SetUser(userData);
   }, [userData]);
-  const { values, errors, handleSubmit, touched, handleBlur, handleChange } =
-    useFormik({
-      initialValues: initialValues,
-      validationSchema: addressValidation,
-      onSubmit: (values, action) => {
-        console.log("🚀 ~ file: address.js:31 ~ Address ~ values:", values);
-        return {};
-      },
-    });
+  const {
+    values,
+    errors,
+    setValues,
+    handleSubmit,
+    touched,
+    handleBlur,
+    handleChange,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema: addressValidation,
+    onSubmit: (values, action) => {
+      return {};
+    },
+  });
+  console.log("🚀 ~ file: address.js:45 ~ Address ~ values:", values);
+
+  const handleCountryChange = (event) => {
+    const selectedCountry = event.target.value;
+    handleChange(event);
+
+    const selectedCountryData = countryCityState
+      .getCountries()
+      .find((country) => country.name === selectedCountry);
+
+    if (selectedCountryData) {
+      const shortname = selectedCountryData.shortName;
+      SetStateval(countryCityState.getStatesByShort(shortname));
+    } else {
+      console.error(`Country not found: ${selectedCountry}`);
+    }
+  };
+  const handleStateChange = (event) => {
+    const selectedState = event.target.value;
+    handleChange(event);
+    const shortname = countryCityState
+      .getCountries()
+      .find((country) => country.name == values.country).shortName;
+    SetcitiesVal(countryCityState.getCities(shortname, selectedState));
+  };
 
   return (
     <>
@@ -146,11 +181,14 @@ const Address = () => {
                         <select
                           id="country"
                           name="country"
-                          values={values.country}
-                          onChange={handleChange}
+                          value={values.country} // Use value for the selected option
+                          onChange={(event) => handleCountryChange(event)}
                           onBlur={handleBlur}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
+                          <option value="" disabled>
+                            Please select a country
+                          </option>
                           {countryCityState
                             .getCountries()
                             .sort((a, b) => {
@@ -166,10 +204,13 @@ const Address = () => {
                             })
                             .map((item) => {
                               return (
-                                <option value={item.name}>{item.name}</option>
+                                <option key={item.name} value={item.name}>
+                                  {item.name}
+                                </option>
                               );
                             })}
                         </select>
+
                         {errors.country && touched.country ? (
                           <span className="text-red-600 text-[10px]">
                             {errors.country}
@@ -204,6 +245,47 @@ const Address = () => {
                     </div>
                   </div>
 
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="state"
+                      className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:text-red-700"
+                    >
+                      State / Province
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        id="state"
+                        name="state"
+                        value={values.state} // Use value for the selected option
+                        onChange={(e) => handleStateChange(e)}
+                        onBlur={handleBlur}
+                        className="block w-full  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      >
+                        {!values.country && (
+                          <option value="" disabled>
+                            Please select a country first
+                          </option>
+                        )}
+                        {values.country && (
+                          <option value="" disabled>
+                            Please select a state
+                          </option>
+                        )}
+                        {statesVal && statesVal.length
+                          ? statesVal.map((stateItems) => (
+                              <option value={stateItems}>{stateItems}</option>
+                            ))
+                          : null}
+                      </select>
+
+                      {errors.state && touched.state ? (
+                        <span className="text-red-600 text-[10px]">
+                          {errors.state}
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+
                   <div className="sm:col-span-2 sm:col-start-1">
                     <label
                       htmlFor="city"
@@ -215,41 +297,30 @@ const Address = () => {
                       <select
                         id="city"
                         name="city"
-                        values={values.city}
+                        value={values.city}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       >
-                        {/* { values.country && } */}
+                        {!values.state && (
+                          <option value="" disabled>
+                            Please select a state first
+                          </option>
+                        )}
+                        {values.state && (
+                          <option value="" disabled>
+                            Please select a city
+                          </option>
+                        )}
+                        {citiesVal && citiesVal.length
+                          ? citiesVal.map((cityItems) => (
+                              <option value={cityItems}>{cityItems}</option>
+                            ))
+                          : null}
                       </select>
                       {errors.city && touched.city ? (
                         <span className="text-red-600 text-[10px]">
                           {errors.city}
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="state"
-                      className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:text-red-700"
-                    >
-                      State / Province
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        name="state"
-                        id="state"
-                        values={values.state}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
-                      />
-                      {errors.state && touched.state ? (
-                        <span className="text-red-600 text-[10px]">
-                          {errors.state}
                         </span>
                       ) : null}
                     </div>

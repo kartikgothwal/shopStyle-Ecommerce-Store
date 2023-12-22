@@ -93,7 +93,7 @@ const Navbar = () => {
 
                     <li className="list-none hover:text-[#654444]">
                       <NavLink
-                        to="#"
+                        to="/myaddress"
                         className="text-[14px] max-sm:text-[11px] font-light"
                       >
                         My Address
