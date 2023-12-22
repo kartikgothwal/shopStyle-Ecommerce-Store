@@ -39,11 +39,10 @@ const Address = () => {
     initialValues: initialValues,
     validationSchema: addressValidation,
     onSubmit: (values, action) => {
-      return {};
+      console.log("🚀 ~ file: address.js:43 ~ Address ~ values:", values)
     },
   });
-  console.log("🚀 ~ file: address.js:45 ~ Address ~ values:", values);
-
+ 
   const handleCountryChange = (event) => {
     const selectedCountry = event.target.value;
     handleChange(event);
@@ -158,11 +157,16 @@ const Address = () => {
                           name="contact"
                           id="contact"
                           pattern="[0-9]*"
-                          values={values.contact}
+                          value={values.contact}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
                           placeholder="e.g.: 8391119900"
+                          style={{
+                            WebkitAppearance: "none",
+                            MozAppearance: "textfield",
+                            margin: 0,
+                          }}
                         />
                         {errors.contact && touched.contact ? (
                           <span className="text-red-600 text-[10px]">
@@ -274,7 +278,7 @@ const Address = () => {
                         )}
                         {statesVal && statesVal.length
                           ? statesVal.map((stateItems) => (
-                              <option value={stateItems}>{stateItems}</option>
+                              <option key={stateItems} value={stateItems}>{stateItems}</option>
                             ))
                           : null}
                       </select>
@@ -315,7 +319,7 @@ const Address = () => {
                         )}
                         {citiesVal && citiesVal.length
                           ? citiesVal.map((cityItems) => (
-                              <option value={cityItems}>{cityItems}</option>
+                              <option key={cityItems} value={cityItems}>{cityItems}</option>
                             ))
                           : null}
                       </select>

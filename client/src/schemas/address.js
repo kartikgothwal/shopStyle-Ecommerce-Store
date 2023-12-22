@@ -23,6 +23,6 @@ export const addressValidation = Yup.object({
     .required("Please select the countryCode"),
   zipCode: Yup.number()
     .min(6, "should be min 6 characters!")
-    .max(8, "should be max 8 characters!")
-    .required("Please select the zipCode"),
+    
+    .required("Please enter the zipCode"),
 });
