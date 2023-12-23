@@ -9,13 +9,13 @@ import { AuthUserCheck } from "./features/userAuth/UserAuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./layout/Navbar.jsx";
-import Main from "./components/filterproductspages/Main.jsx";
 import ComponentLoaderAnimation from "./layout/ComponentLoaderAnimation.jsx";
 import {
   addCartItemAsync,
   getCartItemAsync,
 } from "./features/cart/cartSlice.js";
 import { getAddressAsync } from "./features/address/addressSlice.js";
+const Main = lazy(() => import("./components/filterproductspages/Main.jsx"));
 const Address = lazy(() => import("./features/address/Address.js"));
 const Footer = lazy(() => import("./layout/Footer"));
 const PageNotFound = lazy(() => import("./layout/PageNotFound"));
@@ -31,7 +31,7 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userData);
-  const cartStoreValue = useSelector((state) => state.cart.cartvalue);
+
   useEffect(() => {
     const getCookie = () => {
       const UserRefreshToken = Cookies.get("refresh-token");
@@ -66,7 +66,6 @@ const App = () => {
     if (userData && userData._id) {
       dispatch(getCartItemAsync(userData._id));
       dispatch(getAddressAsync({ user: userData._id }));
-
     }
   }, [dispatch, userData]);
 
