@@ -15,11 +15,11 @@ import {
   getCartItemAsync,
 } from "./features/cart/cartSlice.js";
 import { getAddressAsync } from "./features/address/addressSlice.js";
-const Main = lazy(() => import("./components/filterproductspages/Main.jsx"));
+const Main = lazy(() => import("./components/FilterProductsPages/Main.jsx"));
 const Address = lazy(() => import("./features/address/Address.js"));
 const Footer = lazy(() => import("./layout/Footer"));
 const PageNotFound = lazy(() => import("./layout/PageNotFound"));
-const Home = lazy(() => import("./components/homecomponents"));
+const Home = lazy(() => import("./components/HomeComponents/Homes.jsx"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
 const Order = lazy(() => import("./features/order/Order.js"));
