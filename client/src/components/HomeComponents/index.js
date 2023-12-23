@@ -9,6 +9,7 @@ import ForWardrobe from "./ForWardrobe";
 import NewLetter from "./NewLetter";
 import Home from "./Home";
 export {
+  Home,
   HomeCarousel,
   ProductsCategory,
   Brands,
@@ -19,4 +20,3 @@ export {
   ForWardrobe,
   NewLetter,
 };
-export default Home;
