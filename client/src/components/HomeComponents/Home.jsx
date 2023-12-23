@@ -8,7 +8,7 @@ import {
   WeddingsSpecial,
   ForWardrobe,
   NewLetter,
-} from "./index";
+} from "./index"
 
 const Home = () => {
   return (
