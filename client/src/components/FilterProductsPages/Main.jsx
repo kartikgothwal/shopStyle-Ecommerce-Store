@@ -169,7 +169,7 @@ const Main = ({ setProgress, progress }) => {
         setProgress(progress + 100);
       } catch (error) {
         console.error("Error during request:", error);
-        alert("Error found");
+        alert("Something went wrong, Please check your connection");
         setProgress(progress + 100);
       } finally {
         window.scrollTo(0, 0);

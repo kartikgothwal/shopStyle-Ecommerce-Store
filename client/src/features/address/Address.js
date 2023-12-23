@@ -3,7 +3,7 @@ import countryCityState from "countrycitystatejson";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { PageNotFound } from "../../layout";
+import { ButtonLoadingAnimation, PageNotFound } from "../../layout";
 import { addressValidation } from "../../schemas/address";
 import { addAddressAsync } from "./addressSlice";
 
@@ -12,7 +12,7 @@ const Address = ({ valid }) => {
   const [citiesVal, SetcitiesVal] = useState([]);
   const userData = useSelector((state) => state.user.userData);
   const userAddress = useSelector((state) => state.address.useraddress);
-
+  const AddressState = useSelector((state) => state.address);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValues = {
@@ -379,10 +379,8 @@ const Address = ({ valid }) => {
               >
                 Cancel
               </button>
-              <button
-                className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-              >
-                Save
+              <button className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] flex gap-4 justify-center items-center">
+                Save {AddressState.pending ? <ButtonLoadingAnimation /> : null}
               </button>
             </div>
           </form>

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { DataLoaderAnimation, PageNotFound } from "../../layout";
+import {
+  ButtonLoadingAnimation,
+  DataLoaderAnimation,
+  PageNotFound,
+} from "../../layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Address from "../address/Address";
 import { deleteAddressAsync } from "../address/addressSlice";
 import { toast } from "react-toastify";
 import { PaddingGiverHoc } from "../../components/hoc";
- 
+import { attemptPaymentAsync } from "../payment/paymentSlice";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -19,6 +23,7 @@ const Order = () => {
   const cartDataPending = useSelector((state) => state.cart.pending);
   const userAddress = useSelector((state) => state.address.useraddress);
   const addressPending = useSelector((state) => state.address.pending);
+  const payment = useSelector((state) => state.payment);
   useEffect(() => {
     SetUser(userData);
     window.scrollTo(0, 0);
@@ -42,8 +47,17 @@ const Order = () => {
         theme: "light",
       });
     }
-    alert("Thank you");
+    const totalAmount =
+      cartStoreValue.reduce((acc, currEle) => {
+        return acc + currEle.product.price * currEle.quantity;
+      }, 0) + 8;
+    dispatch(attemptPaymentAsync(totalAmount));
   };
+  useEffect(() => {
+    if (!userAddress.length) {
+      SetChoosenAddress(null);
+    }
+  }, [userAddress]);
   return (
     <>
       {user && user._id ? (
@@ -336,11 +350,12 @@ const Order = () => {
                     </div>
                   </div>
                   <button
-                    className="mt-4 w-full bg-neutral-950 text-neutral-400 border border-neutral-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+                    className="mt-4 w-full bg-neutral-950 text-neutral-400 border border-neutral-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group flex gap-4 justify-center items-center"
                     onClick={(e) => handlePlaceOrderClick(e)}
                   >
                     <span className="bg-neutral-400 shadow-neutral-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
-                    Place Order
+                    Place Order{" "}
+                    {payment.pending ? <ButtonLoadingAnimation /> : null}
                   </button>
                 </div>
               </div>

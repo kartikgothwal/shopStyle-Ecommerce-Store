@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { signUpSchema } from "../../schemas";
-import ButtonLoadingAnimation from "../../ButtonLoadingAnimation";
+import { ButtonLoadingAnimation } from "../../layout";
 const UserRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const UserRegister = () => {
             className=" gap-4 h-full w-full  flex flex-col  "
           >
             <div className="flex flex-col  gap-1">
-              <label  htmlFor="firstname">
+              <label htmlFor="firstname">
                 First name:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -79,7 +79,7 @@ const UserRegister = () => {
               />
             </div>
             <div className="flex flex-col  gap-1">
-              <label  htmlFor="lastname">
+              <label htmlFor="lastname">
                 Last name:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -100,7 +100,7 @@ const UserRegister = () => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label  htmlFor="email">
+              <label htmlFor="email">
                 Email:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>
@@ -119,7 +119,7 @@ const UserRegister = () => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label  htmlFor="password">
+              <label htmlFor="password">
                 Password:
                 <span className="  after:content-['*'] text-red-800 after:text-xs after:mr-2"></span>
               </label>

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { signInSchema } from "../../schemas";
 import { useNavigate } from "react-router-dom";
+import { ButtonLoadingAnimation } from "../../layout";
 
 const UserLogin = () => {
   const dispatch = useDispatch();
@@ -97,7 +98,7 @@ const UserLogin = () => {
               type="submit"
               className="max-md:w-[100%]  h-10 hover:border   transition-color duration-300 hover:bg-transparent px-10 py-[-2] my-4 rounded  bg-black hover:text-black hover:border-black z-20 text-white md:ml[-20px] w-full"
             >
-              Sign In
+              Sign In {users.pending ? <ButtonLoadingAnimation /> : null}
             </button>
           </form>
         </div>
