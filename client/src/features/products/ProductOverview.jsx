@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { RadioGroup } from "@headlessui/react";
- 
+
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { PaddingGiverHoc } from "../../components/hoc";
+import { PaddingGiverHoc } from "../../components/hoc/PaddingGiverHoc";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
