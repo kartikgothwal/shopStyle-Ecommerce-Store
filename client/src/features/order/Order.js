@@ -6,10 +6,12 @@ import { DataLoaderAnimation, PageNotFound } from "../../layout";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Address from "../address/Address";
 import { deleteAddressAsync } from "../address/addressSlice";
+import { toast } from "react-toastify";
 
 const Order = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [choosenAddress, SetChoosenAddress] = useState(null);
   const [user, SetUser] = useState(null);
   const userData = useSelector((state) => state.user.userData);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
@@ -24,6 +26,22 @@ const Order = () => {
   const handleSavedAddressRemove = (e, addressID) => {
     e.preventDefault();
     dispatch(deleteAddressAsync(addressID));
+  };
+  const handlePlaceOrderClick = (e) => {
+    e.preventDefault();
+    if (!choosenAddress) {
+      return toast.warn("Please add and choose an address first", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    alert("Thank you");
   };
   return (
     <>
@@ -197,18 +215,25 @@ const Order = () => {
                     {userAddress && userAddress.length ? (
                       userAddress.map((addressItem) => {
                         return (
-                          <div key={addressItem._id} className="relative">
+                          <div
+                            key={addressItem._id}
+                            className={`relative cursor-pointer  `}
+                            onClick={() => SetChoosenAddress(addressItem)}
+                          >
                             <input
                               className="peer hidden"
                               id="radio_1"
                               type="radio"
                               name="radio"
-                              checked
+                              checked={
+                                choosenAddress &&
+                                choosenAddress._id == addressItem._id
+                              }
                             />
                             <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                             <label
                               className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                              htmlFor="radio_1"
+                              htmlFor={`radio_${addressItem._id}`}
                             >
                               <img
                                 className="w-14 object-contain"
@@ -309,7 +334,10 @@ const Order = () => {
                       </p>
                     </div>
                   </div>
-                  <button className="mt-4 w-full bg-neutral-950 text-neutral-400 border border-neutral-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">
+                  <button
+                    className="mt-4 w-full bg-neutral-950 text-neutral-400 border border-neutral-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+                    onClick={(e) => handlePlaceOrderClick(e)}
+                  >
                     <span className="bg-neutral-400 shadow-neutral-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                     Place Order
                   </button>
