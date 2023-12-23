@@ -43,12 +43,12 @@ export const paymentSlice = createSlice({
           key: apiKeySecret,
           amount: order.amount,
           currency: "INR",
-          name: "Acme Corp",
+          name: "Payment methods",
           description: "Test Transaction",
           image:
             "https://avatars.githubusercontent.com/u/127651456?s=400&u=ac7f56901b779fe11e6a69b03ad8ac4d34edd692&v=4",
           order_id: order.id,
-          callback_url: "http://localhost:8080/payment/api/paymentverify",
+          callback_url: `${process.env.REACT_APP_BACKEND_URL}/payment/api/paymentverify`,
           prefill: {
             name: "Gaurav Kumar",
             email: "gaurav.kumar@example.com",

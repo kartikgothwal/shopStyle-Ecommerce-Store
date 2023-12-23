@@ -15,7 +15,7 @@ exports.checkOut = async (req, res) => {
     return res.status(500).json({
       message: "Failed to redirect to payment",
       error: error.message,
-      success: false, 
+      success: false,
     });
   }
 };
@@ -23,6 +23,7 @@ exports.checkOut = async (req, res) => {
 exports.paymentVerification = async (req, res) => {
   try {
     console.log("paymentVerification", req.body);
+    return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json({
       message: "Payment verification failed",

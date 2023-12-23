@@ -5,7 +5,6 @@ const {
 } = require("../middlewares/validation/usertokenverify");
 const PaymentController = require("../controllers/payment");
 router
-
   .post("/checkout", UserTokenAuthorization, PaymentController.checkOut)
   .post("/paymentverify", PaymentController.paymentVerification);
 exports.router = router;
