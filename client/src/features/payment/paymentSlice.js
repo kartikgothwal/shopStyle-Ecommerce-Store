@@ -12,7 +12,6 @@ export const attemptPaymentAsync = createAsyncThunk(
   async (amount) => {
     try {
       const response = await attemptpayment(amount);
-      console.log("🚀 ~ file: paymentSlice.js:15 ~ response:", response);
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
@@ -34,31 +33,36 @@ export const paymentSlice = createSlice({
         state.pending = true;
       })
       .addCase(attemptPaymentAsync.fulfilled, (state, action) => {
+        const { apiKeySecret, order } = action.payload;
+        console.log(
+          "🚀 ~ file: paymentSlice.js:37 ~ .addCase ~ apiKeySecret:",
+          apiKeySecret
+        );
         state.pending = false;
         var options = {
-          "key": "YOUR_KEY_ID", 
-          "amount": "50000",  
-          "currency": "INR",
-          "name": "Acme Corp",
-          "description": "Test Transaction",
-          "image": "https://example.com/your_logo",
-          "order_id": "order_IluGWxBm9U8zJ8",  
-          "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
-          "prefill": {
-              "name": "Gaurav Kumar",
-              "email": "gaurav.kumar@example.com",
-              "contact": "9000090000"
+          key: apiKeySecret,
+          amount: order.amount,
+          currency: "INR",
+          name: "Acme Corp",
+          description: "Test Transaction",
+          image:
+            "https://avatars.githubusercontent.com/u/127651456?s=400&u=ac7f56901b779fe11e6a69b03ad8ac4d34edd692&v=4",
+          order_id: order.id,
+          callback_url: "http://localhost:8080/payment/api/paymentverify",
+          prefill: {
+            name: "Gaurav Kumar",
+            email: "gaurav.kumar@example.com",
+            contact: "9000090000",
           },
-          "notes": {
-              "address": "Razorpay Corporate Office"
+          notes: {
+            address: "Razorpay Corporate Office",
           },
-          "theme": {
-              "color": "#3399cc"
-          }
-      };
-      var rzp1 = new Razorpay(options);
-      document.getElementById('rzp-button1').onclick = function(e){
-          rzp1.open();
+          theme: {
+            color: "#3399cc",
+          },
+        };
+        const razor = new window.Razorpay(options);
+        razor.open();
       })
       .addCase(attemptPaymentAsync.rejected, (state, action) => {
         state.pending = false;
