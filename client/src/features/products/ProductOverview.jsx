@@ -10,7 +10,8 @@ import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { PaddingGiverHoc } from "../../components/hoc/PaddingGiverHoc";
+import { PaddingGiverHoc } from "../../components/hoc";
+ 
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",

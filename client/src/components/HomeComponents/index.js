@@ -7,9 +7,8 @@ import JustLaunched from "./JustLaunched";
 import WeddingsSpecial from "./WeddingsSpecial";
 import ForWardrobe from "./ForWardrobe";
 import NewLetter from "./NewLetter";
-import Home from "./Homes";
+
 export {
-  Home,
   HomeCarousel,
   ProductsCategory,
   Brands,
