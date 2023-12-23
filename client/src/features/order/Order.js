@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PaddingGiverHoc } from "../../components/hoc";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DataLoaderAnimation, PageNotFound } from "../../layout";
@@ -7,6 +7,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Address from "../address/Address";
 import { deleteAddressAsync } from "../address/addressSlice";
 import { toast } from "react-toastify";
+import { PaddingGiverHoc } from "../../components/hoc";
 
 const Order = () => {
   const navigate = useNavigate();

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { PaddingGiverHoc } from "../../components/hoc";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,6 +10,7 @@ import {
   updateCartItemAsync,
 } from "./cartSlice";
 import { DataLoaderAnimation } from "../../layout";
+import { PaddingGiverHoc } from "../../components/hoc";
 const Cart = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

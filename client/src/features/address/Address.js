@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { PageNotFound } from "../../layout";
 import { addressValidation } from "../../schemas/address";
-import { addAddressAsync, getAddressAsync } from "./addressSlice";
+import { addAddressAsync } from "./addressSlice";
 
 const Address = ({ valid }) => {
   const [statesVal, SetStateval] = useState([]);
