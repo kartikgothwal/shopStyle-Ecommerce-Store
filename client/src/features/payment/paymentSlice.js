@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { attemptpayment, getToken } from "./paymentAPI";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   paymentdata: [],
@@ -10,14 +11,14 @@ const initialState = {
 
 export const attemptPaymentAsync = createAsyncThunk(
   "payment/attemptpayment",
-  async ({ totalAmount, orderInfo }) => {
+  async ({ totalAmount, orderInfo, navigate }) => {
     try {
       const response = await attemptpayment(totalAmount);
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
       }
-      return { ...response.data, orderInfo };
+      return { ...response.data, orderInfo, navigate };
     } catch (error) {
       throw error;
     }
@@ -34,7 +35,7 @@ export const paymentSlice = createSlice({
         state.pending = true;
       })
       .addCase(attemptPaymentAsync.fulfilled, (state, action) => {
-        const { apiKeySecret, order, orderInfo } = action.payload;
+        const { apiKeySecret, order, orderInfo, navigate } = action.payload;
         state.pending = false;
         var options = {
           key: apiKeySecret,
@@ -57,24 +58,18 @@ export const paymentSlice = createSlice({
           theme: {
             color: "#3399cc",
           },
-          handler: async function (response) {
-            await axios
+          handler: function (response) {
+            axios
               .post(
                 `${process.env.REACT_APP_BACKEND_URL}/payment/api/paymentverify`,
                 { response, order, orderInfo },
                 { headers: getToken() }
               )
-              .then((response) => {
-                console.log(
-                  "🚀 ~ file: paymentSlice.js:69 ~ .then ~ data:",
-                  response.data
-                );
-                const { message, orderdoc, doc } = response.data;
-                state.paymentdata.push(doc);
-                state.paymentdata = state.paymentdata;
+              .then((axiosResponse) => {
+                const { message, orderdoc, doc } = axiosResponse.data;
                 toast(message, {
                   position: "top-center",
-                  autoClose: 5000,
+                  autoClose: 3000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
@@ -82,6 +77,7 @@ export const paymentSlice = createSlice({
                   progress: undefined,
                   theme: "light",
                 });
+                navigate("/ordersuccessful");
               })
               .catch((error) => {
                 console.log(

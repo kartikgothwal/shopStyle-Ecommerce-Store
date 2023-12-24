@@ -57,7 +57,7 @@ const Order = () => {
       user: userData._id,
       cartdata: cartStoreValue,
     };
-    dispatch(attemptPaymentAsync({ totalAmount, orderInfo }));
+    dispatch(attemptPaymentAsync({ totalAmount, orderInfo, navigate }));
   };
   useEffect(() => {
     if (!userAddress.length) {
