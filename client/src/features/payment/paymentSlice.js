@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { attemptpayment, getToken } from "./paymentAPI";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
   paymentdata: [],
@@ -36,7 +35,7 @@ export const paymentSlice = createSlice({
       })
       .addCase(attemptPaymentAsync.fulfilled, (state, action) => {
         const { apiKeySecret, order, orderInfo, navigate } = action.payload;
-        state.pending = false;
+
         var options = {
           key: apiKeySecret,
           amount: order.amount,
@@ -77,7 +76,7 @@ export const paymentSlice = createSlice({
                   progress: undefined,
                   theme: "light",
                 });
-                navigate("/ordersuccessful");
+                navigate("/ordersuccessful", { state: orderdoc });
               })
               .catch((error) => {
                 console.log(
@@ -87,6 +86,7 @@ export const paymentSlice = createSlice({
               });
           },
         };
+        state.pending = false;
         const razor = new window.Razorpay(options);
         razor.open();
       })

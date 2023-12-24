@@ -15,11 +15,13 @@ import weddingOne from "./wedding-one.jpg";
 import weddingTwo from "./weddingTwo.jpg";
 import electronicsOne from "./electronicsOne.webp";
 import electronicsTwo from "./electronicsTwo.webp";
+import user from './user.webp'
 export {
   electronicsOne,
   electronicsTwo,
   weddingOne,
   weddingTwo,
+  user,
   winterOne,
   winterTwo,
   winterThree,
