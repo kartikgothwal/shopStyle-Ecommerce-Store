@@ -8,11 +8,11 @@ export function getToken() {
   return headers;
 }
 
-export async function getOrders(amount) {
+export async function getOrders(orderInfo) {
   try {
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/payment/api/checkout`,
-      { amount },
+      { orderInfo },
       { headers: getToken() }
     );
   } catch (error) {

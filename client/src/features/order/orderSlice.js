@@ -2,22 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getOrders } from "./orderAPI";
 
 const initialState = {
-  value: 0,
+  userorders: [],
   pending: false,
 };
 
-// export const incrementAsync = createAsyncThunk(
-//   "order/fetch",
-//   async (amount) => {
-//     const response = await fetchCount(amount);
-//     return response.data;
-//   }
-// );
 export const getOrdersAsync = createAsyncThunk(
   "order/fetch",
-  async (amount) => {
+  async (orderInfo) => {
     try {
-      const response = await getOrders(amount);
+      const response = await getOrders(orderInfo);
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
@@ -32,10 +25,19 @@ export const getOrdersAsync = createAsyncThunk(
 export const orderSlice = createSlice({
   name: "order",
   initialState,
-
   reducers: {},
-
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getOrdersAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(getOrdersAsync.fulfilled, (state, action) => {
+        state.pending = false;
+      })
+      .addCase(getOrdersAsync.rejected, (state, action) => {
+        state.pending = false;
+      });
+  },
 });
 
 export const {} = orderSlice.actions;

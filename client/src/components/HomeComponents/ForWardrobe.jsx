@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { navLinks } from  "../../constants";
+
 import { styles } from "../../utils/Style";
-import { PaddingGiverHoc } from  "../hoc";
-import { electronicsOne, electronicsTwo } from "../../assets";
+import { PaddingGiverHoc } from "../hoc";
+
 import StarIcon from "@mui/icons-material/Star";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { useSelector } from "react-redux";
-import { BigCardShimmerEffect } from  "../../layout";
+import { BigCardShimmerEffect } from "../../layout";
 import { useNavigate } from "react-router-dom";
 
 const ProductCategoryCard = ({ items }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <div className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col" onClick={()=>navigate(`productoverview/${items._id}`)}>
+    <div
+      className="border-3 cursor-pointer z-2 h-[30rem] max-sm:h-[20rem]  max-sm:w-[15rem] max-w-[200px] max-sm:min-w-[12rem] min-w-[20rem] p-1 flex flex-col"
+      onClick={() => navigate(`productoverview/${items._id}`)}
+    >
       <aside className="h-full w-full overflow-hidden">
         <img
           src={items.images[0]}
@@ -133,7 +136,9 @@ const ForWardrobe = () => {
                     </>
                   );
                 })
-              : testArr.map((items) => <BigCardShimmerEffect />)}
+              : testArr.map((items, index) => (
+                  <BigCardShimmerEffect key={index} />
+                ))}
           </div>
         </div>
         <button

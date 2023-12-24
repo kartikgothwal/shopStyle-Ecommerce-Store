@@ -2,12 +2,15 @@ import { PaddingGiverHoc } from "../../components/hoc";
 import { user } from "../../assets";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrdersAsync } from "./orderSlice";
 
 const OrderSuccessful = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const orderData = location.state;
   useEffect(() => {
-
+    dispatch(getOrdersAsync(orderData));
   }, [orderData]);
 
   return (
@@ -50,22 +53,25 @@ const OrderSuccessful = () => {
                         </h3>
                         <div className="flex justify-start items-start flex-col space-y-2">
                           <p className="text-sm leading-none text-gray-800">
-                            <span className=" text-gray-600">Style: </span> Italic
-                            Minimal Design
+                            <span className=" text-gray-600">Style: </span>{" "}
+                            Italic Minimal Design
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className=" text-gray-600">Size: </span> Small
                           </p>
                           <p className="text-sm leading-none text-gray-800">
-                            <span className=" text-gray-600">Color: </span> Light
-                            Blue
+                            <span className=" text-gray-600">Color: </span>{" "}
+                            Light Blue
                           </p>
                         </div>
                       </div>
                       <div className="flex justify-between space-x-8 items-start w-full">
                         <p className="text-base xl:text-lg leading-6">
                           $36.00{" "}
-                          <span className="text-red-300 line-through"> $45.00</span>
+                          <span className="text-red-300 line-through">
+                            {" "}
+                            $45.00
+                          </span>
                         </p>
                         <p className="text-base xl:text-lg leading-6 text-gray-800">
                           01
@@ -96,22 +102,25 @@ const OrderSuccessful = () => {
                         </h3>
                         <div className="flex justify-start items-start flex-col space-y-2">
                           <p className="text-sm leading-none text-gray-800">
-                            <span className=" text-gray-600">Style: </span> Italic
-                            Minimal Design
+                            <span className=" text-gray-600">Style: </span>{" "}
+                            Italic Minimal Design
                           </p>
                           <p className="text-sm leading-none text-gray-800">
                             <span className=" text-gray-600">Size: </span> Small
                           </p>
                           <p className="text-sm leading-none text-gray-800">
-                            <span className=" text-gray-600">Color: </span> Light
-                            Blue
+                            <span className=" text-gray-600">Color: </span>{" "}
+                            Light Blue
                           </p>
                         </div>
                       </div>
                       <div className="flex justify-between space-x-8 items-start w-full">
                         <p className="text-base xl:text-lg leading-6">
                           $20.00{" "}
-                          <span className="text-red-300 line-through"> $30.00</span>
+                          <span className="text-red-300 line-through">
+                            {" "}
+                            $30.00
+                          </span>
                         </p>
                         <p className="text-base xl:text-lg leading-6 text-gray-800">
                           01
@@ -133,7 +142,9 @@ const OrderSuccessful = () => {
                         <p className="text-base leading-4 text-gray-800">
                           Subtotal
                         </p>
-                        <p className="text-base  leading-4 text-gray-600">$56.00</p>
+                        <p className="text-base  leading-4 text-gray-600">
+                          $56.00
+                        </p>
                       </div>
                       <div className="flex justify-between items-center w-full">
                         <p className="text-base leading-4 text-gray-800">
@@ -150,7 +161,9 @@ const OrderSuccessful = () => {
                         <p className="text-base leading-4 text-gray-800">
                           Shipping
                         </p>
-                        <p className="text-base  leading-4 text-gray-600">$8.00</p>
+                        <p className="text-base  leading-4 text-gray-600">
+                          $8.00
+                        </p>
                       </div>
                     </div>
                     <div className="flex justify-between items-center w-full">
@@ -227,13 +240,13 @@ const OrderSuccessful = () => {
                           d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z"
                           stroke="currentColor"
                           strokeLinecap="round"
-                           strokeLinejoin="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M3 7L12 13L21 7"
                           stroke="currentColor"
                           strokeLinecap="round"
-                           strokeLinejoin="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                       <p className="cursor-pointer text-sm leading-5 ">

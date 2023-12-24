@@ -31,3 +31,13 @@ exports.addOrders = async (req, res) => {
       .json({ message: "Failed to order", error: error.message });
   }
 };
+
+exports.getOrders = async (req, res) => {
+  try {
+    console.log("🚀 ~ file: order.js:36 ~ exports.getOrders= ~ req:", req.body);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to order", error: error.message });
+  }
+};

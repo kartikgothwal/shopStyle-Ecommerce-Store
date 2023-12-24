@@ -6,5 +6,7 @@ const {
 } = require("../middlewares/validation/usertokenverify");
 const orderController = require("../controllers/order");
 
-router.post("/addorder", UserTokenAuthorization, orderController.addOrders);
+router
+  .post("/getorders", UserTokenAuthorization, orderController.getOrders)
+  .post("/addorder", UserTokenAuthorization, orderController.addOrders);
 exports.router = router;
