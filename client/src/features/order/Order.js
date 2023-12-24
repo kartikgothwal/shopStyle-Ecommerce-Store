@@ -51,7 +51,13 @@ const Order = () => {
       cartStoreValue.reduce((acc, currEle) => {
         return acc + currEle.product.price * currEle.quantity;
       }, 0) + 8;
-    dispatch(attemptPaymentAsync(totalAmount));
+
+    const orderInfo = {
+      address: choosenAddress,
+      user: userData._id,
+      cartdata: cartStoreValue,
+    };
+    dispatch(attemptPaymentAsync({ totalAmount, orderInfo }));
   };
   useEffect(() => {
     if (!userAddress.length) {

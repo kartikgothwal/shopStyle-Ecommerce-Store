@@ -10,14 +10,14 @@ const initialState = {
 
 export const attemptPaymentAsync = createAsyncThunk(
   "payment/attemptpayment",
-  async (amount) => {
+  async ({ totalAmount, orderInfo }) => {
     try {
-const response = await attemptpayment(amount);      
+      const response = await attemptpayment(totalAmount);
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
       }
-      return response.data;
+      return { ...response.data, orderInfo };
     } catch (error) {
       throw error;
     }
@@ -34,11 +34,8 @@ export const paymentSlice = createSlice({
         state.pending = true;
       })
       .addCase(attemptPaymentAsync.fulfilled, (state, action) => {
-        const { apiKeySecret, order } = action.payload;
-        console.log(
-          "🚀 ~ file: paymentSlice.js:37 ~ .addCase ~ apiKeySecret:",
-          apiKeySecret
-        );
+        const { apiKeySecret, order, orderInfo } = action.payload;
+
         state.pending = false;
         var options = {
           key: apiKeySecret,
@@ -66,7 +63,7 @@ export const paymentSlice = createSlice({
             await axios
               .post(
                 `${process.env.REACT_APP_BACKEND_URL}/payment/api/paymentverify`,
-                response
+                { response, order, orderInfo }
               )
               .then((data) => {
                 console.log(
