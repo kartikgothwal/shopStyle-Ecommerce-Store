@@ -16,16 +16,16 @@ exports.addOrders = async (req, res) => {
         };
       }),
       totalamount: amount,
-      orderstatus: "Booked",
+      orderstatus: "order placed",
       payment: paymentId,
       address: address._id,
     };
     const orderdoc = await OrderModel.create(newOrderItem);
-    console.log(
-      "🚀 ~ file: order.js:24 ~ exports.addOrders= ~ orderdoc:",
-      orderdoc
-    )
-  } catch (error){
+    return res.status(200).json({
+      message: "Order Placed, Thankyou for ordering",
+      orderdoc: orderdoc,
+    });
+  } catch (error) {
     return res
       .status(500)
       .json({ message: "Failed to order", error: error.message });

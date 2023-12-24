@@ -35,7 +35,6 @@ export const paymentSlice = createSlice({
       })
       .addCase(attemptPaymentAsync.fulfilled, (state, action) => {
         const { apiKeySecret, order, orderInfo } = action.payload;
-
         state.pending = false;
         var options = {
           key: apiKeySecret,
@@ -59,18 +58,30 @@ export const paymentSlice = createSlice({
             color: "#3399cc",
           },
           handler: async function (response) {
-            console.log("🚀 ~ file: paymentSlice.js:65 ~ response:", response);
             await axios
               .post(
                 `${process.env.REACT_APP_BACKEND_URL}/payment/api/paymentverify`,
                 { response, order, orderInfo },
                 { headers: getToken() }
               )
-              .then((data) => {
+              .then((response) => {
                 console.log(
-                  "🚀 ~ file: paymentSlice.js:69 ~ ).then ~ data:",
-                  data
+                  "🚀 ~ file: paymentSlice.js:69 ~ .then ~ data:",
+                  response.data
                 );
+                const { message, orderdoc, doc } = response.data;
+                state.paymentdata.push(doc);
+                state.paymentdata = state.paymentdata;
+                toast(message, {
+                  position: "top-center",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
               })
               .catch((error) => {
                 console.log(

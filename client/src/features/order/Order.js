@@ -243,13 +243,14 @@ const Order = () => {
                           >
                             <input
                               className="peer hidden"
-                              id="radio_1"
+                              id={`radio_${addressItem._id}`}
                               type="radio"
                               name="radio"
                               checked={
                                 choosenAddress &&
-                                choosenAddress._id == addressItem._id
+                                choosenAddress._id === addressItem._id
                               }
+                              onChange={() => SetChoosenAddress(addressItem)}
                             />
                             <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                             <label

@@ -39,7 +39,7 @@ exports.paymentVerification = async (req, res) => {
     if (isAuthentic) {
       const paymentdata = {
         user: orderInfo.user,
-        amount: order.amount,
+        amount: Number(order.amount / 100),
         ...response,
         payment_status: "success",
       };
@@ -54,7 +54,7 @@ exports.paymentVerification = async (req, res) => {
         `${process.env.REACT_APP_BACKEND_URL}/order/addorder`,
         {
           orderInfo: orderInfo,
-          amount: order.amount,
+          amount: Number(order.amount / 100),
           paymentId: doc._id,
         },
         {
@@ -63,7 +63,22 @@ exports.paymentVerification = async (req, res) => {
           },
         }
       );
-      return res.status(200).json({ success: true });
+      if (addOrderResponse.status >= 400) {
+        return res.status(500).json({
+          message: "Failed to order",
+          error: error.message,
+          success: false,
+        });
+      } else {
+        const { orderdoc, message } = addOrderResponse.data;
+        doc.order = orderdoc._id;
+        await doc.save();
+        return res.status(201).json({
+          message: message,
+          orderdoc,
+          doc,
+        });
+      }
     } else {
       const paymentdata = {
         user: orderInfo.user,
@@ -72,8 +87,6 @@ exports.paymentVerification = async (req, res) => {
         payment_status: "success",
       };
       const doc = await new paymentModel();
-
-      // return res.status(200).json({ success: false });
     }
   } catch (error) {
     console.log(

@@ -8,7 +8,7 @@ const paymentSchema = new Schema(
     },
     order: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "order",
     },
     amount: { type: Number, required: true },
     razorpay_payment_id: { type: String, required: true },
