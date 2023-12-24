@@ -20,7 +20,7 @@ const OrderSchema = new Schema(
       required: true,
     },
     orderstatus: { type: String, required: true },
-    paymentID: {
+    payment: {
       type: Schema.Types.ObjectId,
       ref: "payment",
     },

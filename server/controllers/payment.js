@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { instance } = require("../payment/init");
+const { paymentModel } = require("../model/payment");
 exports.checkOut = async (req, res) => {
   try {
     const { amount } = req.body;
@@ -22,7 +23,10 @@ exports.checkOut = async (req, res) => {
 
 exports.paymentVerification = async (req, res) => {
   try {
-    console.log("paymentVerification", req.body);
+    const { paymentdata } = req.body;
+    console.log("🚀 ~ file: payment.js:27 ~ exports.paymentVerification= ~ req.body:", req.body)
+  
+    // const doc = await paymentModel.insertOne();
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json({

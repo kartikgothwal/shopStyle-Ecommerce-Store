@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { attemptpayment } from "./paymentAPI";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const initialState = {
   paymentdata: [],
@@ -11,7 +12,7 @@ export const attemptPaymentAsync = createAsyncThunk(
   "payment/attemptpayment",
   async (amount) => {
     try {
-      const response = await attemptpayment(amount);
+const response = await attemptpayment(amount);      
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
@@ -59,6 +60,26 @@ export const paymentSlice = createSlice({
           },
           theme: {
             color: "#3399cc",
+          },
+          handler: async function (response) {
+            console.log("🚀 ~ file: paymentSlice.js:65 ~ response:", response);
+            await axios
+              .post(
+                `${process.env.REACT_APP_BACKEND_URL}/payment/api/paymentverify`,
+                response
+              )
+              .then((data) => {
+                console.log(
+                  "🚀 ~ file: paymentSlice.js:69 ~ ).then ~ data:",
+                  data
+                );
+              })
+              .catch((error) => {
+                console.log(
+                  "🚀 ~ file: paymentSlice.js:76 ~ .then ~ error:",
+                  error
+                );
+              });
           },
         };
         const razor = new window.Razorpay(options);

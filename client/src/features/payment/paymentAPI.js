@@ -10,13 +10,15 @@ function getToken() {
 }
 
 export async function attemptpayment(amount) {
-   try {
+  try {
     return await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/payment/api/checkout`,
-     {amount},
+      { amount },
       { headers: getToken() }
     );
   } catch (error) {
     return error.response;
   }
 }
+
+ 
