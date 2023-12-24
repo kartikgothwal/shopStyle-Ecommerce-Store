@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-function getToken() {
+export function getToken() {
   const refreshToken = Cookies.get("refresh-token");
   const headers = {
     Authorization: `Bearer ${refreshToken}`,

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { attemptpayment } from "./paymentAPI";
+import { attemptpayment, getToken } from "./paymentAPI";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -63,7 +63,8 @@ export const paymentSlice = createSlice({
             await axios
               .post(
                 `${process.env.REACT_APP_BACKEND_URL}/payment/api/paymentverify`,
-                { response, order, orderInfo }
+                { response, order, orderInfo },
+                { headers: getToken() }
               )
               .then((data) => {
                 console.log(

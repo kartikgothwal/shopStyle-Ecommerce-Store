@@ -6,5 +6,9 @@ const {
 const PaymentController = require("../controllers/payment");
 router
   .post("/checkout", UserTokenAuthorization, PaymentController.checkOut)
-  .post("/paymentverify", PaymentController.paymentVerification);
+  .post(
+    "/paymentverify",
+    UserTokenAuthorization,
+    PaymentController.paymentVerification
+  );
 exports.router = router;
