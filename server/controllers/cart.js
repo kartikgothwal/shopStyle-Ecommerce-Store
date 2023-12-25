@@ -65,7 +65,12 @@ exports.updateCartItems = async (req, res) => {
 
 exports.removeCart = async (req, res) => {
   try {
-    console.log("🚀 ~ file: cart.js:67 ~ exports.removeCart= ~ req:", req.body);
+    const { userID } = req.body;
+    const doc = await cartModel.deleteMany({ user: userID });
+    return res.status(200).json({
+      message: "Refreshed the cart",
+      doc: doc,
+    });
   } catch (error) {
     return res
       .status(500)

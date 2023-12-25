@@ -240,6 +240,17 @@ export const cartSlice = createSlice({
           progress: undefined,
           theme: "colored",
         });
+      })
+      .addCase(removeCartAsync.pending, (state, action) => {
+        state.pending = true;
+      })
+      .addCase(removeCartAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        state.cartvalue = [];
+      })
+      .addCase(removeCartAsync.rejected, (state, action) => {
+        state.pending = false;
+        state.cartvalue = [];
       });
   },
 });
