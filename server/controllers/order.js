@@ -10,7 +10,7 @@ exports.addOrders = async (req, res) => {
       user: user,
       products: cartdata.map((item) => {
         return {
-          productID: item.product._id,
+          productData: item.product._id,
           quantity: item.quantity,
           subtotal: item.product.price * item.quantity,
         };
@@ -34,10 +34,24 @@ exports.addOrders = async (req, res) => {
 
 exports.getOrders = async (req, res) => {
   try {
-    console.log("🚀 ~ file: order.js:36 ~ exports.getOrders= ~ req:", req.body);
+    const { orderInfo } = req.body;
+    const docs = await OrderModel.find({
+      user: orderInfo.user,
+      _id: orderInfo._id,
+    })
+      .populate("user")
+      .populate("payment")
+      .populate("address")
+      .populate("products.productData");
+
+    return res.status(200).json({
+      message: "Order data fetched successfully",
+      docs: docs,
+    });
   } catch (error) {
+    console.log("🚀 ~ file: order.js:49 ~ exports.getOrders= ~ error:", error);
     return res
       .status(500)
-      .json({ message: "Failed to order", error: error.message });
+      .json({ message: "Failed to fetched order", error: error.message });
   }
 };

@@ -8,5 +8,6 @@ router
   .post("/getitems", UserTokenAuthorization, cartController.getCart)
   .post("/additem", UserTokenAuthorization, cartController.addCartItem)
   .delete("/deleteitem", UserTokenAuthorization, cartController.deleteCartItems)
+  .delete("/deletecart", UserTokenAuthorization, cartController.removeCart)
   .patch("/updateitem", UserTokenAuthorization, cartController.updateCartItems);
 exports.router = router;

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getOrders } from "./orderAPI";
+import { toast } from "react-toastify";
 
 const initialState = {
   userorders: [],
@@ -33,9 +34,23 @@ export const orderSlice = createSlice({
       })
       .addCase(getOrdersAsync.fulfilled, (state, action) => {
         state.pending = false;
+        const { docs } = action.payload;
+        state.userorders = docs;
       })
       .addCase(getOrdersAsync.rejected, (state, action) => {
         state.pending = false;
+        state.userorders = [];
+        const { message } = action.error;
+        toast.error(message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   },
 });

@@ -62,3 +62,13 @@ exports.updateCartItems = async (req, res) => {
       .json({ message: "Failed to update", error: error.message });
   }
 };
+
+exports.removeCart = async (req, res) => {
+  try {
+    console.log("🚀 ~ file: cart.js:67 ~ exports.removeCart= ~ req:", req.body);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
+  }
+};

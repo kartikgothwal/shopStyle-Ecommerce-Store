@@ -11,7 +11,7 @@ export function getToken() {
 export async function getOrders(orderInfo) {
   try {
     return await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/payment/api/checkout`,
+      `${process.env.REACT_APP_BACKEND_URL}/order/getorders`,
       { orderInfo },
       { headers: getToken() }
     );

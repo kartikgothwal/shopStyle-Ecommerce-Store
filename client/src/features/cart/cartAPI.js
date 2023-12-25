@@ -59,3 +59,20 @@ export async function deleteCartItem(userID, ProductID) {
     return error.response;
   }
 }
+
+export async function removeCart(userID) {
+  console.log("🚀 ~ file: cartAPI.js:64 ~ removeCart ~ userID:", userID);
+  // try {
+  //   return await axios.delete(
+  //     `${process.env.REACT_APP_BACKEND_URL}/cart/deletecart`,
+  //     {
+  //       data: {
+  //         userID: userID,
+  //       },
+  //       headers: getToken(),
+  //     }
+  //   );
+  // } catch (error) {
+  //   return error.response;
+  // }
+}

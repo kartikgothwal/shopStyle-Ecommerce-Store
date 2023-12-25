@@ -3,6 +3,7 @@ import {
   addCartItem,
   deleteCartItem,
   getCartItem,
+  removeCart,
   updateCartItem,
 } from "./cartAPI";
 import { toast } from "react-toastify";
@@ -63,6 +64,21 @@ export const updateCartItemAsync = createAsyncThunk(
   async ({ userID, productID, change }) => {
     try {
       const response = await updateCartItem(userID, productID, change);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const removeCartAsync = createAsyncThunk(
+  "cart/deletecart",
+  async ({ userID }) => {
+    try {
+      const response = await removeCart(userID);
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
