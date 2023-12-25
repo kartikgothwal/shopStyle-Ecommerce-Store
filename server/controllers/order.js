@@ -35,14 +35,24 @@ exports.addOrders = async (req, res) => {
 exports.getOrders = async (req, res) => {
   try {
     const { orderInfo } = req.body;
-    const docs = await OrderModel.find({
-      user: orderInfo.user,
-      _id: orderInfo._id,
-    })
-      .populate("user")
-      .populate("payment")
-      .populate("address")
-      .populate("products.productData");
+    if (orderInfo._id) {
+      var docs = await OrderModel.find({
+        user: orderInfo.user,
+        _id: orderInfo._id,
+      })
+        .populate("user")
+        .populate("payment")
+        .populate("address")
+        .populate("products.productData");
+    } else {
+      var docs = await OrderModel.find({
+        user: orderInfo.user,
+      })
+        .populate("user")
+        .populate("payment")
+        .populate("address")
+        .populate("products.productData");
+    }
 
     return res.status(200).json({
       message: "Order data fetched successfully",
