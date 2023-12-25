@@ -35,7 +35,6 @@ export const paymentSlice = createSlice({
       })
       .addCase(attemptPaymentAsync.fulfilled, (state, action) => {
         const { apiKeySecret, order, orderInfo, navigate } = action.payload;
-
         var options = {
           key: apiKeySecret,
           amount: order.amount,
@@ -79,18 +78,41 @@ export const paymentSlice = createSlice({
                 navigate("/ordersuccessful", { state: orderdoc });
               })
               .catch((error) => {
-                console.log(
-                  "🚀 ~ file: paymentSlice.js:76 ~ .then ~ error:",
-                  error
-                );
+                toast.error(error.message, {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
               });
           },
         };
         state.pending = false;
         const razor = new window.Razorpay(options);
         razor.open();
+        razor.on("payment.failed", function (response) {
+          razor.close();
+          toast.error("Payment failed, Please try again", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        });
       })
       .addCase(attemptPaymentAsync.rejected, (state, action) => {
+        console.log(
+          "🚀 ~ file: paymentSlice.js:99 ~ .addCase ~ action:",
+          action
+        );
         state.pending = false;
         const { message } = action.error;
         toast.error(message, {
