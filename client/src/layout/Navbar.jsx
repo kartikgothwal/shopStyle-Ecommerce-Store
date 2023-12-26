@@ -133,7 +133,7 @@ const Navbar = () => {
                   style={{ fontSize: "30px", color: "#563131" }}
                 />
               </Tooltip>
-              <Tooltip title="wishlist">
+              <Tooltip title="wishlist" onClick={() => navigate("/wishlist")}>
                 {" "}
                 <FavoriteBorderIcon
                   className="cursor-pointer"

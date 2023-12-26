@@ -24,7 +24,7 @@ const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
 const Order = lazy(() => import("./features/order/Order.js"));
 const Cart = lazy(() => import("./features/cart/Cart"));
-const Wishlist = -lazy(() => import("./features/wishlist/Wishlist.js"));
+const Wishlist = lazy(() => import("./features/wishlist/Wishlist.js"));
 const OrderSuccessful = lazy(() =>
   import("./features/order/OrderSuccessful.js")
 );
