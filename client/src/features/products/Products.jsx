@@ -108,9 +108,23 @@ export default function Product({ items, setProgress, progress }) {
     } else {
       const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
       if (localWishlistData && localWishlistData.length) {
-        const doc = localWishlistData.find((item) => itemId == item.product);
-        if (doc) {
-          console.log("hello world");
+        const targetIndex = localWishlistData.findIndex(
+          (item) => itemId == item.product
+        );
+        if (targetIndex != -1) {
+          console.log("hello worsdfdld");
+          localWishlistData.splice(targetIndex, 1);
+          localStorage.setItem("wishlist", JSON.stringify(localWishlistData));
+          return  toast.success("Removed from the wishlist", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         } else {
           const newItem = {
             user: userId,
