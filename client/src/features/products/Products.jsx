@@ -105,10 +105,55 @@ export default function Product({ items, setProgress, progress }) {
       } else {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
       }
+    } else {
+      const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
+      if (localWishlistData && localWishlistData.length) {
+        const doc = localWishlistData.find((item) => itemId == item.product);
+        if (doc) {
+          console.log("hello world");
+        } else {
+          const newItem = {
+            user: userId,
+            product: itemId,
+            createdAt: new Date(),
+          };
+          localStorage.setItem(
+            "wishlist",
+            JSON.stringify([...localWishlistData, newItem])
+          );
+          toast.success("Added to the wishlist", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      } else {
+        const newItem = {
+          user: userId,
+          product: itemId,
+          createdAt: new Date(),
+        };
+        localStorage.setItem("wishlist", JSON.stringify([newItem]));
+        toast.success("Added to the wishlist", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     }
   };
   return (
-    <div className="  cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">
+    <div className="cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">
       <div className="relative mx-4 -mt-6 h-[10rem] lg:h-[15rem] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-blue-gray-500/40 bg-gradient-to-r  bg-transparent shadow-2xl">
         <img
           src={items.thumbnail}

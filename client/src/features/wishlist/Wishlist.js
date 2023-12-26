@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataLoaderAnimation } from "../../layout";
 import { useNavigate } from "react-router-dom";
 import { removeWishlistAsync } from "./wishlistSlice";
-const Wishlist = () => {
+const Wishlist = ({ setProgress, progress }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [wishlistVal, setwishlistVal] = useState(undefined);
@@ -12,16 +12,19 @@ const Wishlist = () => {
   const userData = useSelector((state) => state.user.userData);
   const pending = useSelector((state) => state.wishlist.pending);
   useEffect(() => {
-    setwishlistVal(wishlistData);
-  }, [wishlistData]);
-  console.log(
-    "🚀 ~ file: Wishlist.js:37 ~ Wishlist ~ wishlistVal:",
-    wishlistVal
-  );
+    if (userData && userData._id) {
+      setwishlistVal(wishlistData);
+    }
+  }, [wishlistData, userData]);
+
   const handleWishlistRemoveClick = (itemId, userId) => {
     if (userData && userData._id) {
       dispatch(removeWishlistAsync({ product: itemId, user: userId }));
     } else {
+      const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
+      if(wishlistVal && wishlistData.length){
+        const doc = wishlistVal.find()
+      }
     }
   };
   return (
@@ -34,64 +37,66 @@ const Wishlist = () => {
           <div className="mt-8">
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
-                {wishlistVal && wishlistVal.map((item) => (
-                  <li key={item._id} className="flex py-6">
-                    <div
-                      className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 cursor-pointer"
-                      onClick={() =>
-                        navigate(`/productoverview/${item.product._id}`)
-                      }
-                    >
-                      <img
-                        src={item.product.thumbnail}
-                        alt={item.product.title}
-                        className="h-full w-full object-cover object-center"
-                      />
-                    </div>
+                {wishlistVal &&
+                  wishlistVal.map((item) => (
+                    <li key={item._id} className="flex py-6">
+                      <div
+                        className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 cursor-pointer"
+                        onClick={() =>
+                          navigate(`/productoverview/${item.product._id}`)
+                        }
+                      >
+                        <img
+                          src={item.product.thumbnail}
+                          alt={item.product.title}
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
 
-                    <div className="ml-4 flex flex-1 flex-col">
-                      <div>
-                        <div className="flex justify-between text-base font-medium text-gray-900">
-                          <h3>
-                            <button
-                              href={`/productoverview/${item.product._id}`}
-                            >
-                              {item.product.title}
-                            </button>
-                          </h3>
-                          <p className="ml-4">
-                            ${Number(item.product.price).toFixed(2)}
+                      <div className="ml-4 flex flex-1 flex-col">
+                        <div>
+                          <div className="flex justify-between text-base font-medium text-gray-900">
+                            <h3>
+                              <button
+                                href={`/productoverview/${item.product._id}`}
+                              >
+                                {item.product.title}
+                              </button>
+                            </h3>
+                            <p className="ml-4">
+                              ${Number(item.product.price).toFixed(2)}
+                            </p>
+                          </div>
+                          <p className="mt-1 text-sm text-black">
+                            Brand:{" "}
+                            <span className="text-gray-700">
+                              {item.product.brand}
+                            </span>
+                          </p>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {item.product.description}
                           </p>
                         </div>
-                        <p className="mt-1 text-sm text-black">
-                          Brand:{" "}
-                          <span className="text-gray-700">
-                            {item.product.brand}
-                          </span>
-                        </p>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {item.product.description}
-                        </p>
-                      </div>
-                      <div className="flex flex-1 items-end justify-between mt-3 text-sm">
-                        <div className="flex">
-                          <button
-                            type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() =>
-                              handleWishlistRemoveClick(
-                                item.product._id,
-                                userData._id
-                              )
-                            }
-                          >
-                            Remove
-                          </button>
+                        <div className="flex flex-1 items-end justify-between mt-3 text-sm">
+                          <div className="flex">
+                            <button
+                              type="button"
+                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                              onClick={() =>
+                                handleWishlistRemoveClick(
+                                  item.product._id,
+                                  userData._id
+                                )
+                              }
+                              disabled={pending}
+                            >
+                              Remove
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  ))}
               </ul>
             </div>
           </div>

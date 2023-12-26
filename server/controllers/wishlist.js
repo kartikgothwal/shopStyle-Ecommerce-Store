@@ -11,7 +11,7 @@ exports.addItem = async (req, res) => {
     return res.status(201).json({ message: "Added to wishlist", doc: doc });
   } catch (error) {
     return res
-      .status(500)  
+      .status(500)
       .json({ message: "Failed to Add to wishlist", error: error.message });
   }
 };
@@ -32,9 +32,7 @@ exports.deleteItem = async (req, res) => {
   try {
     console.log(req.body);
     const doc = await WishlistModel.findOneAndDelete(req.body);
-    return res
-      .status(200)
-      .json({ message: "Removed item from watchlist", doc: doc });
+    return res.status(200).json({ message: "Removed from wishlist", doc: doc });
   } catch (error) {
     return res.status(500).json({
       message: "Failed to remove from wishlist",
