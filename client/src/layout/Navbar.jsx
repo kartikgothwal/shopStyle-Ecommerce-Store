@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LIMIT_PER_PAGE, navLinks } from "../constants";
+import {  navLinks } from "../constants";
 import { NavLink } from "react-router-dom";
 import { Logo } from "../assets";
 import { toast } from "react-toastify";
@@ -125,7 +125,7 @@ const Navbar = () => {
                   </ul>
                 ) : null}
               </Tooltip>
-              <Tooltip title="orders">
+              <Tooltip title="orders" onClick={() => navigate("/trackorders")}> 
                 <LocalShippingIcon
                   className="cursor-pointer "
                   size="large"

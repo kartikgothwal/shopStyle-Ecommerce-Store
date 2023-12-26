@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
 export default function Product({ items, setProgress, progress }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -105,6 +105,9 @@ export default function Product({ items, setProgress, progress }) {
         />
         <p className="absolute bg-black rounded-full top-3 left-4 text-xs p-1">
           {Math.floor(items.discountPercentage)}% off
+        </p>
+        <p className="absolute bg-white rounded-full top-3 right-4 text-xs p-1 shadow-2xl">
+          <FavoriteIcon className="text-red-700" />
         </p>
       </div>
       <div className="px-6">

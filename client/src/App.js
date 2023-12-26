@@ -24,9 +24,11 @@ const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
 const Order = lazy(() => import("./features/order/Order.js"));
 const Cart = lazy(() => import("./features/cart/Cart"));
+const Wishlist = -lazy(() => import("./features/wishlist/Wishlist.js"));
 const OrderSuccessful = lazy(() =>
   import("./features/order/OrderSuccessful.js")
 );
+const TrackOrder = lazy(() => import("./features/order/TrackOrder.js"));
 const ProductOverview = lazy(() =>
   import("./features/products/ProductOverview")
 );
@@ -158,6 +160,22 @@ const App = () => {
                   setProgress={setProgress}
                   progress={progress}
                 />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/trackorders"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <TrackOrder setProgress={setProgress} progress={progress} />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/wishlist"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <Wishlist setProgress={setProgress} progress={progress} />
               </Suspense>
             }
           />
