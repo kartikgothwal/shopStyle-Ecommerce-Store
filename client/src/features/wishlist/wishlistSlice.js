@@ -31,10 +31,10 @@ export const addWishlistAsync = createAsyncThunk(
   }
 );
 export const removeWishlistAsync = createAsyncThunk(
-  "wishlist/additem",
-  async (Item) => {
+  "wishlist/removeitem",
+  async ({ product, user }) => {
     try {
-      const response = await removeWishlist(Item);
+      const response = await removeWishlist(product, user);
       if (response.status >= 400) {
         let error = response.data.message;
         throw error;
@@ -110,6 +110,44 @@ export const counterSlice = createSlice({
       })
       .addCase(getWishlistAsync.rejected, (state) => {
         state.pending = false;
+      })
+      .addCase(removeWishlistAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(removeWishlistAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        const { doc, message } = action.payload;
+        const targetIndex = state.wishlistData.findIndex(
+          (items) => items._id == doc._id
+        );
+        if (targetIndex !== -1) {
+          state.wishlistData.splice(targetIndex, 1);
+          state.wishlistData = state.wishlistData;
+          toast.success(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      })
+      .addCase(removeWishlistAsync.rejected, (state, action) => {
+        state.pending = false;
+        const { message } = action.error;
+        toast.error(message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   },
 });

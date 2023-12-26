@@ -2,7 +2,10 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { addWishlistAsync } from "../wishlist/wishlistSlice";
+import {
+  addWishlistAsync,
+  removeWishlistAsync,
+} from "../wishlist/wishlistSlice";
 
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -97,8 +100,8 @@ export default function Product({ items, setProgress, progress }) {
 
   const handleWishlistClick = (itemId, userId) => {
     if (userData && userData._id) {
-      if (wishlistData.find((item) => item.product === itemId)) {
-        console.log("item already inside");
+      if (wishlistData.find((item) => item.product._id === itemId)) {
+        dispatch(removeWishlistAsync({ product: itemId, user: userId }));
       } else {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
       }
@@ -116,14 +119,15 @@ export default function Product({ items, setProgress, progress }) {
         <p className="absolute bg-black rounded-full top-3 left-4 text-xs p-1">
           {Math.floor(items.discountPercentage)}% off
         </p>
-        <p className="absolute bg-gray-200 rounded-full top-3 right-4 text-xs p-1 shadow-2xl">
+        <p className="absolute bg-transparent  rounded-full top-3 right-4 text-xs p-1 shadow-2xl">
           <FavoriteIcon
-            className={`${
-              wishlistData.find((item) => item.product === items._id)
+            className={`  ${
+              wishlistData.find((item) => item.product._id === items._id)
                 ? "text-red-700"
-                : "text-white"
+                : "text-[#000] opacity-30"
             }`}
             onClick={() => handleWishlistClick(items._id, userData._id)}
+            style={{ fontSize: "30px" }}
           />
         </p>
       </div>
