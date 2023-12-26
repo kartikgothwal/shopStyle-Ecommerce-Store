@@ -112,7 +112,6 @@ export default function Product({ items, setProgress, progress }) {
           (item) => itemId == item.product
         );
         if (targetIndex != -1) {
-          console.log("hello worsdfdld");
           localWishlistData.splice(targetIndex, 1);
           localStorage.setItem("wishlist", JSON.stringify(localWishlistData));
           return  toast.success("Removed from the wishlist", {
@@ -149,7 +148,7 @@ export default function Product({ items, setProgress, progress }) {
       } else {
         const newItem = {
           user: userId,
-          product: itemId,
+          product: {_id:itemId},
           createdAt: new Date(),
         };
         localStorage.setItem("wishlist", JSON.stringify([newItem]));
