@@ -2,6 +2,8 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { addWishlistAsync } from "../wishlist/wishlistSlice";
+
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 export default function Product({ items, setProgress, progress }) {
@@ -9,6 +11,7 @@ export default function Product({ items, setProgress, progress }) {
   const navigate = useNavigate();
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
+  const wishlistData = useSelector((state) => state.wishlist.wishlistData);
   const pending = useSelector((state) => state.cart.pending);
 
   if (items == undefined) return null;
@@ -92,22 +95,36 @@ export default function Product({ items, setProgress, progress }) {
     // navigate("/cart");
   };
 
+  const handleWishlistClick = (itemId, userId) => {
+    if (userData && userData._id) {
+      if (wishlistData.find((item) => item.product === itemId)) {
+        console.log("item already inside");
+      } else {
+        dispatch(addWishlistAsync({ product: itemId, user: userId }));
+      }
+    }
+  };
   return (
     <div className="  cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">
-      <div
-        className="relative mx-4 -mt-6 h-[10rem] lg:h-[15rem] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-blue-gray-500/40 bg-gradient-to-r  bg-transparent shadow-2xl"
-        onClick={() => navigate(`/productoverview/${items._id}`)}
-      >
+      <div className="relative mx-4 -mt-6 h-[10rem] lg:h-[15rem] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-blue-gray-500/40 bg-gradient-to-r  bg-transparent shadow-2xl">
         <img
           src={items.thumbnail}
           alt={items.title}
           className="object-cover bg-white h-full w-full"
+          onClick={() => navigate(`/productoverview/${items._id}`)}
         />
         <p className="absolute bg-black rounded-full top-3 left-4 text-xs p-1">
           {Math.floor(items.discountPercentage)}% off
         </p>
-        <p className="absolute bg-white rounded-full top-3 right-4 text-xs p-1 shadow-2xl">
-          <FavoriteIcon className="text-red-700" />
+        <p className="absolute bg-gray-200 rounded-full top-3 right-4 text-xs p-1 shadow-2xl">
+          <FavoriteIcon
+            className={`${
+              wishlistData.find((item) => item.product === items._id)
+                ? "text-red-700"
+                : "text-white"
+            }`}
+            onClick={() => handleWishlistClick(items._id, userData._id)}
+          />
         </p>
       </div>
       <div className="px-6">

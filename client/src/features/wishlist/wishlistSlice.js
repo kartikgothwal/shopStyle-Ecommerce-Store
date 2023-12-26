@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addWishlist } from "./counterAPI";
+import { addWishlist, getWishlist, removeWishlist } from "./wishlistAPI";
+import { toast } from "react-toastify";
 
 const initialState = {
   wishlistData: [],
@@ -29,23 +30,85 @@ export const addWishlistAsync = createAsyncThunk(
     }
   }
 );
+export const removeWishlistAsync = createAsyncThunk(
+  "wishlist/additem",
+  async (Item) => {
+    try {
+      const response = await removeWishlist(Item);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const getWishlistAsync = createAsyncThunk(
+  "wishlist/getwishlist",
+  async (userID) => {
+    try {
+      const response = await getWishlist(userID);
+      if (response.status >= 400) {
+        let error = response.data.message;
+        throw error;
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 export const counterSlice = createSlice({
   name: "wishlist",
   initialState,
-
   reducers: {},
 
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.pending, (state) => {
+      .addCase(addWishlistAsync.pending, (state) => {
         state.pending = true;
       })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
+      .addCase(addWishlistAsync.fulfilled, (state, action) => {
         state.pending = false;
-        state.value += action.payload;
+        const { message, doc } = action.payload;
+        state.wishlistData.push(doc);
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       })
-      .addCase(incrementAsync.rejected, (state) => {
+      .addCase(addWishlistAsync.rejected, (state, action) => {
+        state.pending = false;
+        const { message } = action.error;
+        toast.error(message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      })
+      .addCase(getWishlistAsync.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(getWishlistAsync.fulfilled, (state, action) => {
+        state.pending = false;
+        const { doc } = action.payload;
+        state.wishlistData = doc;
+      })
+      .addCase(getWishlistAsync.rejected, (state) => {
         state.pending = false;
       });
   },

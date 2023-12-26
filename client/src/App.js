@@ -14,7 +14,9 @@ import {
   addCartItemAsync,
   getCartItemAsync,
 } from "./features/cart/cartSlice.js";
+
 import { getAddressAsync } from "./features/address/addressSlice.js";
+import { getWishlistAsync } from "./features/wishlist/wishlistSlice.js";
 const Main = lazy(() => import("./components/FilterProductsPages/Main.jsx"));
 const Address = lazy(() => import("./features/address/Address.js"));
 const Footer = lazy(() => import("./layout/Footer"));
@@ -71,6 +73,7 @@ const App = () => {
     if (userData && userData._id) {
       dispatch(getCartItemAsync(userData._id));
       dispatch(getAddressAsync({ user: userData._id }));
+      dispatch(getWishlistAsync({ user: userData._id }));
     }
   }, [dispatch, userData]);
 
