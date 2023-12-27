@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 export default function Product({ items, setProgress, progress }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [wishlistVal, setwishlistVal] = useState(null);
+  const [wishlistVal, setWishlistVal] = useState([]);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
   const wishlistData = useSelector((state) => state.wishlist.wishlistData);
@@ -22,7 +22,7 @@ export default function Product({ items, setProgress, progress }) {
 
   useEffect(() => {
     if (userData || userData._id) {
-      setwishlistVal(wishlistData);
+      setWishlistVal(wishlistData);
     } else {
     }
   }, [wishlistData]);
@@ -116,6 +116,45 @@ export default function Product({ items, setProgress, progress }) {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
       }
     } else {
+      console.log(
+        "🚀 ~ file: Products.jsx:129 ~ handleWishlistClick ~ wishlistVal:",
+        wishlistVal
+      );
+      if (wishlistVal && wishlistVal.length) {
+        const localData = JSON.parse(localStorage.getItem("wishlist"));
+
+        if (localData) {
+          const targetIndex = localData.findIndex(
+            (item) => item.product._id == itemId
+          );
+          if (targetIndex != -1) {
+            localData.splice(targetIndex, 1);
+            setWishlistVal(localData);
+            localStorage.setItem("wishlist", JSON.stringify(localData));
+          } else {
+            const newItem = {
+              product: { _id: itemId },
+              userId: userId,
+              createdAt: new Date(),
+            };
+            setWishlistVal([...wishlistVal, newItem]);
+            localStorage.setItem(
+              "wishlist",
+              JSON.stringify([...localData, newItem])
+            );
+          }
+        } else {
+          console.log("sdhfbdsj");
+        }
+      } else {
+        const newItem = {
+          product: { _id: itemId },
+          userId: null,
+          createdAt: new Date(),
+        };
+        setWishlistVal([newItem]);
+        localStorage.setItem("wishlist", JSON.stringify([newItem]));
+      }
     }
   };
   return (
