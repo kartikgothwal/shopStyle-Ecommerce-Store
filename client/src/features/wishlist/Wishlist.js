@@ -22,8 +22,8 @@ const Wishlist = ({ setProgress, progress }) => {
       dispatch(removeWishlistAsync({ product: itemId, user: userId }));
     } else {
       const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
-      if(wishlistVal && wishlistData.length){
-        const doc = wishlistVal.find()
+      if (wishlistVal && wishlistData.length) {
+        const doc = wishlistVal.find();
       }
     }
   };
@@ -58,7 +58,11 @@ const Wishlist = ({ setProgress, progress }) => {
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
                               <button
-                                href={`/productoverview/${item.product._id}`}
+                                onClick={() =>
+                                  navigate(
+                                    `/productoverview/${item.product._id}`
+                                  )
+                                }
                               >
                                 {item.product.title}
                               </button>

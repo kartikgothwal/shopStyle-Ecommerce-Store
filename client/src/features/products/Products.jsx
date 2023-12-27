@@ -6,16 +6,26 @@ import {
   addWishlistAsync,
   removeWishlistAsync,
 } from "../wishlist/wishlistSlice";
-
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useEffect, useState } from "react";
 export default function Product({ items, setProgress, progress }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [wishlistVal, setwishlistVal] = useState(null);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
   const wishlistData = useSelector((state) => state.wishlist.wishlistData);
+  const wishlist = useSelector((state) => state.wishlist);
+
   const pending = useSelector((state) => state.cart.pending);
+
+  useEffect(() => {
+    if (userData || userData._id) {
+      setwishlistVal(wishlistData);
+    } else {
+    }
+  }, [wishlistData]);
 
   if (items == undefined) return null;
 
@@ -106,63 +116,6 @@ export default function Product({ items, setProgress, progress }) {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
       }
     } else {
-      const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
-      if (localWishlistData && localWishlistData.length) {
-        const targetIndex = localWishlistData.findIndex(
-          (item) => itemId == item.product
-        );
-        if (targetIndex != -1) {
-          localWishlistData.splice(targetIndex, 1);
-          localStorage.setItem("wishlist", JSON.stringify(localWishlistData));
-          return  toast.success("Removed from the wishlist", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        } else {
-          const newItem = {
-            user: userId,
-            product: itemId,
-            createdAt: new Date(),
-          };
-          localStorage.setItem(
-            "wishlist",
-            JSON.stringify([...localWishlistData, newItem])
-          );
-          toast.success("Added to the wishlist", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-        }
-      } else {
-        const newItem = {
-          user: userId,
-          product: {_id:itemId},
-          createdAt: new Date(),
-        };
-        localStorage.setItem("wishlist", JSON.stringify([newItem]));
-        toast.success("Added to the wishlist", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
     }
   };
   return (
@@ -178,15 +131,19 @@ export default function Product({ items, setProgress, progress }) {
           {Math.floor(items.discountPercentage)}% off
         </p>
         <p className="absolute bg-transparent  rounded-full top-3 right-4 text-xs p-1 shadow-2xl">
-          <FavoriteIcon
-            className={`  ${
-              wishlistData.find((item) => item.product._id === items._id)
-                ? "text-red-700"
-                : "text-[#000] opacity-30"
-            }`}
+          <button
+            disabled={wishlist.pending}
             onClick={() => handleWishlistClick(items._id, userData._id)}
-            style={{ fontSize: "30px" }}
-          />
+          >
+            <FavoriteIcon
+              className={`${
+                wishlistVal?.find((item) => item.product._id === items._id)
+                  ? "text-red-700"
+                  : "text-[#000] opacity-30"
+              }`}
+              style={{ fontSize: "30px" }}
+            />
+          </button>
         </p>
       </div>
       <div className="px-6">
