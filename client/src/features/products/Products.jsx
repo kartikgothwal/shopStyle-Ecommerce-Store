@@ -21,11 +21,20 @@ export default function Product({ items, setProgress, progress }) {
   const pending = useSelector((state) => state.cart.pending);
 
   useEffect(() => {
-    if (userData || userData._id) {
+    if (userData && userData._id) {
       setWishlistVal(wishlistData);
     } else {
     }
   }, [wishlistData]);
+  useEffect(() => {
+    if (userData && userData._id) {
+    } else {
+      const localData = JSON.parse(localStorage.getItem("wishlist"));
+      if (localData && localData.length) {
+        setWishlistVal(localData);
+      }
+    }
+  }, []);
 
   if (items == undefined) return null;
 
@@ -116,13 +125,8 @@ export default function Product({ items, setProgress, progress }) {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
       }
     } else {
-      console.log(
-        "🚀 ~ file: Products.jsx:129 ~ handleWishlistClick ~ wishlistVal:",
-        wishlistVal
-      );
-      if (wishlistVal && wishlistVal.length) {
-        const localData = JSON.parse(localStorage.getItem("wishlist"));
-
+      const localData = JSON.parse(localStorage.getItem("wishlist"));
+      if (localData && localData.length) {
         if (localData) {
           const targetIndex = localData.findIndex(
             (item) => item.product._id == itemId
@@ -131,6 +135,16 @@ export default function Product({ items, setProgress, progress }) {
             localData.splice(targetIndex, 1);
             setWishlistVal(localData);
             localStorage.setItem("wishlist", JSON.stringify(localData));
+            toast.success("Removed from the wishlist", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
           } else {
             const newItem = {
               product: { _id: itemId },
@@ -149,11 +163,23 @@ export default function Product({ items, setProgress, progress }) {
       } else {
         const newItem = {
           product: { _id: itemId },
-          userId: null,
           createdAt: new Date(),
+          userId: null,
         };
+
         setWishlistVal([newItem]);
+
         localStorage.setItem("wishlist", JSON.stringify([newItem]));
+        toast.success("Added to the wishlist", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     }
   };
