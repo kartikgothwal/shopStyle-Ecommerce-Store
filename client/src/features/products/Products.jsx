@@ -17,7 +17,6 @@ export default function Product({ items, setProgress, progress }) {
   const userData = useSelector((state) => state.user.userData);
   const wishlistData = useSelector((state) => state.wishlist.wishlistData);
   const wishlist = useSelector((state) => state.wishlist);
-
   const pending = useSelector((state) => state.cart.pending);
 
   useEffect(() => {
@@ -156,6 +155,16 @@ export default function Product({ items, setProgress, progress }) {
               "wishlist",
               JSON.stringify([...localData, newItem])
             );
+            toast.success("Added to the wishlist", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
           }
         } else {
           console.log("sdhfbdsj");

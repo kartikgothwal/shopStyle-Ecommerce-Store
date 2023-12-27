@@ -4,26 +4,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataLoaderAnimation } from "../../layout";
 import { useNavigate } from "react-router-dom";
 import { removeWishlistAsync } from "./wishlistSlice";
-const Wishlist = ({ setProgress, progress }) => {
+import { toast } from "react-toastify";
+const Wishlist = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [wishlistVal, setwishlistVal] = useState(undefined);
   const wishlistData = useSelector((state) => state.wishlist.wishlistData);
   const userData = useSelector((state) => state.user.userData);
   const pending = useSelector((state) => state.wishlist.pending);
+  const ProductData = useSelector((state) => state.product.productdata);
   useEffect(() => {
     if (userData && userData._id) {
       setwishlistVal(wishlistData);
     }
   }, [wishlistData, userData]);
+  useEffect(() => {
+    if (userData && userData._id) {
+    } else {
+      const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
+      if (localWishlistData && localWishlistData.length) {
+        const Item = ProductData.filter((product) => {
+          return localWishlistData.find(
+            (item) => item.product._id == product._id
+          );
+        }).map((item) => {
+          return { product: item };
+        });
+        setwishlistVal(Item);
+      }
+    }
+  }, [ProductData]);
 
   const handleWishlistRemoveClick = (itemId, userId) => {
     if (userData && userData._id) {
       dispatch(removeWishlistAsync({ product: itemId, user: userId }));
     } else {
-      const localWishlistData = JSON.parse(localStorage.getItem("wishlist"));
-      if (wishlistVal && wishlistData.length) {
-        const doc = wishlistVal.find();
+      const remainingItems = wishlistVal.filter((values) => {
+        return values.product._id !== itemId;
+      });
+      setwishlistVal(remainingItems);
+      const localWishlistItem = JSON.parse(localStorage.getItem("wishlist"));
+      const targetIndex = localWishlistItem.findIndex(
+        (item) => item.product._id == itemId
+      );
+      if (targetIndex != -1) {
+        localWishlistItem.splice(targetIndex, 1);
+        localStorage.setItem("wishlist", JSON.stringify(localWishlistItem));
       }
     }
   };

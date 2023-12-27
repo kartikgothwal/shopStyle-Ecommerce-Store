@@ -19,7 +19,7 @@ const Cart = ({ setProgress, progress }) => {
   const userData = useSelector((state) => state.user.userData);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const pending = useSelector((state) => state.cart.pending);
-
+  const ProductData = useSelector((state) => state.product.productdata);
   useEffect(() => {
     if (userData && userData._id) {
     } else {
