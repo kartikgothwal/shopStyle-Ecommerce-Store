@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { RadioGroup } from "@headlessui/react";
-
+import {
+  addWishlistAsync,
+  removeWishlistAsync,
+} from "../wishlist/wishlistSlice";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -11,7 +14,7 @@ import { toast } from "react-toastify";
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { PaddingGiverHoc } from "../../components/hoc";
- 
+import FavoriteIcon from "@mui/icons-material/Favorite";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -81,6 +84,24 @@ const ProductPage = ({ setProgress, progress }) => {
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
   const pending = useSelector((state) => state.cart.pending);
+  const [wishlistVal, setWishlistVal] = useState([]);
+  const wishlistData = useSelector((state) => state.wishlist.wishlistData);
+  const wishlist = useSelector((state) => state.wishlist);
+  useEffect(() => {
+    if (userData && userData._id) {
+      setWishlistVal(wishlistData);
+    } else {
+    }
+  }, [wishlistData]);
+  useEffect(() => {
+    if (userData && userData._id) {
+    } else {
+      const localData = JSON.parse(localStorage.getItem("wishlist"));
+      if (localData && localData.length) {
+        setWishlistVal(localData);
+      }
+    }
+  }, []);
   useEffect(() => {
     setProgress(progress + 40);
     const value = productData.filter((items) => items._id == productID);
@@ -181,7 +202,82 @@ const ProductPage = ({ setProgress, progress }) => {
     }
     setProgress(progress + 100);
   };
+  const handleWishlistClick = (itemId, userId) => {
+    if (userData && userData._id) {
+      if (wishlistData.find((item) => item.product._id === itemId)) {
+        dispatch(removeWishlistAsync({ product: itemId, user: userId }));
+      } else {
+        dispatch(addWishlistAsync({ product: itemId, user: userId }));
+      }
+    } else {
+      const localData = JSON.parse(localStorage.getItem("wishlist"));
+      if (localData && localData.length) {
+        if (localData) {
+          const targetIndex = localData.findIndex(
+            (item) => item.product._id == itemId
+          );
+          if (targetIndex != -1) {
+            localData.splice(targetIndex, 1);
+            setWishlistVal(localData);
+            localStorage.setItem("wishlist", JSON.stringify(localData));
+            toast.success("Removed from the wishlist", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          } else {
+            const newItem = {
+              product: { _id: itemId },
+              userId: userId,
+              createdAt: new Date(),
+            };
+            setWishlistVal([...wishlistVal, newItem]);
+            localStorage.setItem(
+              "wishlist",
+              JSON.stringify([...localData, newItem])
+            );
+            toast.success("Added to the wishlist", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          }
+        } else {
+          console.log("sdhfbdsj");
+        }
+      } else {
+        const newItem = {
+          product: { _id: itemId },
+          createdAt: new Date(),
+          userId: null,
+        };
 
+        setWishlistVal([newItem]);
+
+        localStorage.setItem("wishlist", JSON.stringify([newItem]));
+        toast.success("Added to the wishlist", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    }
+  };
   return (
     <>
       {productVal ? (
@@ -211,7 +307,7 @@ const ProductPage = ({ setProgress, progress }) => {
             </nav>
 
             {productVal && productVal.images ? (
-              <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8 ">
+              <div className="relative mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8 ">
                 {productVal.images[0] && (
                   <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                     <img
@@ -241,6 +337,25 @@ const ProductPage = ({ setProgress, progress }) => {
                     />
                   </div>
                 )}
+                <p className="absolute bg-transparent  rounded-full top-[-20px] right-4 text-xs p-1 shadow-2xl">
+                  <button
+                    disabled={wishlist.pending}
+                    onClick={() =>
+                      handleWishlistClick(productVal._id, userData._id)
+                    }
+                  >
+                    <FavoriteIcon
+                      className={`${
+                        wishlistVal?.find(
+                          (item) => item.product._id === productVal._id
+                        )
+                          ? "text-red-700"
+                          : "text-[#000] opacity-30"
+                      }`}
+                      style={{ fontSize: "40px" }}
+                    />
+                  </button>
+                </p>
               </div>
             ) : (
               <div className="flex gap-4 ">

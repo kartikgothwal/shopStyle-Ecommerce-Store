@@ -50,6 +50,16 @@ const Wishlist = () => {
       if (targetIndex != -1) {
         localWishlistItem.splice(targetIndex, 1);
         localStorage.setItem("wishlist", JSON.stringify(localWishlistItem));
+        toast.success("Removed from the wishlist", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     }
   };
