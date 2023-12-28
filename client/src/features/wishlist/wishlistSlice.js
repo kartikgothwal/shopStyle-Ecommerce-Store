@@ -7,14 +7,6 @@ const initialState = {
   pending: false,
 };
 
-// export const incrementAsync = createAsyncThunk(
-//   "counter/fetchCount",
-//   async (amount) => {
-//     const response = await fetchCount(amount);
-
-//     return response.data;
-//   }
-// );
 export const addWishlistAsync = createAsyncThunk(
   "wishlist/additem",
   async (Item) => {
@@ -117,11 +109,13 @@ export const counterSlice = createSlice({
       .addCase(removeWishlistAsync.fulfilled, (state, action) => {
         state.pending = false;
         const { doc, message } = action.payload;
+
         const targetIndex = state.wishlistData.findIndex(
           (items) => items._id == doc._id
         );
         if (targetIndex !== -1) {
           state.wishlistData.splice(targetIndex, 1);
+
           state.wishlistData = state.wishlistData;
           toast.success(message, {
             position: "top-right",

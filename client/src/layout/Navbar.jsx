@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  navLinks } from "../constants";
+import { navLinks } from "../constants";
 import { NavLink } from "react-router-dom";
 import { Logo } from "../assets";
 import { toast } from "react-toastify";
@@ -101,7 +101,7 @@ const Navbar = () => {
                     </li>
                     <li className="list-none hover:text-[#654444]">
                       <NavLink
-                        to="#"
+                        to="/trackorders"
                         className="text-[14px] max-sm:text-[11px] font-light"
                       >
                         My Orders
@@ -109,7 +109,7 @@ const Navbar = () => {
                     </li>
                     <li className="list-none hover:text-[#654444]">
                       <NavLink
-                        to="#"
+                        to="/wishlist"
                         className="text-[14px] max-sm:text-[11px] font-light"
                       >
                         My Wishlist
@@ -125,7 +125,7 @@ const Navbar = () => {
                   </ul>
                 ) : null}
               </Tooltip>
-              <Tooltip title="orders" onClick={() => navigate("/trackorders")}> 
+              <Tooltip title="orders" onClick={() => navigate("/trackorders")}>
                 <LocalShippingIcon
                   className="cursor-pointer "
                   size="large"
@@ -207,11 +207,21 @@ const Navbar = () => {
               >
                 <ul className="flex flex-col gap-4">
                   {navLinks &&
-                    navLinks.map((nav) => {
+                    navLinks.map((nav, index) => {
                       return (
-                        <div className="cursor-pointer border-b border-[#efe9e9] flex justify-between">
-                          <li className="hover:text-[#221e1e] text-[13px] font-rubik text-[#5e5959]  pb-4 ">
-                            <NavLink to={""}> {nav.title}</NavLink>
+                        <div
+                          key={index}
+                          className="cursor-pointer border-b border-[#efe9e9] flex justify-between"
+                          onClick={() => navigate(`/product/${nav.link}`)}
+                        >
+                          <li
+                            className="hover:text-[#221e1e] text-[13px] font-rubik text-[#5e5959]  pb-4 "
+                            onClick={() => navigate(`/product/${nav.link}`)}
+                          >
+                            <NavLink to={`/product/${nav.link}`}>
+                              {" "}
+                              {nav.title}
+                            </NavLink>
                           </li>
                           <KeyboardArrowRightIcon
                             style={{ color: "#5e5959" }}

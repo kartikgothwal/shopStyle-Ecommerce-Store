@@ -15,22 +15,14 @@ const Wishlist = () => {
   const ProductData = useSelector((state) => state.product.productdata);
   useEffect(() => {
     if (userData && userData._id) {
-      console.log(
-        "🚀 ~ file: Wishlist.js:19 ~ useEffect ~ wishlistData:",
-        wishlistData
-      );
       if (wishlistData.length) {
         setwishlistVal(wishlistData);
+      } else {
+        setwishlistVal([]);
       }
     }
   }, [wishlistData, userData]);
-  // useEffect(() => {
-  //   if (userData && userData._id) {
-  //     if (!wishlistData && !wishlistData.length) {
-  //       dispatch(getWishlistAsync({ user: userData._id }));
-  //     }
-  //   }
-  // }, []);
+
   useEffect(() => {
     if (userData && userData._id) {
     } else {
