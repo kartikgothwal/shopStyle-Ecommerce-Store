@@ -214,7 +214,7 @@ const ProductPage = ({ setProgress, progress }) => {
       if (localData && localData.length) {
         if (localData) {
           const targetIndex = localData.findIndex(
-            (item) => item.product._id == itemId
+            (item) => item.product?._id == itemId
           );
           if (targetIndex != -1) {
             localData.splice(targetIndex, 1);

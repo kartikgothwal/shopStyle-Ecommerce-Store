@@ -3,7 +3,7 @@ import { PaddingGiverHoc } from "../../components/hoc";
 import { useDispatch, useSelector } from "react-redux";
 import { DataLoaderAnimation } from "../../layout";
 import { useNavigate } from "react-router-dom";
-import { removeWishlistAsync } from "./wishlistSlice";
+import { getWishlistAsync, removeWishlistAsync } from "./wishlistSlice";
 import { toast } from "react-toastify";
 const Wishlist = () => {
   const navigate = useNavigate();
@@ -15,9 +15,22 @@ const Wishlist = () => {
   const ProductData = useSelector((state) => state.product.productdata);
   useEffect(() => {
     if (userData && userData._id) {
-      setwishlistVal(wishlistData);
+      console.log(
+        "🚀 ~ file: Wishlist.js:19 ~ useEffect ~ wishlistData:",
+        wishlistData
+      );
+      if (wishlistData.length) {
+        setwishlistVal(wishlistData);
+      }
     }
   }, [wishlistData, userData]);
+  // useEffect(() => {
+  //   if (userData && userData._id) {
+  //     if (!wishlistData && !wishlistData.length) {
+  //       dispatch(getWishlistAsync({ user: userData._id }));
+  //     }
+  //   }
+  // }, []);
   useEffect(() => {
     if (userData && userData._id) {
     } else {
@@ -40,7 +53,7 @@ const Wishlist = () => {
       dispatch(removeWishlistAsync({ product: itemId, user: userId }));
     } else {
       const remainingItems = wishlistVal.filter((values) => {
-        return values.product._id !== itemId;
+        return values.product?._id !== itemId;
       });
       setwishlistVal(remainingItems);
       const localWishlistItem = JSON.parse(localStorage.getItem("wishlist"));

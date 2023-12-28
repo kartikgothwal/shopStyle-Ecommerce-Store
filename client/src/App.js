@@ -16,7 +16,10 @@ import {
 } from "./features/cart/cartSlice.js";
 
 import { getAddressAsync } from "./features/address/addressSlice.js";
-import { getWishlistAsync } from "./features/wishlist/wishlistSlice.js";
+import {
+  addWishlistAsync,
+  getWishlistAsync,
+} from "./features/wishlist/wishlistSlice.js";
 const Main = lazy(() => import("./components/FilterProductsPages/Main.jsx"));
 const Address = lazy(() => import("./features/address/Address.js"));
 const Footer = lazy(() => import("./layout/Footer"));
@@ -63,13 +66,22 @@ const App = () => {
           };
           return newItem;
         });
-        const wishlistLocalData = JSON.parse(localStorage.getItem("cartArray"));
-        if (wishlistLocalData && wishlistLocalData.length) {
-          console.log("SDFBDSJ");
-        }
+
         dispatch(addCartItemAsync(itemdoc));
-        localStorage.clear();
       }
+      const wishlistLocalData = JSON.parse(localStorage.getItem("wishlist"));
+
+      if (wishlistLocalData && wishlistLocalData.length) {
+        const itemdoc = wishlistLocalData.map((itemVal) => {
+          const newItem = {
+            user: userData._id,
+            ...itemVal,
+          };
+          return newItem;
+        });
+        dispatch(addWishlistAsync(itemdoc));
+      }
+      localStorage.clear();
     }
   }, [userData]);
 

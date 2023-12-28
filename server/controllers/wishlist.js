@@ -2,10 +2,11 @@ const { WishlistModel } = require("../model/wishlist");
 
 exports.addItem = async (req, res) => {
   try {
-    const { Items } = req.body;
+    let { Items } = req.body;
     if (!Array.isArray(Items)) {
       Items = [Items];
     }
+    console.log("🚀 ~ file: wishlist.js:8 ~ exports.addItem= ~ Items:", Items)
     const ItemsVal = await WishlistModel.insertMany(Items);
     const populatedDoc = await WishlistModel.populate(ItemsVal, {
       path: "product",
@@ -13,6 +14,7 @@ exports.addItem = async (req, res) => {
     const doc = await WishlistModel.populate(populatedDoc, { path: "user" });
     return res.status(201).json({ message: "Added to wishlist", doc: doc });
   } catch (error) {
+    console.log("🚀 ~ file: wishlist.js:16 ~ exports.addItem= ~ error:", error)
     return res
       .status(500)
       .json({ message: "Failed to Add to wishlist", error: error.message });
