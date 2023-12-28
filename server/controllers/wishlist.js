@@ -3,7 +3,10 @@ const { WishlistModel } = require("../model/wishlist");
 exports.addItem = async (req, res) => {
   try {
     const { Items } = req.body;
-    const ItemsVal = await WishlistModel.create(Items);
+    if (!Array.isArray(Items)) {
+      Items = [Items];
+    }
+    const ItemsVal = await WishlistModel.insertMany(Items);
     const populatedDoc = await WishlistModel.populate(ItemsVal, {
       path: "product",
     });

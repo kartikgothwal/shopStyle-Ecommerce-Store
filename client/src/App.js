@@ -63,6 +63,10 @@ const App = () => {
           };
           return newItem;
         });
+        const wishlistLocalData = JSON.parse(localStorage.getItem("cartArray"));
+        if (wishlistLocalData && wishlistLocalData.length) {
+          console.log("SDFBDSJ");
+        }
         dispatch(addCartItemAsync(itemdoc));
         localStorage.clear();
       }

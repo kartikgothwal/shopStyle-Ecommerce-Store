@@ -74,7 +74,7 @@ export const counterSlice = createSlice({
       .addCase(addWishlistAsync.fulfilled, (state, action) => {
         state.pending = false;
         const { message, doc } = action.payload;
-        state.wishlistData.push(doc);
+        state.wishlistData = state.wishlistData.concat(doc);
         toast.success(message, {
           position: "top-right",
           autoClose: 5000,
