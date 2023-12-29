@@ -6,7 +6,13 @@ exports.getProducts = async (req, res) => {
     if (req.query.page) {
       const { page, LIMIT_PER_PAGE, category } = req.query;
       let baseQuery = {
-        subCategory: { $regex: new RegExp(category, "i") },
+        $or: [
+          { subCategory: { $regex: new RegExp(category, "i") } },
+          { title: { $regex: new RegExp(category, "i") } },
+          { description: { $regex: new RegExp(category, "i") } },
+          { category: { $regex: new RegExp(category, "i") } },
+          { details: { $regex: new RegExp(category, "i") } },
+        ],
       };
       let paginationQuery = { ...baseQuery };
       let PaginationProducts;
@@ -51,6 +57,10 @@ exports.getProducts = async (req, res) => {
       .status(200)
       .json({ message: "Products fetched successfully", AllProducts });
   } catch (error) {
+    console.log(
+      "🚀 ~ file: product.js:60 ~ exports.getProducts= ~ error:",
+      error
+    );
     return res
       .status(500)
       .json({ message: "Something went wrong", error: error.message });

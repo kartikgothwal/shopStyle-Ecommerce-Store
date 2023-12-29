@@ -10,7 +10,7 @@ exports.SearchProduct = async (req, res) => {
         { category: { $regex: new RegExp(data, "i") } },
         { details: { $regex: new RegExp(data, "i") } },
       ],
-    });
+    }); 
     return res.status(200).json({ message: "failed search", doc: doc });
   } catch (error) {
     return res

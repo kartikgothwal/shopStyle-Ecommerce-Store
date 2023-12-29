@@ -18,6 +18,7 @@ import axios from "axios";
 const Navbar = () => {
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
+  const [inputFocus, SetinputFocus] = useState(false);
   const [searchData, SetSearchData] = useState();
   const [toggleSidebar, setToogleSidebar] = useState(false);
   const toggleSidebarFunction = () => {
@@ -34,7 +35,11 @@ const Navbar = () => {
         const {
           data: { doc },
         } = response;
-        SetSearchData(doc);
+        if (doc && doc.length) {
+          SetSearchData(doc);
+        } else {
+          SetSearchData([]);
+        }
       }
     } catch (error) {
       toast.error("Something went wrong", {
@@ -66,7 +71,7 @@ const Navbar = () => {
       }, d);
     };
   }
-  const fetchSearchData = decounced(getData, 200);
+  const fetchSearchData = decounced(getData, 300);
   useEffect(() => {
     document.body.style.overflow = toggleSidebar ? "hidden" : "visible";
     return () => {
@@ -111,14 +116,45 @@ const Navbar = () => {
               />
             </NavLink>
 
-            <div className="hidden border-2 shadow-[0_0_3px_hsl(240deg,7%,62%)] border-black absolute sm:flex left-8 mx-4 h-[2rem] w-[15rem] rounded-md px-3 md:relative md:left-0 md:flex justify-center items-center max-md:w-[14rem] ">
+            <div
+              className=" hidden border-2 shadow-[0_0_3px_hsl(240deg,7%,62%)] border-black absolute sm:flex left-8 mx-4 h-[2rem] w-[15rem] rounded-md px-3 md:relative md:left-0 md:flex justify-center items-center max-md:w-[14rem] "
+              onMouseEnter={() => SetinputFocus(true)}
+              onMouseLeave={() => SetinputFocus(false)}
+              // onFocus={() => SetinputFocus(true)}
+              // onBlur={() => SetinputFocus(false)}
+            >
               <SearchIcon />
               <input
                 type="text"
                 onChange={(e) => handleSearchChange(e)}
                 placeholder="Search for something"
-                className="text-[15px] font-rubik w-[100%] outline-none "
+                className="text-[15px] font-rubik w-[100%] outline-none"
               />
+              <div
+                className={`${
+                  inputFocus ? "block" : "hidden"
+                } absolute top-[32px]  border border-gray-300  rounded-xl bg-white`}
+              >
+                <div className="w-full min-h-full max-h-[30rem] overflow-y-scroll">
+                  {searchData && searchData.length ? (
+                    searchData.map((item) => {
+                      return (
+                        <div
+                          className="flex px-2 w-full flex-col gap-1 cursor-pointer hover:bg-gray-100"
+                          onClick={() => navigate(`product/${item.category}`)}
+                        >
+                          <h3 className="text-[15px]">{item.title}</h3>
+                          <p className="text-[10px] text-blue-700 font-bold">
+                            {item.category}
+                          </p>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="px-2 py-2">No data found</p>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="mx-4 flex flex-wrap justify-center items-center gap-4">
               <Tooltip
@@ -164,7 +200,6 @@ const Navbar = () => {
                         My Wishlist
                       </NavLink>
                     </li>
-
                     <button
                       className="relative bg-black  px-4 py-1 mt-3 rounded-md bg-neutral-800 isolation-auto z-10 border-2 border-black before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-white before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 text-white transition-colors delay-100 hover:text-black flex item-center gap-1 max-sm:px-4 text-sm"
                       onClick={removeCookie}
