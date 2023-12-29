@@ -26,7 +26,6 @@ exports.checkOut = async (req, res) => {
 exports.paymentVerification = async (req, res) => {
   try {
     const { response, order, orderInfo } = req.body;
-
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
       response;
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -89,11 +88,6 @@ exports.paymentVerification = async (req, res) => {
       const doc = await new paymentModel();
     }
   } catch (error) {
-    console.log(
-      "🚀 ~ file: payment.js:62 ~ exports.paymentVerification= ~ error:",
-      error
-    );
-
     return res.status(500).json({
       message: "Payment verification failed",
       error: error.message,

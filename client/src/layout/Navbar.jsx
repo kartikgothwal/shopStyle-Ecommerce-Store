@@ -14,13 +14,60 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import axios from "axios";
 const Navbar = () => {
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
+  const [searchData, SetSearchData] = useState();
   const [toggleSidebar, setToogleSidebar] = useState(false);
   const toggleSidebarFunction = () => {
     setToogleSidebar(!toggleSidebar);
   };
+  async function getData(searchDataval) {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/search?data=${searchDataval}`
+      );
+      if (response.status >= 400) {
+        throw "Error found";
+      } else {
+        const {
+          data: { doc },
+        } = response;
+        SetSearchData(doc);
+      }
+    } catch (error) {
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  }
+  useEffect(() => {
+    console.log("🚀 ~ file: Navbar.jsx:54 ~ Navbar ~ searchData:", searchData);
+  }, [searchData]);
+  function decounced(fn, d) {
+    let time = null;
+    return function (...args) {
+      if (time) {
+        clearTimeout(time);
+      }
+      time = setTimeout(() => {
+        fn.apply(this, args);
+      }, d);
+    };
+  }
+  const fetchSearchData = decounced(getData, 200);
+
   useEffect(() => {
     document.body.style.overflow = toggleSidebar ? "hidden" : "visible";
     return () => {
@@ -34,7 +81,9 @@ const Navbar = () => {
     window.location.reload();
     toast("Your have been logged out");
   };
-
+  const handleSearchChange = (e) => {
+    fetchSearchData(e.target.value);
+  };
   return (
     <>
       <div
@@ -67,6 +116,7 @@ const Navbar = () => {
               <SearchIcon />
               <input
                 type="text"
+                onChange={(e) => handleSearchChange(e)}
                 placeholder="Search for something"
                 className="text-[15px] font-rubik w-[100%] outline-none "
               />
