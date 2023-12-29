@@ -120,12 +120,7 @@
 }
 
 .shimmer {
-  background: linear-gradient(
-    133deg,
-    #fef7f7 0%,
-    #f5f5f5 50%,
-    #faf0f0 100%
-  );
+  background: linear-gradient(133deg, #fef7f7 0%, #f5f5f5 50%, #faf0f0 100%);
   background-size: 200% auto;
   animation: shimmer 1.5s infinite;
 }
@@ -137,5 +132,27 @@
   }
 }
 
+html::-webkit-scrollbar {
+  width: 10px;
+}
 
+html::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
 
+html::-webkit-scrollbar-thumb {
+  background: rgb(87, 87, 222);
+  border-radius: 25px;
+}
+.scrollbar-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-container::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
+
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background: rgb(198, 198, 205);
+  border-radius: 25px;
+}

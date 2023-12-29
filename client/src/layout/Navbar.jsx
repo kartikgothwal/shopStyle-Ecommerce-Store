@@ -135,7 +135,7 @@ const Navbar = () => {
                   inputFocus ? "block" : "hidden"
                 } absolute top-[32px]  border border-gray-300  rounded-xl bg-white`}
               >
-                <div className="w-full min-h-full max-h-[30rem] overflow-y-scroll">
+                <div className="w-full min-h-full max-h-[30rem] overflow-y-scroll scrollbar-container">
                   {searchData && searchData.length ? (
                     searchData.map((item) => {
                       return (
