@@ -67,7 +67,6 @@ const Navbar = () => {
     };
   }
   const fetchSearchData = decounced(getData, 200);
-
   useEffect(() => {
     document.body.style.overflow = toggleSidebar ? "hidden" : "visible";
     return () => {
