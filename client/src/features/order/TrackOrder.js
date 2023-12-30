@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DataLoaderAnimation } from "../../layout";
 import { getOrdersAsync } from "./orderSlice";
-
+import CircleIcon from "@mui/icons-material/Circle";
 const TrackOrder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -134,10 +134,69 @@ const TrackOrder = () => {
                               </div>
                             </div>
                           </div>
-                        
                         </>
                       );
                     })}
+                  <div className="flex justify-center items-center border-4">
+                    <ol class="flex items-center w-full justify-center">
+                      <div className="w-full flex-col">
+                        <div className="flex w-full">
+                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
+                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
+                              <CircleIcon />
+                            </span>
+                          </li>
+                        </div>
+                        <div>
+                          <p className="text-xs md:block hidden">
+                            Order Placed
+                          </p>
+                        </div>
+                      </div>
+                      <div className="w-full flex-col">
+                        <div className="flex w-full">
+                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
+                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
+                              <CircleIcon />
+                            </span>
+                          </li>
+                        </div>
+                        <div>
+                          <p className="text-xs md:block hidden">
+                            Ready to Ship
+                          </p>
+                        </div>
+                      </div>
+                      <div className="w-full flex-col">
+                        <div className="flex w-full">
+                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
+                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
+                              <CircleIcon />
+                            </span>
+                          </li>
+                        </div>
+                        <div>
+                          <p className="text-xs md:block hidden">
+                            Arrived at facility
+                          </p>
+                        </div>
+                      </div>
+                      <div className="w-full flex-col">
+                        <div className="flex w-full">
+                          <li className="bg">
+                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
+                              <CircleIcon className="text-blue-500" />
+                            </span>
+                          </li>
+                        </div>
+                        <div>
+                          <p className="text-xs md:block hidden">
+                            Ready for Delivery
+                          </p>
+                        </div>
+                      </div>
+                    </ol>
+                  </div>
                 </div>
               </>
             );
