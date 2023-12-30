@@ -24,18 +24,21 @@ const TrackOrder = () => {
       dispatch(getOrdersAsync(orderInfo));
     }
   }, [userData]);
-  useEffect(() => {
-    console.log("🚀 ~ file: TrackOrder.js:12 ~ TrackOrder ~ orders:", orders);
-  }, [orders]);
+
   const pending = useSelector((state) => state.order.pending);
+  const options = { day: "numeric", month: "short", year: "numeric" };
   return (
     <>
       <section className="max-sm:mt-[6rem] sm:mt-[7rem] lg:mt-[6rem] ">
         {orders && orders.length ? (
-          orders.map((items) => {
+          [...orders].reverse().map((items) => {
+            console.log(
+              "🚀 ~ file: TrackOrder.js:36 ~ orders.map ~ items:",
+              items
+            );
             return (
               <>
-                <div className="flex flex-col gap-4 shadow-lg my-4  p-8 rounded-md">
+                <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md border border-black">
                   <div className="flex justify-between items-center shadow-sm">
                     <div className=" flex gap-4 flex-wrap items-center">
                       <h1 className="font-bold text-lg sm:text-2xl lg:text-4xl">
@@ -53,7 +56,10 @@ const TrackOrder = () => {
                         Order placed
                       </p>
                       <p className="mx-2 font-semibold text-center">
-                        March 22, 2021
+                        {new Date(items.createdAt).toLocaleTimeString(
+                          "en-US",
+                          options
+                        )}
                       </p>
                     </div>
                   </div>
@@ -63,7 +69,7 @@ const TrackOrder = () => {
                     items.products.map((value) => {
                       return (
                         <>
-                          <div className="border shadow-sm py-4 mt-5 flex flex-wrap gap-4 justify-start lg:justify-center items-start bg-gray-100 bg-opacity-100 rounded-md">
+                          <div className="border shadow-sm py-4 px-4 mt-5 flex flex-wrap gap-4 justify-start lg:justify-center items-start bg-gray-100 bg-opacity-100 rounded-md">
                             <div className=" rounded-xl overflow-hidden shadow-xl ">
                               <img
                                 src={value.productData.thumbnail}
@@ -78,7 +84,10 @@ const TrackOrder = () => {
                               </h1>
                               <h1 className="font-normal ">
                                 ${Number(value.productData.price).toFixed(2, 2)}{" "}
-                                * {value.quantity}
+                                * {value.quantity}{" "}
+                                <span className="font-normal text-[14px] text-gray-700 text-opacity-70">
+                                  (Qty)
+                                </span>
                               </h1>
                               <p className="font-normal text-[14px] text-gray-700 text-opacity-70">
                                 <span className="font-semibold">Subtotal</span>:
@@ -90,7 +99,7 @@ const TrackOrder = () => {
                                 during your next adventure.
                               </p>
                             </div>
-                            <div className="flex   w-[15rem] flex-col gap-2">
+                            <div className="flex w-[15rem] flex-col gap-2">
                               <h2 className="font-normal font-rubik">
                                 Delivery address
                               </h2>
