@@ -12,9 +12,9 @@ import PageNotFound from "../../layout/PageNotFound";
 import { BigCardShimmerEffect } from "../../layout";
 import { toast } from "react-toastify";
 import { addCartItemAsync, updateCartItemAsync } from "../cart/cartSlice";
-import { useNavigate } from "react-router-dom";
 import { PaddingGiverHoc } from "../../components/hoc";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -75,11 +75,9 @@ function classNames(...classes) {
 
 const ProductPage = ({ setProgress, progress }) => {
   const dispatch = useDispatch();
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [productVal, SetProductVal] = useState({});
   const { productID } = useParams();
-  const navigate = useNavigate();
   const productData = useSelector((state) => state.product.productdata);
   const cartStoreValue = useSelector((state) => state.cart.cartvalue);
   const userData = useSelector((state) => state.user.userData);
@@ -278,6 +276,7 @@ const ProductPage = ({ setProgress, progress }) => {
       }
     }
   };
+
   return (
     <>
       {productVal ? (
@@ -544,7 +543,14 @@ const ProductPage = ({ setProgress, progress }) => {
                     onClick={() => AddToCartClickHandle(productVal)}
                     disabled={pending}
                   >
-                    Add to bag
+                    Add to bag{console.log(cartStoreValue)}
+                    {cartStoreValue &&
+                    cartStoreValue.length &&
+                    cartStoreValue.find(
+                      (item) => item.product._id == productVal._id
+                    ) ? (
+                      <CheckCircleIcon className="mx-1" />
+                    ) : null}
                   </button>
                 </div>
               </div>

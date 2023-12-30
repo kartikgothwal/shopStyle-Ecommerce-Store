@@ -42,7 +42,12 @@ exports.getOrders = async (req, res) => {
       })
         .populate("user")
         .populate("payment")
-        .populate("address")
+        .populate({
+          path: "address",
+          populate: {
+            path: "user",
+          },
+        })
         .populate("products.productData");
     } else {
       var docs = await OrderModel.find({
@@ -50,7 +55,12 @@ exports.getOrders = async (req, res) => {
       })
         .populate("user")
         .populate("payment")
-        .populate("address")
+        .populate({
+          path: "address",
+          populate: {
+            path: "user",
+          },
+        })
         .populate("products.productData");
     }
 

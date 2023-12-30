@@ -178,7 +178,9 @@ const Navbar = () => {
                 />
                 {userData.email ? (
                   <ul className="absolute invisible max-mobileSize:right-[-110px] max-md:right-[-170px] max-xl:right-[-50px]   pl-6 text-[16px] text-[#563131] flex account-details border transition-display delay-300  my-2 h-[15rem] w-[12rem] bg-white z-50 flex-col items-start py-4 px-2 gap-2">
-                    <h1 className="max-sm:text-[12px]">Welcome, {userData.firstname}</h1>
+                    <h1 className="max-sm:text-[12px]">
+                      Welcome, {userData.firstname}
+                    </h1>
 
                     <li className="list-none hover:text-[#654444]">
                       <NavLink

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { PaddingGiverHoc } from "../hoc";
 import { LIMIT_PER_PAGE } from "../../constants";
-import { ProductPageShimmer } from "../../layout";
+import { DataLoaderAnimation, ProductPageShimmer } from "../../layout";
 import ProductCard from "../../features/products/Products";
 import Pagination from "./Pagination";
 
@@ -22,6 +22,7 @@ const Main = ({ setProgress, progress }) => {
   const [product, SetProduct] = useState(null);
   let totalDocument = 0;
   const ProductData = useSelector((state) => state.product.productdata);
+  const pending = useSelector((state) => state.product.pending);
   const { category } = useParams();
 
   const handleCurrentPage = (pageVal) => {
@@ -182,13 +183,14 @@ const Main = ({ setProgress, progress }) => {
     <>
       <section className="max-VerySmallmobileSize:top-[8rem] max-mobileSize:top-[8rem]  border-none  relative max-sm:top-[5rem] max-md:top-[7rem] top-[8rem] lg:top-[8rem] max-xl:top-[7rem] xl:top-[6rem] w-full min-h-screen">
         <div className=" min-h-screen w-full mt-3 flex flex-col gap-8  ">
+          {pending ? <DataLoaderAnimation /> : null}
           <div className="py-2 px-8 grid grid-rows-2 lg:gap-y-8">
             <h1 className="text-center text-2xl font-normal capitalize text-[#545252]">
               Showing results for {category}
             </h1>
             <p className="text-center text-sm font-light">
-              Shop online for Suta's stunning designer blouses that feature a
-              wide range of necklines, sleeve styles, techniques and colour.
+              Shop online for ShopStyles's stunning designer Dress that feature
+              a wide range of necklines, sleeve styles, techniques and colour.
               We're sure you'll find the perfect designer blouse to make your
               looks stand out.
             </p>
