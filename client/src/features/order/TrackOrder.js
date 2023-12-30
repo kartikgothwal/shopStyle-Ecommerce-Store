@@ -38,7 +38,7 @@ const TrackOrder = () => {
             );
             return (
               <>
-                <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md border border-black">
+                <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md   ">
                   <div className="flex justify-between items-center shadow-sm">
                     <div className=" flex gap-4 flex-wrap items-center">
                       <h1 className="font-bold text-lg sm:text-2xl lg:text-4xl">
@@ -134,6 +134,7 @@ const TrackOrder = () => {
                               </div>
                             </div>
                           </div>
+                        
                         </>
                       );
                     })}
