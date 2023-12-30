@@ -126,7 +126,9 @@ const Wishlist = () => {
                           <div className="flex">
                             <button
                               type="button"
-                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                              className={`font-medium ${
+                                pending ? "opacity-70" : "opacity-100"
+                              } text-indigo-600 hover:text-indigo-500`}
                               onClick={() =>
                                 handleWishlistRemoveClick(
                                   item.product._id,

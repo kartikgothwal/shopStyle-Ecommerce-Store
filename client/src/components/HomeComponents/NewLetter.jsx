@@ -3,8 +3,8 @@ import { styles } from "../../utils/Style";
 import { PaddingGiverHoc } from  "../hoc";
 const NewLetter = () => {
   return (
-    <section className="  py-8 px-[7rem] max-lg:px-[5rem] flex justify-center items-center h-[100%] bg-[#116dff] text-white">
-      <div className="  gap-3 h-full w-full   flex flex-col ustify-center items-center ">
+    <section className=" mb-[5rem] py-8 px-[7rem] max-lg:px-[5rem] flex justify-center items-center h-[100%] bg-[#116dff] text-white">
+      <div className="  gap-3 h-full w-full flex flex-col ustify-center items-center ">
         <h1 className="text-4xl max-md:text-2xl">Newsletter</h1>
         <p className="text-xl max-lg:text-sm flex justify-center item-center text-center">
           Sign up to receive updates on new arrivals and special offers

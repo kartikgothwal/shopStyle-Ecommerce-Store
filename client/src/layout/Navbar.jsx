@@ -18,6 +18,7 @@ import axios from "axios";
 const Navbar = () => {
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
+  const [searchBarData, SetSearchBarData] = useState(null);
   const [inputFocus, SetinputFocus] = useState(false);
   const [searchData, SetSearchData] = useState();
   const [toggleSidebar, setToogleSidebar] = useState(false);
@@ -37,8 +38,10 @@ const Navbar = () => {
         } = response;
         if (doc && doc.length) {
           SetSearchData(doc);
+          SetSearchBarData(searchDataval);
         } else {
           SetSearchData([]);
+          SetSearchBarData(null);
         }
       }
     } catch (error) {
@@ -88,6 +91,7 @@ const Navbar = () => {
   const handleSearchChange = (e) => {
     fetchSearchData(e.target.value);
   };
+
   return (
     <>
       <div
@@ -120,8 +124,6 @@ const Navbar = () => {
               className=" hidden border-2 shadow-[0_0_3px_hsl(240deg,7%,62%)] border-black absolute sm:flex left-8 mx-4 h-[2rem] w-[15rem] rounded-md px-3 md:relative md:left-0 md:flex justify-center items-center max-md:w-[14rem] "
               onMouseEnter={() => SetinputFocus(true)}
               onMouseLeave={() => SetinputFocus(false)}
-              // onFocus={() => SetinputFocus(true)}
-              // onBlur={() => SetinputFocus(false)}
             >
               <SearchIcon />
               <input
@@ -133,7 +135,7 @@ const Navbar = () => {
               <div
                 className={`${
                   inputFocus ? "block" : "hidden"
-                } absolute top-[32px]  border border-gray-300  rounded-xl bg-white`}
+                } absolute top-[32px]  border border-gray-300  rounded-xl bg-white min-w-full max-w-[30rem] `}
               >
                 <div className="w-full min-h-full max-h-[30rem] overflow-y-scroll scrollbar-container">
                   {searchData && searchData.length ? (
@@ -141,7 +143,9 @@ const Navbar = () => {
                       return (
                         <div
                           className="flex px-2 w-full flex-col gap-1 cursor-pointer hover:bg-gray-100"
-                          onClick={() => navigate(`product/${item.category}`)}
+                          onClick={() => {
+                            navigate(`product/${item.title}`);
+                          }}
                         >
                           <h3 className="text-[15px]">{item.title}</h3>
                           <p className="text-[10px] text-blue-700 font-bold">
@@ -174,7 +178,7 @@ const Navbar = () => {
                 />
                 {userData.email ? (
                   <ul className="absolute invisible max-mobileSize:right-[-110px] max-md:right-[-170px] max-xl:right-[-50px]   pl-6 text-[16px] text-[#563131] flex account-details border transition-display delay-300  my-2 h-[15rem] w-[12rem] bg-white z-50 flex-col items-start py-4 px-2 gap-2">
-                    <h1 className="max-sm:text-[12px]">Welcome, Kartik</h1>
+                    <h1 className="max-sm:text-[12px]">Welcome, {userData.firstname}</h1>
 
                     <li className="list-none hover:text-[#654444]">
                       <NavLink
@@ -276,7 +280,7 @@ const Navbar = () => {
             <div className="block sm:hidden border border-red-900 bg-[#00000042] fixed w-full h-screen"></div>
           </div>
           <div
-            className={`sidebar overflow-hidden block mt-[-5px] z-50 sm:hidden border ${
+            className={`sidebar overflow-hidden block mt-[-5px] z-50 sm:hidden border top-0 ${
               toggleSidebar ? "w-[80%]" : "w-0"
             } h-[101%] fixed bg-white`}
           >

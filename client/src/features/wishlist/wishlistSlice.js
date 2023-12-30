@@ -111,7 +111,7 @@ export const counterSlice = createSlice({
         const { doc, message } = action.payload;
 
         const targetIndex = state.wishlistData.findIndex(
-          (items) => items._id == doc._id
+          (items) => items?._id == doc._id
         );
         if (targetIndex !== -1) {
           state.wishlistData.splice(targetIndex, 1);
