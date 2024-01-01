@@ -155,7 +155,7 @@ const TrackOrder = () => {
                         </div>
                         <div>
                           <p
-                            className={`text-xs md:block hidden  ${
+                            className={`text-xs md:block max-sm:text-[12px] max-mobileSize:text-[9px]  ${
                               items.orderstatus == "order placed"
                                 ? "text-blue-600"
                                 : null
@@ -181,13 +181,13 @@ const TrackOrder = () => {
                         </div>
                         <div>
                           <p
-                            className={`text-xs md:block hidden  ${
+                            className={`text-xs md:block max-sm:text-[12px]  max-mobileSize:text-[9px] ${
                               items.orderstatus == "shipped"
                                 ? "text-blue-600"
                                 : "text-black"
                             }`}
                           >
-                            Ready to Ship
+                            Shipped
                           </p>
                         </div>
                       </div>
@@ -207,13 +207,13 @@ const TrackOrder = () => {
                         </div>
                         <div>
                           <p
-                            className={`text-xs md:block hidden  ${
+                            className={`text-xs md:block max-sm:text-[12px]  max-mobileSize:text-[9px] ${
                               items.orderstatus == "arrived"
                                 ? "text-blue-600"
                                 : "text-black"
                             }`}
                           >
-                            Arrived at facility
+                            Arrived 
                           </p>
                         </div>
                       </div>
@@ -233,13 +233,13 @@ const TrackOrder = () => {
                         </div>
                         <div>
                           <p
-                            className={`text-xs md:block hidden  ${
-                              items.orderstatus == "delivery"
+                            className={`text-xs md:block max-sm:text-[12px]  max-mobileSize:text-[9px] ${
+                              items.orderstatus == "delivered"
                                 ? "text-blue-600"
                                 : "text-black"
                             }`}
                           >
-                            Ready for Delivery
+                           Delivered
                           </p>
                         </div>
                       </div>
