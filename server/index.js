@@ -32,6 +32,7 @@ const AddressRouter = require("./routes/address");
 const PaymentRouter = require("./routes/payment");
 const WishlistRouter = require("./routes/wishlist");
 const SearchRouter = require("./routes/search")
+const NewsLetterRouter = require("./routes/newsletter")
 //Middlewares
 app.use("/static", express.static("static"));
 app.use(cookieParser());
@@ -45,6 +46,7 @@ app.use("/address", AddressRouter.router);
 app.use("/wishlist", WishlistRouter.router);
 app.use("/payment/api", PaymentRouter.router);
 app.use("/search", SearchRouter.router)
+app.use("/newsletter", NewsLetterRouter.router)
 app.listen(port, () => {
   console.log(`listening to the port http://localhost:${port}`);
 });

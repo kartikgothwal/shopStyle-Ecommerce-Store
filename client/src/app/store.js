@@ -6,6 +6,8 @@ import AddressReducer from "../features/address/addressSlice";
 import orderReducer from "../features/order/orderSlice";
 import PaymentReducer from "../features/payment/paymentSlice";
 import WishlistReducer from "../features/wishlist/wishlistSlice";
+import newsLetterReducer from "../features/newletter/newsLetterSlice";
+
 export const store = configureStore({
   reducer: {
     user: UserAuthReducer,
@@ -15,5 +17,6 @@ export const store = configureStore({
     address: AddressReducer,
     payment: PaymentReducer,
     wishlist: WishlistReducer,
+    newsletter: newsLetterReducer,
   },
 });

@@ -1,7 +1,11 @@
 const { NewsLetterModel } = require("../model/newsletter");
 exports.addNewLetter = (req, res) => {
   try {
-    console.log("🚀 ~ file: newsletter.js:3 ~ req:", req.body);
+    const { email } = req.body;
+    const doc = new NewsLetterModel({ email: email });
+    return res
+      .status(201)
+      .json({ message: "Added to the newsletter", doc: doc });
   } catch {
     return res
       .status(500)

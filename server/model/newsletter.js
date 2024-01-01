@@ -5,12 +5,10 @@ const NewsLetterSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validate: {
-        validator: (value) => {
-          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
-        },
-        message: "Please enter a valid email address",
+      validator: (value) => {
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
       },
+      message: "Please enter a valid email address",
     },
   },
 });

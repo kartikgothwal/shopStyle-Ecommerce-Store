@@ -6,7 +6,7 @@ const {
   newsLetterValidaton,
 } = require("../middlewares/validation/newsletter");
 router.post(
-  "/addusernewletter",
+  "/add",
   ValidateNewsLetter,
   newsLetterValidaton,
   NewsLetterController.addNewLetter

@@ -5,8 +5,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Logo } from "../assets";
 import { useFormik } from "formik";
 import { NewLetterValidation } from "../schemas/newsletter";
+import { AddNewsletter } from "../features/newletter/newsLetterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ButtonLoadingAnimation from "./ButtonLoadingAnimation";
 
 const Footer = () => {
+  const pending = useSelector((state) => state.newsletter.pending);
+  const dispatch = useDispatch();
   const initialValues = {
     email: "",
   };
@@ -15,7 +20,8 @@ const Footer = () => {
       initialValues: initialValues,
       validationSchema: NewLetterValidation,
       onSubmit: (values, action) => {
-        console.log("🚀 ~ file: Footer.jsx:21 ~ Footer ~ values:", values);
+        dispatch(AddNewsletter(values));
+        action.resetForm();
       },
     });
   return (
@@ -182,7 +188,7 @@ const Footer = () => {
                       type="submit"
                       className="block rounded-full bg-indigo-500 px-8 py-3 font-medium text-white transition hover:bg-indigo-600"
                     >
-                      Subscribe
+                      {pending?<ButtonLoadingAnimation />:<span>Subscribe</span>}
                     </button>
                   </div>
                 </form>
