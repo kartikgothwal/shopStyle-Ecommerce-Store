@@ -493,7 +493,7 @@ const ProductPage = ({ setProgress, progress }) => {
                                     "group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
                                   )
                                 }
-                                onClick={() => console.log(size)}
+                                // onClick={() => console.log(size)}
                               >
                                 {({ active, checked }) => (
                                   <>

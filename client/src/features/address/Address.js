@@ -37,6 +37,7 @@ const Address = ({ valid }) => {
           user: userData._id,
         };
         dispatch(addAddressAsync(newItem));
+        action.resetForm()
       },
     });
 
@@ -63,12 +64,7 @@ const Address = ({ valid }) => {
       .find((country) => country.name == values.country).shortName;
     SetcitiesVal(countryCityState.getCities(shortname, selectedState));
   };
-  // useEffect(() => {
-  //   console.log("again inside");
-  //   if (userData && userData._id) {
-  //     dispatch(getAddressAsync({ user: userData._id }));
-  //   }
-  // }, [dispatch]);
+ 
 
   return (
     <>

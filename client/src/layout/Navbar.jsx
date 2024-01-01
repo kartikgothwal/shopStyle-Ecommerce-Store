@@ -60,9 +60,7 @@ const Navbar = () => {
       }, 2000);
     }
   }
-  useEffect(() => {
-    console.log("🚀 ~ file: Navbar.jsx:54 ~ Navbar ~ searchData:", searchData);
-  }, [searchData]);
+
   function decounced(fn, d) {
     let time = null;
     return function (...args) {

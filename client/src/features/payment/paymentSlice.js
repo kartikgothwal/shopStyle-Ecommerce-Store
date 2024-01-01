@@ -109,10 +109,7 @@ export const paymentSlice = createSlice({
         });
       })
       .addCase(attemptPaymentAsync.rejected, (state, action) => {
-        console.log(
-          "🚀 ~ file: paymentSlice.js:99 ~ .addCase ~ action:",
-          action
-        );
+        
         state.pending = false;
         const { message } = action.error;
         toast.error(message, {

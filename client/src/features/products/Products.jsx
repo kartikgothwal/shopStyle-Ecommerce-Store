@@ -171,7 +171,7 @@ export default function Product({ items, setProgress, progress }) {
             });
           }
         } else {
-          console.log("sdhfbdsj");
+           
         }
       } else {
         const newItem = {

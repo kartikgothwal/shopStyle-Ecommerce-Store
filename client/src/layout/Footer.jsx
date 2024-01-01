@@ -1,7 +1,23 @@
 import React from "react";
+import { CollabBrands, navLinks } from "../constants";
 import { NavLink } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Logo } from "../assets";
+import { useFormik } from "formik";
+import { NewLetterValidation } from "../schemas/newsletter";
+
 const Footer = () => {
+  const initialValues = {
+    email: "",
+  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: NewLetterValidation,
+      onSubmit: (values, action) => {
+        console.log("🚀 ~ file: Footer.jsx:21 ~ Footer ~ values:", values);
+      },
+    });
   return (
     <>
       <footer className="bg-white border-t ">
@@ -12,16 +28,16 @@ const Footer = () => {
             </div>
 
             <p className="mt-4 max-w-md text-center leading-relaxed text-gray-500 sm:text-left lg:mt-0">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
-              consequuntur amet culpa cum itaque neque.
+              Discover Endless Elegance at ShopStyles - Your Premier Destination
+              for Trendsetting Fashion, Unmatched Variety, and Unbeatable Deals!
             </p>
           </div>
 
           <div className="mt-16 grid grid-cols-1 gap-8 border-t border-gray-100 pt-16 md:grid-cols-4 lg:grid-cols-6">
-            <div className="text-center sm:text-left">
+            <div className="text-center sm:text-left mx-auto">
               <p className="text-lg font-medium text-gray-900">About Us</p>
 
-              <ul className="mt-8 space-y-4 text-sm">
+              <ul className="mt-8 space-y-4 text-sm ">
                 <li>
                   <a
                     className="text-gray-700 transition hover:text-gray-700/75"
@@ -62,106 +78,50 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900">Our Services</p>
+            <div className="text-center sm:text-left mx-auto">
+              <p className="text-lg font-medium whitespace-nowrap text-gray-900">
+                Products Category
+              </p>
 
               <ul className="mt-8 space-y-4 text-sm">
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    Web Development
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    {" "}
-                    Web Design{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    {" "}
-                    Marketing{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    {" "}
-                    Google Ads{" "}
-                  </a>
-                </li>
+                {navLinks &&
+                  navLinks.map((items) => {
+                    return (
+                      <li key={items.id}>
+                        <NavLink
+                          className="text-gray-700 transition hover:text-gray-700/75"
+                          to={`/product/${items.link}`}
+                        >
+                          {items.title}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
 
-            <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-gray-900">Resources</p>
+            <div className="text-center sm:text-left mx-auto">
+              <p className="text-lg font-medium text-gray-900">Brands</p>
 
               <ul className="mt-8 space-y-4 text-sm">
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    {" "}
-                    Online Guides{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    Conference Notes
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    {" "}
-                    Forum{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    {" "}
-                    Downloads{" "}
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    className="text-gray-700 transition hover:text-gray-700/75"
-                    href="/"
-                  >
-                    Upcoming Events
-                  </a>
-                </li>
+                {CollabBrands &&
+                  CollabBrands.map((items, index) => {
+                    return (
+                      <li key={index}>
+                        <a
+                          className="text-gray-700 transition hover:text-gray-700/75"
+                          href="/"
+                        >
+                          {" "}
+                          {items.title}
+                        </a>
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
 
-            <div className="text-center sm:text-left">
+            <div className="text-center sm:text-left mx-auto">
               <p className="text-lg font-medium text-gray-900">Helpful Links</p>
 
               <ul className="mt-8 space-y-4 text-sm">
@@ -184,23 +144,6 @@ const Footer = () => {
                     Support{" "}
                   </a>
                 </li>
-
-                <li>
-                  <a
-                    className="group flex justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                    href="/"
-                  >
-                    <span className="text-gray-700 transition group-hover:text-gray-700/75">
-                      {" "}
-                      Live Chat{" "}
-                    </span>
-
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"></span>
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-500"></span>
-                    </span>
-                  </a>
-                </li>
               </ul>
             </div>
 
@@ -209,25 +152,35 @@ const Footer = () => {
 
               <div className="mx-auto mt-8 max-w-md sm:ms-0">
                 <p className="text-center leading-relaxed text-gray-500 ltr:sm:text-left rtl:sm:text-right">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Earum id, iure consectetur et error hic!
+                  ShopStyles: Where Trends Meet Timeless Elegance - Explore,
+                  Discover, Shop Your Signature Style!
                 </p>
 
-                <form className="mt-4">
+                <form className="mt-4" onSubmit={handleSubmit}>
                   <div className="flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start">
                     <label htmlFor="email" className="sr-only">
                       Email
                     </label>
-
+                    {errors.email && touched.email ? (
+                      <span className="text-red-600 text-[10px]">
+                        {errors.email}
+                      </span>
+                    ) : null}
                     <input
+                      id="email"
+                      name="email"
                       className="w-full rounded-full border border-gray-200 px-6 py-3 shadow-sm"
                       type="email"
+                      value={values.email}
                       placeholder="Enter your email"
+                      autoComplete="off"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
 
                     <button
-                      className="block rounded-full bg-indigo-500 px-8 py-3 font-medium text-white transition hover:bg-indigo-600"
                       type="submit"
+                      className="block rounded-full bg-indigo-500 px-8 py-3 font-medium text-white transition hover:bg-indigo-600"
                     >
                       Subscribe
                     </button>
@@ -239,7 +192,8 @@ const Footer = () => {
 
           <div className="mt-16 border-t border-gray-100 pt-6 sm:flex sm:items-center sm:justify-between">
             <p className="text-center text-sm text-gray-500 sm:text-left">
-              Copyright &copy; 2022. All rights reserved.
+              Made with <FavoriteIcon className="text-red-700" /> by{" "}
+              <span className="text-black font-semibold">Kartik Gothwal</span>
             </p>
 
             <ul className="mt-4 flex justify-center gap-6 sm:mt-0 sm:justify-start">

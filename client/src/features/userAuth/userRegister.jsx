@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthUserRegistration, resetError } from "./UserAuthSlice";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -131,20 +131,19 @@ const UserRegister = () => {
                   {errors.password}
                 </span>
               ) : null}
-                <div className="w-full border border-gray-300 flex justify-center items-center rounded bg-slate-100 ">
-              <input
-               type={showToggle ? "text" : "password"}
-                name="password"
-                id="password"
-                autoComplete="off"
-                value={values.password}
-                placeholder="Enter password here"
-                
-                className="  bg-transparent  outline-none rounded px-2 py-2 font-light text-sm w-full"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-                 {showToggle ? (
+              <div className="w-full border border-gray-300 flex justify-center items-center rounded bg-slate-100 ">
+                <input
+                  type={showToggle ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  autoComplete="off"
+                  value={values.password}
+                  placeholder="Enter password here"
+                  className="  bg-transparent  outline-none rounded px-2 py-2 font-light text-sm w-full"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {showToggle ? (
                   <VisibilityIcon
                     className="cursor-pointer"
                     onClick={() => SetShowToggle(!showToggle)}
