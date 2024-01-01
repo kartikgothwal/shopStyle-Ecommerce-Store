@@ -15,6 +15,7 @@ const TrackOrder = () => {
     if (userData && userData._id && userorders && userorders.length) {
       SetOrders(userorders);
     }
+    window.scrollTo(0, 0);
   }, [userorders, userData]);
   useEffect(() => {
     if (userData && userData._id) {
@@ -23,6 +24,7 @@ const TrackOrder = () => {
       };
       dispatch(getOrdersAsync(orderInfo));
     }
+    window.scrollTo(0, 0);
   }, [userData]);
 
   const pending = useSelector((state) => state.order.pending);
@@ -32,13 +34,9 @@ const TrackOrder = () => {
       <section className="max-sm:mt-[6rem] sm:mt-[7rem] lg:mt-[6rem] ">
         {orders && orders.length ? (
           [...orders].reverse().map((items) => {
-            console.log(
-              "🚀 ~ file: TrackOrder.js:36 ~ orders.map ~ items:",
-              items
-            );
             return (
               <>
-                <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md   ">
+                <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md">
                   <div className="flex justify-between items-center shadow-sm">
                     <div className=" flex gap-4 flex-wrap items-center">
                       <h1 className="font-bold text-lg sm:text-2xl lg:text-4xl">
@@ -67,6 +65,7 @@ const TrackOrder = () => {
                     items.products &&
                     items.products.length &&
                     items.products.map((value) => {
+                      console.log(items);
                       return (
                         <>
                           <div className="border shadow-sm py-4 px-4 mt-5 flex flex-wrap gap-4 justify-start lg:justify-center items-start bg-gray-100 bg-opacity-100 rounded-md">
@@ -137,46 +136,83 @@ const TrackOrder = () => {
                         </>
                       );
                     })}
-                  <div className="flex justify-center items-center border-4">
+
+                  <div className="flex justify-center items-center mx-auto w-full">
                     <ol class="flex items-center w-full justify-center">
                       <div className="w-full flex-col">
                         <div className="flex w-full">
-                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
-                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
-                              <CircleIcon />
+                          <li class="flex w-full items-center   text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-600">
+                            <span class=" flex items-center justify-center bg-blue-100 rounded-full  0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
+                              <CircleIcon
+                                className={` max-md:h-2 max-md:w-2 text-blue-600 ${
+                                  items.orderstatus == "order placed"
+                                    ? "animate-ping"
+                                    : null
+                                }`}
+                              />
                             </span>
                           </li>
                         </div>
                         <div>
-                          <p className="text-xs md:block hidden">
+                          <p
+                            className={`text-xs md:block hidden  ${
+                              items.orderstatus == "order placed"
+                                ? "text-blue-600"
+                                : null
+                            }`}
+                          >
                             Order Placed
                           </p>
                         </div>
                       </div>
                       <div className="w-full flex-col">
                         <div className="flex w-full">
-                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
-                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
-                              <CircleIcon />
+                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-600">
+                            <span class="flex items-center justify-center  bg-blue-100 rounded-full   0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
+                              <CircleIcon
+                                className={` max-md:h-2 max-md:w-2 text-blue-600 ${
+                                  items.orderstatus == "shipped"
+                                    ? "animate-ping"
+                                    : null
+                                }`}
+                              />
                             </span>
                           </li>
                         </div>
                         <div>
-                          <p className="text-xs md:block hidden">
+                          <p
+                            className={`text-xs md:block hidden  ${
+                              items.orderstatus == "shipped"
+                                ? "text-blue-600"
+                                : "text-black"
+                            }`}
+                          >
                             Ready to Ship
                           </p>
                         </div>
                       </div>
                       <div className="w-full flex-col">
                         <div className="flex w-full">
-                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
-                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
-                              <CircleIcon />
+                          <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-600">
+                            <span class="flex items-center justify-center  bg-blue-100 rounded-full   0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
+                              <CircleIcon
+                                className={` max-md:h-2 max-md:w-2 text-blue-600 ${
+                                  items.orderstatus == "arrived"
+                                    ? "animate-ping"
+                                    : null
+                                }`}
+                              />
                             </span>
                           </li>
                         </div>
                         <div>
-                          <p className="text-xs md:block hidden">
+                          <p
+                            className={`text-xs md:block hidden  ${
+                              items.orderstatus == "arrived"
+                                ? "text-blue-600"
+                                : "text-black"
+                            }`}
+                          >
                             Arrived at facility
                           </p>
                         </div>
@@ -184,13 +220,25 @@ const TrackOrder = () => {
                       <div className="w-full flex-col">
                         <div className="flex w-full">
                           <li className="bg">
-                            <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-8 lg:w-8 0 shrink-0">
-                              <CircleIcon className="text-blue-500" />
+                            <span class="flex items-center justify-center  bg-blue-100 rounded-full   0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
+                              <CircleIcon
+                                className={` max-md:h-2 max-md:w-2 text-blue-600 ${
+                                  items.orderstatus == "arrived"
+                                    ? "animate-ping"
+                                    : null
+                                }`}
+                              />
                             </span>
                           </li>
                         </div>
                         <div>
-                          <p className="text-xs md:block hidden">
+                          <p
+                            className={`text-xs md:block hidden  ${
+                              items.orderstatus == "delivery"
+                                ? "text-blue-600"
+                                : "text-black"
+                            }`}
+                          >
                             Ready for Delivery
                           </p>
                         </div>
