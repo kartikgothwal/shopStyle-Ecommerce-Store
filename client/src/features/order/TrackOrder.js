@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PaddingGiverHoc } from "../../components/hoc";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { DataLoaderAnimation } from "../../layout";
 import { getOrdersAsync } from "./orderSlice";
@@ -8,16 +8,16 @@ import CircleIcon from "@mui/icons-material/Circle";
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import { saveToExcel } from "./saveorders";
+
 const TrackOrder = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [orderSummaryModel, SetOrderSummaryModel] = useState(null);
-  console.log(
-    "🚀 ~ file: TrackOrder.js:17 ~ TrackOrder ~ orderSummaryModel:",
-    orderSummaryModel
-  );
+   
   const statusOfOrder = ["order placed", "shipped", "arrived", "delivered"];
   const [orders, SetOrders] = useState([]);
   const userorders = useSelector((state) => state.order.userorders);
@@ -42,7 +42,30 @@ const TrackOrder = () => {
   const options = { day: "numeric", month: "short", year: "numeric" };
   return (
     <>
-      <section className="max-sm:mt-[6rem] sm:mt-[7rem] lg:mt-[6rem] ">
+      <section className="max-sm:mt-[7rem] sm:mt-[8rem] lg:mt-[7rem] ">
+        {userData && userData._id && orders && (
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button
+              class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]"
+              onClick={() => {
+                if (orders && orders.length) {
+                  saveToExcel(orders);
+                }
+              }}
+            >
+              <BookmarksIcon />
+              Save to excel
+            </button>
+            <button class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]">
+              <BookmarksIcon className="max-sm:text-[13px] sm:text-xs text-sm" />
+              Save to CSV
+            </button>
+            <button class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs max-sm:w-[10rem]">
+              <BookmarksIcon />
+              Save to PDF
+            </button>
+          </div>
+        )}
         {orders && orders.length ? (
           [...orders].reverse().map((items, index) => {
             return (
@@ -51,7 +74,7 @@ const TrackOrder = () => {
                   <div className="flex justify-between items-center shadow-sm">
                     <div className=" flex gap-4 flex-wrap items-center">
                       <h1 className="font-bold text-lg sm:text-2xl lg:text-4xl">
-                        Order #54879
+                        Order Details
                       </h1>
                       <button
                         onClick={() => {
