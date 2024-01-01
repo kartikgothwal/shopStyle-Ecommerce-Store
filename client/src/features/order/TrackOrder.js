@@ -5,9 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataLoaderAnimation } from "../../layout";
 import { getOrdersAsync } from "./orderSlice";
 import CircleIcon from "@mui/icons-material/Circle";
+import { Fragment, useRef } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const TrackOrder = () => {
+  const [open, setOpen] = useState(false);
+  const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [orderSummaryModel, SetOrderSummaryModel] = useState(null);
+  console.log(
+    "🚀 ~ file: TrackOrder.js:17 ~ TrackOrder ~ orderSummaryModel:",
+    orderSummaryModel
+  );
   const statusOfOrder = ["order placed", "shipped", "arrived", "delivered"];
   const [orders, SetOrders] = useState([]);
   const userorders = useSelector((state) => state.order.userorders);
@@ -34,7 +44,7 @@ const TrackOrder = () => {
     <>
       <section className="max-sm:mt-[6rem] sm:mt-[7rem] lg:mt-[6rem] ">
         {orders && orders.length ? (
-          [...orders].reverse().map((items) => {
+          [...orders].reverse().map((items, index) => {
             return (
               <>
                 <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md">
@@ -43,12 +53,15 @@ const TrackOrder = () => {
                       <h1 className="font-bold text-lg sm:text-2xl lg:text-4xl">
                         Order #54879
                       </h1>
-                      <NavLink
-                        to={""}
+                      <button
+                        onClick={() => {
+                          SetOrderSummaryModel(items);
+                          setOpen(true);
+                        }}
                         className="text-blue-600 sm:text-xs lg:text-sm"
                       >
                         View invoice →
-                      </NavLink>
+                      </button>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-1 flex-wrap max-sm:text-[13px] sm:text-[13px] lg:text-[17px] items-center justify-center">
                       <p className="font-normal items-cente text-center ">
@@ -62,6 +75,129 @@ const TrackOrder = () => {
                       </p>
                     </div>
                   </div>
+                  <Transition.Root show={open} as={Fragment}>
+                    <Dialog
+                      as="div"
+                      className="relative z-10"
+                      initialFocus={cancelButtonRef}
+                      onClose={setOpen}
+                    >
+                      <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <div className="fixed inset-0 bg-gray-200 bg-opacity-50 transition-opacity" />
+                      </Transition.Child>
+
+                      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                          <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          >
+                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start">
+                                  <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    <CheckCircleIcon
+                                      className="h-6 w-6 text-red-600"
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                  <div className="w-full mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                    <Dialog.Title
+                                      as="h3"
+                                      className="text-base font-semibold leading-6 text-gray-900"
+                                    >
+                                      Order Summary
+                                    </Dialog.Title>
+                                    <div className="mt-4 flex col w-full ">
+                                      <div className="border-b flex w-full justify-between pb-4">
+                                        <p className="text-opacity-100 text-gray-700">
+                                          Subtotal
+                                        </p>
+                                        <p className="text-opacity-100 text-gray-500">
+                                          $
+                                          {orderSummaryModel &&
+                                            orderSummaryModel.products &&
+                                            orderSummaryModel.products.length &&
+                                            orderSummaryModel.products.reduce(
+                                              (acc, CurrItem) => {
+                                                return acc + CurrItem.subtotal;
+                                              },
+                                              0
+                                            )}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="mt-4 flex col w-full ">
+                                      <div className="border-b flex w-full justify-between pb-4">
+                                        <p className="text-opacity-100 text-gray-700">
+                                          Shipping
+                                        </p>
+                                        <p className="text-opacity-100 text-gray-500">
+                                          $8
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="mt-4 flex col w-full ">
+                                      <div className="border-b flex w-full justify-between pb-4">
+                                        <p className="text-opacity-100 text-gray-700">
+                                          Tax
+                                        </p>
+                                        <p className="text-opacity-100 text-gray-500">
+                                          $0.00
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="mt-4 flex col w-full ">
+                                      <div className="border-b flex w-full justify-between pb-4">
+                                        <p className="text-black">
+                                          Order total
+                                        </p>
+                                        <p className="text-blue-700">
+                                          ${" "}
+                                          {orderSummaryModel &&
+                                            orderSummaryModel.products &&
+                                            orderSummaryModel.products.length &&
+                                            orderSummaryModel.products.reduce(
+                                              (acc, CurrItem) => {
+                                                return acc + CurrItem.subtotal;
+                                              },
+                                              0
+                                            ) + 8}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                <button
+                                  type="button"
+                                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                  onClick={() => setOpen(false)}
+                                  ref={cancelButtonRef}
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </Dialog.Panel>
+                          </Transition.Child>
+                        </div>
+                      </div>
+                    </Dialog>
+                  </Transition.Root>
                   {items &&
                     items.products &&
                     items.products.length &&
