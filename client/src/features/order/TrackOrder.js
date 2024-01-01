@@ -141,12 +141,16 @@ const TrackOrder = () => {
                     <ol class="flex items-center w-full justify-center">
                       {statusOfOrder &&
                         statusOfOrder.map((status, index) => {
-                          
                           return (
                             <div key={status} className="w-full flex-col">
                               <div className="flex w-full">
                                 <li
-                                  class={`flex w-full items-center  text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block ${ statusOfOrder.indexOf(items.orderstatus)>index?"dark:after:border-blue-600":null } `}
+                                  class={`flex w-full items-center  text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block ${
+                                    statusOfOrder.indexOf(items.orderstatus) >
+                                    index
+                                      ? "dark:after:border-blue-600"
+                                      : null
+                                  } `}
                                 >
                                   <span class=" flex items-center justify-center bg-blue-100 rounded-full  0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
                                     <CircleIcon

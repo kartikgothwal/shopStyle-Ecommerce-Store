@@ -201,13 +201,17 @@ const ProductPage = ({ setProgress, progress }) => {
     setProgress(progress + 100);
   };
   const handleWishlistClick = (itemId, userId) => {
+    setProgress(progress + 10);
     if (userData && userData._id) {
       if (wishlistData.find((item) => item.product._id === itemId)) {
         dispatch(removeWishlistAsync({ product: itemId, user: userId }));
+        setProgress(progress + 30);
       } else {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
+        setProgress(progress + 30);
       }
     } else {
+      setProgress(progress + 30);
       const localData = JSON.parse(localStorage.getItem("wishlist"));
       if (localData && localData.length) {
         if (localData) {
@@ -275,6 +279,7 @@ const ProductPage = ({ setProgress, progress }) => {
         });
       }
     }
+    setProgress(progress + 100);
   };
 
   return (

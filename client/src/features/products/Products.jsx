@@ -117,13 +117,17 @@ export default function Product({ items, setProgress, progress }) {
   };
 
   const handleWishlistClick = (itemId, userId) => {
+    setProgress(progress + 10);
     if (userData && userData._id) {
       if (wishlistData.find((item) => item.product._id === itemId)) {
         dispatch(removeWishlistAsync({ product: itemId, user: userId }));
+        setProgress(progress + 30);
       } else {
         dispatch(addWishlistAsync({ product: itemId, user: userId }));
+        setProgress(progress + 30);
       }
     } else {
+      setProgress(progress + 30);
       const localData = JSON.parse(localStorage.getItem("wishlist"));
       if (localData && localData.length) {
         if (localData) {
@@ -191,6 +195,7 @@ export default function Product({ items, setProgress, progress }) {
         });
       }
     }
+    setProgress(progress + 1005);
   };
   return (
     <div className="cursor-pointer h-[100%] max-md:h-[24rem] max-sm:w-[18rem] max-mobileSize:h-[20rem]  max-mobileSize:w-[15rem] max-mobileSize:text[14px]  relative border  flex max-md:w-[16rem] w-80 flex-col rounded-xl pb-2 bg-white bg-clip-border text-gray-700 shadow-md gap-2 mx-auto">

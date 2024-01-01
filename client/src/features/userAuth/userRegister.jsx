@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { AuthUserRegistration, resetError } from "./UserAuthSlice";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
@@ -7,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { signUpSchema } from "../../schemas";
 import { ButtonLoadingAnimation } from "../../layout";
 const UserRegister = () => {
+  const [showToggle, SetShowToggle] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userData);
@@ -128,16 +131,31 @@ const UserRegister = () => {
                   {errors.password}
                 </span>
               ) : null}
+                <div className="w-full border border-gray-300 flex justify-center items-center rounded bg-slate-100 ">
               <input
+               type={showToggle ? "text" : "password"}
                 name="password"
                 id="password"
                 autoComplete="off"
                 value={values.password}
                 placeholder="Enter password here"
-                className="border border-gray-300 bg-slate-100 outline-none rounded px-2 py-2 max-sm:py-1  font-light text-sm"
+                
+                className="  bg-transparent  outline-none rounded px-2 py-2 font-light text-sm w-full"
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
+                 {showToggle ? (
+                  <VisibilityIcon
+                    className="cursor-pointer"
+                    onClick={() => SetShowToggle(!showToggle)}
+                  />
+                ) : (
+                  <VisibilityOffIcon
+                    className="cursor-pointer"
+                    onClick={() => SetShowToggle(!showToggle)}
+                  />
+                )}
+              </div>
             </div>
             <button
               type="submit"
