@@ -3,9 +3,10 @@ import { saveAs } from "file-saver";
 const EXCEL_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const EXCEL_EXTENSION = ".xlsx";
-export const saveToExcel = (data) => {
+
+function filterData(data) {
   const options = { day: "numeric", month: "short", year: "numeric" };
-  const filteredData = data
+  return data
     .map((item) => {
       return item.products.map((product) => {
         return {
@@ -26,7 +27,9 @@ export const saveToExcel = (data) => {
       });
     })
     .flat();
-
+}
+export const saveToExcel = (data) => {
+  const filteredData = filterData(data);
   const worksheet = XLSX.utils.json_to_sheet(filteredData);
   const workbook = {
     Sheets: {
@@ -40,4 +43,24 @@ export const saveToExcel = (data) => {
 function saveAsExcel(buffer, filename) {
   const data = new Blob([buffer], { type: EXCEL_TYPE });
   saveAs(data, filename + new Date().getDate() + EXCEL_EXTENSION);
+}
+
+export const jsonToCsv = (data) => {
+  const filteredData = filterData(data);
+  const headers = Object.keys(filteredData[0]).toString();
+  const values = filteredData.map((items) => {
+    return Object.values(items).toString();
+  });
+  const csvData = [headers, ...values].join("\n");
+  saveToCsv(csvData);
+};
+function saveToCsv(input) {
+  const blob = new Blob([input], { type: "application/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "OrderSummary.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }

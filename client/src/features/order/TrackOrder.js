@@ -9,7 +9,7 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import { saveToExcel } from "./saveorders";
+import { saveToExcel, jsonToCsv } from "./saveorders";
 
 const TrackOrder = () => {
   const [open, setOpen] = useState(false);
@@ -17,7 +17,7 @@ const TrackOrder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [orderSummaryModel, SetOrderSummaryModel] = useState(null);
-   
+
   const statusOfOrder = ["order placed", "shipped", "arrived", "delivered"];
   const [orders, SetOrders] = useState([]);
   const userorders = useSelector((state) => state.order.userorders);
@@ -56,7 +56,14 @@ const TrackOrder = () => {
               <BookmarksIcon />
               Save to excel
             </button>
-            <button class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]">
+            <button
+              class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]"
+              onClick={() => {
+                if (orders && orders.length) {
+                  jsonToCsv(orders);
+                }
+              }}
+            >
               <BookmarksIcon className="max-sm:text-[13px] sm:text-xs text-sm" />
               Save to CSV
             </button>
