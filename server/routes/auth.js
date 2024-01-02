@@ -7,7 +7,18 @@ const {
   validateUserSignIn,
   userValidation,
 } = require("../middlewares/validation/user");
-
+const {
+  ValidateNewsLetter,
+  newsLetterValidaton,
+} = require("../middlewares/validation/newsletter");
+const {
+  ValidateUser,
+  ValidateUserValidaton,
+} = require("../middlewares/validation/forgotpassword");
+const {
+  forgotPassword,
+  confirmUser,
+} = require("../controllers/forgotpassword");
 router.post(
   "/login",
   validateUserSignIn,
@@ -19,8 +30,15 @@ router
     "/register",
     validateUserSignUp,
     userValidation,
-    AuthController.UserRegister 
+    AuthController.UserRegister
   )
+  .post(
+    "/forgotpassword",
+    ValidateNewsLetter,
+    newsLetterValidaton,
+    forgotPassword
+  )
+  .post("/forgotpassword/confirmuser", confirmUser)
   .post("/authuser", AuthController.CheckUserWithCookie);
 
 exports.router = router;

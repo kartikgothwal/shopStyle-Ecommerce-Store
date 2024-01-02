@@ -1,4 +1,5 @@
 import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
 import { saveAs } from "file-saver";
 const EXCEL_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -64,3 +65,24 @@ function saveToCsv(input) {
   a.click();
   document.body.removeChild(a);
 }
+
+export const jsontoPdf = (data) => {
+  const filteredData = filterData(data);
+  const pdf = new jsPDF();
+  const headers = Object.keys(filteredData[0]);
+  const fontSize = 8;
+  const lineHeight = 10;
+  pdf.setFontSize(fontSize);
+  pdf.setFont("helvetica", "normal");
+  const colWidth = 40;
+  const startY = 20;
+  let startX = 20;  
+  filteredData.forEach((value, index) => {
+    headers.forEach((key, colIndex) => {
+      const yCoordinate = startY + index * lineHeight;
+      const xCoordinate = startX + colIndex * colWidth;
+      pdf.text(`${key} : ${value[key]}`, xCoordinate, yCoordinate);
+    });
+  });
+  pdf.save("ordersummary.pdf");
+};

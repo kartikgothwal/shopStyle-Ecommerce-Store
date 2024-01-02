@@ -27,6 +27,12 @@ const PageNotFound = lazy(() => import("./layout/PageNotFound"));
 const Home = lazy(() => import("./components/HomeComponents/Homes.jsx"));
 const UserLogin = lazy(() => import("./features/userAuth/UserLogin"));
 const UserRegister = lazy(() => import("./features/userAuth/userRegister"));
+const Forgotpassword = lazy(() =>
+  import("./features/userAuth/Forgotpassword.js")
+);
+const ResetPassword = lazy(() =>
+  import("./features/userAuth/ResetPassword.js")
+);
 const Order = lazy(() => import("./features/order/Order.js"));
 const Cart = lazy(() => import("./features/cart/Cart"));
 const Wishlist = lazy(() => import("./features/wishlist/Wishlist.js"));
@@ -125,6 +131,22 @@ const App = () => {
             element={
               <Suspense fallback={<ComponentLoaderAnimation />}>
                 <UserRegister />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <Forgotpassword />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/resetpassword/:userID/:token"
+            element={
+              <Suspense fallback={<ComponentLoaderAnimation />}>
+                <ResetPassword />
               </Suspense>
             }
           />

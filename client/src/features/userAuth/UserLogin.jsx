@@ -117,6 +117,14 @@ const UserLogin = () => {
               Sign In {users.pending ? <ButtonLoadingAnimation /> : null}
             </button>
           </form>
+          <p className=" text-center text-sm text-gray-500">
+            <NavLink
+              to="/forgot-password"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot Password?
+            </NavLink>
+          </p>
         </div>
       </section>
     </>

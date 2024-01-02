@@ -9,7 +9,8 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import { saveToExcel, jsonToCsv } from "./saveorders";
+import { saveToExcel, jsonToCsv, jsontoPdf } from "./saveorders";
+import { styles } from "../../utils/Style";
 
 const TrackOrder = () => {
   const [open, setOpen] = useState(false);
@@ -42,7 +43,7 @@ const TrackOrder = () => {
   const options = { day: "numeric", month: "short", year: "numeric" };
   return (
     <>
-      <section className="max-sm:mt-[7rem] sm:mt-[8rem] lg:mt-[7rem] ">
+      <section className={`${styles.sectionFormatting}`}>
         {userData && userData._id && orders && (
           <div className="flex flex-col sm:flex-row gap-3">
             <button
@@ -67,7 +68,15 @@ const TrackOrder = () => {
               <BookmarksIcon className="max-sm:text-[13px] sm:text-xs text-sm" />
               Save to CSV
             </button>
-            <button class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs max-sm:w-[10rem]">
+            <button
+              class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs max-sm:w-[10rem]"
+              onClick={() => {
+                // if (orders && orders.length) {
+                //   jsontoPdf(orders);
+                // }
+                alert("coming soon..");
+              }}
+            >
               <BookmarksIcon />
               Save to PDF
             </button>

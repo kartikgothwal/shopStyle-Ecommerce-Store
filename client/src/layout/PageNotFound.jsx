@@ -8,7 +8,7 @@ const PageNotFound = (props) => {
     <section className="h-screen flex w-full justify-center items-center">
       <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
-          <p className="text-base font-semibold text-indigo-600">404</p>
+          <p className="text-base font-semibold text-indigo-600">  {props.statusCode}</p>
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
             {props.message}
           </h1>
@@ -30,6 +30,7 @@ const PageNotFound = (props) => {
   );
 };
 PageNotFound.defaultProps = {
+  statusCode:404,
   message: "Page not found",
   items: "Sorry, we couldn’t find the Page you’re looking for.",
 };
