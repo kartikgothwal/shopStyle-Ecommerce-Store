@@ -229,7 +229,7 @@ const ResetPassword = () => {
                     {pending ? (
                       <>
                         {" "}
-                        Please wait <ButtonLoadingAnimation className="mx-2" />
+                        Please wait <ButtonLoadingAnimation className="mx-3" />
                       </>
                     ) : (
                       "Reset Password"
