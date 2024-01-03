@@ -2,7 +2,7 @@ require("dotenv").config();
 const { UserModel } = require("../model/user");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
