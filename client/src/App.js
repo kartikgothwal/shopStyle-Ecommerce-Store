@@ -33,6 +33,7 @@ const Forgotpassword = lazy(() =>
 const ResetPassword = lazy(() =>
   import("./features/userAuth/ResetPassword.js")
 );
+const GotoTopBtn = lazy(() => import("./layout/GotoTopBtn.jsx"));
 const Order = lazy(() => import("./features/order/Order.js"));
 const Cart = lazy(() => import("./features/cart/Cart"));
 const Wishlist = lazy(() => import("./features/wishlist/Wishlist.js"));
@@ -109,6 +110,7 @@ const App = () => {
         />
         <Navbar />
         <ToastContainer />
+        <GotoTopBtn />
         <Routes>
           <Route
             path="/"
@@ -229,6 +231,7 @@ const App = () => {
             }
           />
         </Routes>
+
         <Footer />
       </Router>
     </>
