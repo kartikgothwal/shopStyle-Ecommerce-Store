@@ -10,10 +10,7 @@ const GotoTopBtn = () => {
     const heightToHidden = 1000;
     const winScroll =
       document.body.scrollTop || document.documentElement.scrollTop;
-    console.log(
-      "🚀 ~ file: GotoTopBtn.jsx:12 ~ listenToScroll ~ winScroll:",
-      winScroll
-    );
+
     setVisibility(heightToHidden < winScroll);
   };
 
@@ -25,7 +22,7 @@ const GotoTopBtn = () => {
     <>
       {" "}
       {isVisible && (
-        <div className="animate-bounce z-50 fixed bottom-12 right-12  text-white">
+        <div className="animate-bounce z-50 fixed bottom-[8rem] right-8  text-white">
           <button
             class="cursor-pointer group block px-4 py-2 rounded-full    bg-black text-white text-4xl font-bold shadow-2xl hover:scale-110 transition active:scale-90"
             onClick={() => GotoTop()}

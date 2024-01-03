@@ -18,7 +18,26 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script>
+      window.botpressWebChat.init({
+        composerPlaceholder: "Chat with bot",
+        botConversationDescription:
+          "This chatbot was built surprisingly fast with Botpress",
+        botId: "501d8903-5762-4780-8329-56db96af08ee",
+        hostUrl: "https://cdn.botpress.cloud/webchat/v1",
+        messagingUrl: "https://messaging.botpress.cloud",
+        clientId: "501d8903-5762-4780-8329-56db96af08ee",
+        webhookId: "3090540b-da8c-4511-ba8b-4bca0bb419df",
+        lazySocket: true,
+        themeName: "prism",
+        frontendVersion: "v1",
+        showPoweredBy: true,
+        theme: "prism",
+        themeColor: "#2563eb",
+        height: "300px",
+      });
+    </script>
   </body>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
 </html>

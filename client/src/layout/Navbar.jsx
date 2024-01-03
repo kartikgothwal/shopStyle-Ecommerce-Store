@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { navLinks } from "../constants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Logo } from "../assets";
 import { toast } from "react-toastify";
 import PersonIcon from "@mui/icons-material/Person";
@@ -137,9 +137,10 @@ const Navbar = () => {
               >
                 <div className="w-full min-h-full max-h-[30rem] overflow-y-scroll scrollbar-container">
                   {searchData && searchData.length ? (
-                    searchData.map((item) => {
+                    searchData.map((item, index) => {
                       return (
                         <div
+                          key={index}
                           className="flex px-2 w-full flex-col gap-1 cursor-pointer hover:bg-gray-100"
                           onClick={() => {
                             navigate(`product/${item.title}`);

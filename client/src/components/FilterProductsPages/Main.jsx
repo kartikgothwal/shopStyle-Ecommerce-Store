@@ -11,6 +11,7 @@ import ProductCard from "../../features/products/Products";
 import Pagination from "./Pagination";
 
 const Main = ({ setProgress, progress }) => {
+  
   const [AllBrands, SetAllBrands] = useState([]);
   const [CurrentPage, SetCurrentPage] = useState(1);
   const [TotalDetails, SetTotalDetails] = useState({
