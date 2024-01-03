@@ -5,13 +5,15 @@ import { useFormik } from "formik";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { ResetPasswordValidation } from "../../schemas/resetpassword";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { PageNotFound } from "../../layout";
+import { ButtonLoadingAnimation, PageNotFound } from "../../layout";
 
 const ResetPassword = () => {
   var memoizedVal = {};
+  const navigate = useNavigate();
+  const [pending, SetPending] = useState(false);
   const [verifiedUser, SetVerifiedUser] = useState(false);
   const { token, userID } = useParams();
   async function verifyUser(token, userID) {
@@ -21,12 +23,19 @@ const ResetPassword = () => {
     memoizedVal["token"] = token;
     memoizedVal["userID"] = userID;
     try {
-      const { data } = await axios.post(
+      const {
+        data: { user },
+      } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/user/forgotpassword/confirmuser`,
         { userID, token }
       );
-      SetVerifiedUser(true);
+
+      SetVerifiedUser(user);
     } catch (error) {
+      console.log(
+        "🚀 ~ file: ResetPassword.js:33 ~ verifyUser ~ error:",
+        error
+      );
       SetVerifiedUser(false);
       const {
         data: { message },
@@ -59,10 +68,42 @@ const ResetPassword = () => {
       initialValues: initialValue,
       validationSchema: ResetPasswordValidation,
       onSubmit: async (values, action) => {
-        console.log(
-          "🚀 ~ file: ResetPassword.js:15 ~ onSubmit: ~ values:",
-          values
-        );
+        SetPending(true);
+        try {
+          const {
+            data: { message },
+          } = await axios.patch(
+            `${process.env.REACT_APP_BACKEND_URL}/auth/user/resetpassword`,
+            { values, verifiedUser }
+          );
+          toast.success(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          navigate("/user-login");
+        } catch (error) {
+          const {
+            data: { message },
+          } = error.response;
+          toast.error(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+        action.resetForm();
+        SetPending(false);
       },
     });
   const handlePasswordVisibility = (choice) => {
@@ -109,7 +150,7 @@ const ResetPassword = () => {
                         autoComplete="off"
                         value={values.newpassword}
                         placeholder="Enter new password"
-                        className="block w-full py-1.5 text-gray-900  placeholder:text-gray-400 sm:text-sm sm:leading-6 px-2 outline-none "
+                        className="block w-full py-1.5 text-gray-900  placeholder:text-gray-400 sm:text-sm sm:leading-6 px-2 outline-none bg-transparent"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
@@ -185,7 +226,14 @@ const ResetPassword = () => {
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Reset Password
+                    {pending ? (
+                      <>
+                        {" "}
+                        Please wait <ButtonLoadingAnimation className="mx-2" />
+                      </>
+                    ) : (
+                      "Reset Password"
+                    )}
                   </button>
                 </div>
               </form>
@@ -193,7 +241,11 @@ const ResetPassword = () => {
           </div>
         </section>
       ) : (
-        <PageNotFound statusCode={401} message={"Unauthorized Access"} items={"You are not authorized for this page"}/>
+        <PageNotFound
+          statusCode={401}
+          message={"Unauthorized Access"}
+          items={"You are not authorized for this page"}
+        />
       )}
     </>
   );

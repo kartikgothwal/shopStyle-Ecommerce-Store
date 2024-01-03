@@ -18,7 +18,9 @@ const {
 const {
   forgotPassword,
   confirmUser,
+  updatePassword,
 } = require("../controllers/forgotpassword");
+
 router.post(
   "/login",
   validateUserSignIn,
@@ -39,6 +41,7 @@ router
     forgotPassword
   )
   .post("/forgotpassword/confirmuser", confirmUser)
+  .patch("/resetpassword", updatePassword)
   .post("/authuser", AuthController.CheckUserWithCookie);
 
 exports.router = router;

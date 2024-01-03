@@ -2,7 +2,7 @@ require("dotenv").config();
 const { UserModel } = require("../model/user");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-
+const bcrypt = require("bcrypt");
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -15,7 +15,7 @@ exports.forgotPassword = async (req, res) => {
       process.env.PRIVATE_KEY,
       {
         algorithm: "RS256",
-        expiresIn: "5m",
+        expiresIn: "10m",
       }
     );
     const link = `${process.env.CLIENT_URL}/resetpassword/${user._id}/${token}`;
@@ -64,11 +64,26 @@ exports.confirmUser = async (req, res) => {
     if (!decode) {
       return res.status(401).json({ message: "Unauthorized Access" });
     } else {
-      return res.status(200).json({ message: "Verified user" });
+      return res.status(200).json({ message: "Verified user", user: user._id });
     }
   } catch (error) {
     return res
       .status(500)
       .json({ message: "Unauthorized Access", error: error.message });
+  }
+};
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const { values, verifiedUser } = req.body;
+    const hash = bcrypt.hashSync(values.newpassword, 10);
+    const user = await UserModel.findByIdAndUpdate(verifiedUser, {
+      $set: { password: hash },
+    });
+    return res.status(200).json({ message: "Password has been reset" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "An error occurred", error: error.message });
   }
 };
