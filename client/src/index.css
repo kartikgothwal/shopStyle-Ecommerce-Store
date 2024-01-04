@@ -156,3 +156,6 @@ html::-webkit-scrollbar-thumb {
   background: rgb(198, 198, 205);
   border-radius: 25px;
 }
+.bpw-chat-container {
+  background: red;
+}
