@@ -42,6 +42,7 @@ exports.getOrders = async (req, res) => {
       })
         .populate("user")
         .populate("payment")
+        .populate("address")
         .populate({
           path: "address",
           populate: {
@@ -55,6 +56,7 @@ exports.getOrders = async (req, res) => {
       })
         .populate("user")
         .populate("payment")
+        .populate("address")
         .populate({
           path: "address",
           populate: {
@@ -62,6 +64,7 @@ exports.getOrders = async (req, res) => {
           },
         })
         .populate("products.productData");
+      console.log("🚀 ~ file: order.js:65 ~ exports.getOrders= ~ docs:", docs);
     }
 
     return res.status(200).json({

@@ -18,7 +18,6 @@ const TrackOrder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [orderSummaryModel, SetOrderSummaryModel] = useState(null);
-
   const statusOfOrder = ["order placed", "shipped", "arrived", "delivered"];
   const [orders, SetOrders] = useState([]);
   const userorders = useSelector((state) => state.order.userorders);
@@ -29,6 +28,7 @@ const TrackOrder = () => {
     }
     window.scrollTo(0, 0);
   }, [userorders, userData]);
+
   useEffect(() => {
     if (userData && userData._id) {
       const orderInfo = {
@@ -47,7 +47,7 @@ const TrackOrder = () => {
         {userData && userData._id && orders && (
           <div className="flex flex-col sm:flex-row gap-3">
             <button
-              class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]"
+              className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]"
               onClick={() => {
                 if (orders && orders.length) {
                   saveToExcel(orders);
@@ -58,7 +58,7 @@ const TrackOrder = () => {
               Save to excel
             </button>
             <button
-              class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]"
+              className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs  max-sm:w-[10rem]"
               onClick={() => {
                 if (orders && orders.length) {
                   jsonToCsv(orders);
@@ -69,7 +69,7 @@ const TrackOrder = () => {
               Save to CSV
             </button>
             <button
-              class="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs max-sm:w-[10rem]"
+              className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 max-sm:text-[13px] sm:text-xs max-sm:w-[10rem]"
               onClick={() => {
                 // if (orders && orders.length) {
                 //   jsontoPdf(orders);
@@ -84,6 +84,10 @@ const TrackOrder = () => {
         )}
         {orders && orders.length ? (
           [...orders].reverse().map((items, index) => {
+            console.log(
+              "🚀 ~ file: TrackOrder.js:87 ~ [...orders].reverse ~ items:",
+              items
+            );
             return (
               <>
                 <div className="flex flex-col gap-4 shadow-lg my-4 p-8 rounded-md">
@@ -240,6 +244,8 @@ const TrackOrder = () => {
                   {items &&
                     items.products &&
                     items.products.length &&
+                    items.address &&
+                    items.address.user &&
                     items.products.map((value) => {
                       return (
                         <>
@@ -253,8 +259,7 @@ const TrackOrder = () => {
                             <div className="flex w-[30rem] flex-col  gap-2">
                               <h1 className="font-normal font-rubik">
                                 {" "}
-                                {items.address.user.firstname}{" "}
-                                {items.address.user.lastname}
+                                {items.user.firstname} {items.user.lastname}
                               </h1>
                               <h1 className="font-normal ">
                                 ${Number(value.productData.price).toFixed(2, 2)}{" "}
@@ -313,21 +318,21 @@ const TrackOrder = () => {
                     })}
 
                   <div className="flex justify-center items-center mx-auto w-full">
-                    <ol class="flex items-center w-full justify-center">
+                    <ol className="flex items-center w-full justify-center">
                       {statusOfOrder &&
                         statusOfOrder.map((status, index) => {
                           return (
                             <div key={status} className="w-full flex-col">
                               <div className="flex w-full">
                                 <li
-                                  class={`flex w-full items-center  text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block ${
+                                  className={`flex w-full items-center  text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block ${
                                     statusOfOrder.indexOf(items.orderstatus) >
                                     index
                                       ? "dark:after:border-blue-600"
                                       : null
                                   } `}
                                 >
-                                  <span class=" flex items-center justify-center bg-blue-100 rounded-full  0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
+                                  <span className=" flex items-center justify-center bg-blue-100 rounded-full  0 shrink-0 lg:h-8 lg:w-8  w-10 h-10 max-md:h-4 max-md:w-4">
                                     <CircleIcon
                                       className={` max-md:h-2 max-md:w-2 text-blue-600 ${
                                         items.orderstatus == status
