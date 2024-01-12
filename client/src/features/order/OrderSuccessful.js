@@ -30,6 +30,7 @@ const OrderSuccessful = () => {
       }
       previousOrderInfo.current = orderInfo;
     }
+    window.scrollTo(0, 0);
   }, [orderInfo, userData]);
   const options = { day: "numeric", month: "short", year: "numeric" };
   return (
