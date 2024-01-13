@@ -1,7 +1,7 @@
 const { AddressModel } = require("../model/address");
 const { tryCatch } = require("../utils/trycatch");
-const { expertError } = require("../utils/expertError");
-exports.addaddress = async (req, res) => {
+ 
+exports.addaddress = async (req, res, next) => {
   try {
     const { item } = req.body;
     const doc = await new AddressModel(item);
@@ -14,17 +14,12 @@ exports.addaddress = async (req, res) => {
     next(error);
   }
 };
-exports.getaddress = async (req, res) => {
-  try {
-    const { user } = req.body;
-    const doc = await AddressModel.find({ user: user });
-    return res.status(201).json({ message: "Address fetched", doc: doc });
-  } catch (error) {
-    error.message = "Failed to fetch user address";
-    next(error);
-  }
-};
-exports.deleteaddress = async (req, res) => {
+exports.getaddress = tryCatch(async (req, res, next) => {
+  const { user } = req.body;
+  const doc = await AddressModel.find({ user: user });
+  return res.status(201).json({ message: "Address fetched", doc: doc });
+});
+exports.deleteaddress = async (req, res, next) => {
   try {
     const { addressID } = req.params;
     const doc = await AddressModel.findByIdAndDelete(addressID);

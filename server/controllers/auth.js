@@ -6,7 +6,7 @@ const { expertError } = require("../utils/expertError");
 const generateAccessTokenModule = require("../middlewares/tokensGeneration/GenerateJWTAccessToken");
 const generateRefreshTokenModule = require("../middlewares/tokensGeneration/GenerateJWTRefreshToken");
 
-exports.UserRegister = tryCatch(async (req, res) => {
+exports.UserRegister = tryCatch(async (req, res, next) => {
   const isExistingUser = await UserModel.findOne({ email: req.body.email });
   if (isExistingUser) {
     return expertError(400, "User already exists, Please login");
@@ -31,7 +31,7 @@ exports.UserRegister = tryCatch(async (req, res) => {
     next(error);
   }
 });
-exports.UserLogin = tryCatch(async (req, res) => {
+exports.UserLogin = tryCatch(async (req, res, next) => {
   const isExistingUser = await UserModel.findOne({ email: req.body.email });
 
   if (!isExistingUser) {
@@ -62,7 +62,7 @@ exports.UserLogin = tryCatch(async (req, res) => {
     next(error);
   }
 });
-exports.CheckUserWithCookie = tryCatch(async (req, res) => {
+exports.CheckUserWithCookie = tryCatch(async (req, res, next) => {
   const UserRefreshToken = req.body;
   if (!UserRefreshToken) {
     return expertError(400, "something went wrong");

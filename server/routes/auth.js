@@ -1,4 +1,3 @@
-// auth.js
 const express = require("express");
 const router = express.Router();
 const AuthController = require("../controllers/auth");
@@ -21,13 +20,8 @@ const {
   updatePassword,
 } = require("../controllers/forgotpassword");
 
-router.post(
-  "/login",
-  validateUserSignIn,
-  userValidation,
-  AuthController.UserLogin
-);
 router
+  .post("/login", validateUserSignIn, userValidation, AuthController.UserLogin)
   .post(
     "/register",
     validateUserSignUp,
