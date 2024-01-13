@@ -2,28 +2,22 @@ require("dotenv").config();
 const { instance } = require("../payment/init");
 const crypto = require("crypto");
 const axios = require("axios");
+const { tryCatch } = require("../utils/trycatch");
+const { expertError } = require("../utils/expertError");
 const { paymentModel } = require("../model/payment");
-exports.checkOut = async (req, res) => {
-  try {
-    const { amount } = req.body;
-    var options = {
-      amount: Number(amount * 100),
-      currency: "INR",
-      receipt: "order_rcptid_11",
-    };
-    const order = await instance.orders.create(options);
-    const apiKeySecret = process.env.RAZOR_PAY_API_KEY;
-    return res.status(200).json({ success: true, order: order, apiKeySecret });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Failed to redirect to payment",
-      error: error.message,
-      success: false,
-    });
-  }
-};
+exports.checkOut = tryCatch(async (req, res) => {
+  const { amount } = req.body;
+  var options = {
+    amount: Number(amount * 100),
+    currency: "INR",
+    receipt: "order_rcptid_11",
+  };
+  const order = await instance.orders.create(options);
+  const apiKeySecret = process.env.RAZOR_PAY_API_KEY;
+  return res.status(200).json({ success: true, order: order, apiKeySecret });
+});
 
-exports.paymentVerification = async (req, res) => {
+exports.paymentVerification = tryCatch(async (req, res) => {
   try {
     const { response, order, orderInfo } = req.body;
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
@@ -46,7 +40,7 @@ exports.paymentVerification = async (req, res) => {
       const doc = await new paymentModel(paymentdata);
       const authorizationHeader = req.headers.authorization;
       if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
-        return res.status(401).json({ message: "Unauthorized Access" });
+        expertError(401, "Unauthorized Access");
       }
       const token = authorizationHeader.split("Bearer ")[1];
       const addOrderResponse = await axios.post(
@@ -94,4 +88,4 @@ exports.paymentVerification = async (req, res) => {
       success: false,
     });
   }
-};
+});

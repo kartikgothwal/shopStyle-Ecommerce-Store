@@ -3,21 +3,42 @@ const { check, validationResult } = require("express-validator");
 exports.validateUserSignUp = [
   check("firstname")
     .trim()
-    .not()
-    .isEmpty()
+    .custom((value) => {
+      if (!value) {
+        throw new Error("Firstname is required");
+      }
+      return true;
+    })
     .isLength({ min: 2, max: 25 })
     .withMessage("firstname must be of min 2 character and max 25"),
   check("lastname")
     .trim()
-    .not()
-    .isEmpty()
+    .custom((value) => {
+      if (!value) {
+        throw new Error("Lastname is required");
+      }
+      return true;
+    })
     .isLength({ min: 2, max: 25 })
     .withMessage("lastname must be of min 2 character and max 25"),
-  check("email").normalizeEmail().isEmail().withMessage("Enter a vaild Email"),
+  check("email")
+    .custom((value) => {
+      if (!value) {
+        throw new Error("Email is required");
+      }
+      return true;
+    })
+    .normalizeEmail()
+    .isEmail()
+    .withMessage("Enter a vaild Email"),
   check("password")
     .trim()
-    .not()
-    .isEmpty()
+    .custom((value) => {
+      if (!value) {
+        throw new Error("Password is required");
+      }
+      return true;
+    })
     .isLength({ min: 8 })
     .withMessage("password must be of min 8 character")
     .custom((value) => {
@@ -32,11 +53,24 @@ exports.validateUserSignUp = [
     }),
 ];
 exports.validateUserSignIn = [
-  check("email").normalizeEmail().isEmail().withMessage("Enter a vaild Email"),
+  check("email")
+    .custom((value) => {
+      if (!value) {
+        throw new Error("Email is required");
+      }
+      return true;
+    })
+    .normalizeEmail()
+    .isEmail()
+    .withMessage("Enter a vaild Email"),
   check("password")
     .trim()
-    .not()
-    .isEmpty()
+    .custom((value) => {
+      if (!value) {
+        throw new Error("Password is required");
+      }
+      return true;
+    })
     .isLength({ min: 8 })
     .withMessage("Password must be of min 8 character")
     .custom((value) => {
@@ -53,9 +87,11 @@ exports.validateUserSignIn = [
 ];
 exports.userValidation = (req, res, next) => {
   const result = validationResult(req).array();
+
   if (!result.length) {
     return next();
   }
   const error = result[0];
+
   res.status(400).json({ message: error.msg });
 };

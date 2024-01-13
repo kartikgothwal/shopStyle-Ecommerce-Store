@@ -3,12 +3,14 @@ const { UserModel } = require("../model/user");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
+const { tryCatch } = require("../utils/trycatch");
+const { expertError } = require("../utils/expertError");
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await UserModel.findOne({ email: email });
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
+      return expertError(400, "User not found");
     }
     const token = jwt.sign(
       { email: user.email, id: user._id },
@@ -34,10 +36,7 @@ exports.forgotPassword = async (req, res) => {
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        return res.status(400).json({
-          message: "Something went wrong, please try again",
-          error: error.message,
-        });
+        return expertError(400, "Something went wrong, please try again");
       } else {
         return res.status(200).json({
           message: "Password reset link has been sent to your registered email",
@@ -45,9 +44,9 @@ exports.forgotPassword = async (req, res) => {
       }
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Failed to remove", error: error.message });
+    error.status = 500;
+    error.message = "Something went wrong, please try again";
+    next(error);
   }
 };
 
@@ -56,20 +55,20 @@ exports.confirmUser = async (req, res) => {
     const { userID, token } = req.body;
     const user = await UserModel.findById(userID);
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized Access" });
+      return expertError(401, "Unauthorized Access");
     }
     const decode = jwt.verify(token, process.env.PRIVATE_KEY, {
       algorithm: "RS256",
     });
     if (!decode) {
-      return res.status(401).json({ message: "Unauthorized Access" });
+      return expertError(401, "Unauthorized Access");
     } else {
       return res.status(200).json({ message: "Verified user", user: user._id });
     }
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Unauthorized Access", error: error.message });
+    error.status = 500;
+    error.message = "Unauthorized Access";
+    next(error);
   }
 };
 
@@ -82,8 +81,8 @@ exports.updatePassword = async (req, res) => {
     });
     return res.status(200).json({ message: "Password has been reset" });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "An error occurred", error: error.message });
+    error.status = 500;
+    error.message = "An error occurred";
+    next(error);
   }
 };
